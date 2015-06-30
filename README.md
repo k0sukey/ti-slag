@@ -52,7 +52,7 @@ slag(path.join(__dirname, 'Resources', 'app.js'), '4.0.0.GA', 'ios');
 
 ### API
 
-#### slag(string ```<file path>```, string ```<SDK version>```, string ```<platfrom>```)
+#### object ```<vm.context>``` slag(string ```<file path>```, string ```<SDK version>```, string ```<platfrom>```)
 
 ##### file path
 
