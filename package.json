@@ -1,0 +1,44 @@
+{
+  "name": "ti-slag",
+  "version": "0.0.1",
+  "description": "Titanium faker API, Titanium App running on Node.js.",
+  "keywords": [
+    "appcelerator",
+    "titanium",
+    "alloy",
+    "cli",
+    "vm"
+  ],
+  "main": "index.js",
+  "bin": {
+    "slag": "bin/slag"
+  },
+  "preferGlobal": true,
+  "author": {
+    "name": "Kosuke Isobe",
+    "email": "isobe@k0suke.be",
+    "url": "https://github.com/k0sukey"
+  },
+  "homepage": "https://github.com/k0sukey/ti-slag",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/k0sukey/ti-slag.git"
+  },
+  "bugs": {
+    "url": "https://github.com/k0sukey/ti-slag/issues"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "author": "Kosuke Isobe",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "lodash": "^3.9.3",
+    "meow": "^3.3.0",
+    "tiapp.xml": "^0.2.2"
+  },
+  "engines": {
+    "node": ">=0.10"
+  }
+}
