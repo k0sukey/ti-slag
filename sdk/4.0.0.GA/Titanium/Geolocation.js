@@ -1,6 +1,5 @@
 function Geolocation(properties) {
 	properties = properties || {};
-
 	this.ACCURACY_BEST = properties.ACCURACY_BEST || undefined;
 	this.ACCURACY_BEST_FOR_NAVIGATION = properties.ACCURACY_BEST_FOR_NAVIGATION || undefined;
 	this.ACCURACY_HIGH = properties.ACCURACY_HIGH || undefined;
@@ -47,84 +46,117 @@ function Geolocation(properties) {
 	this.purpose = properties.purpose || undefined;
 	this.showCalibration = properties.showCalibration || undefined;
 	this.trackSignificantLocationChange = properties.trackSignificantLocationChange || undefined;
-
 	return this;
 }
-
-Geolocation.prototype.addEventListener = function(){};
-
-Geolocation.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Geolocation.prototype.fireEvent = function(){};
-
-Geolocation.prototype.forwardGeocoder = function(){};
-
-Geolocation.prototype.getAccuracy = function(){ return this.accuracy; };
-
-Geolocation.prototype.getActivityType = function(){ return this.activityType; };
-
-Geolocation.prototype.getApiName = function(){ return this.apiName; };
-
-Geolocation.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Geolocation.prototype.getCurrentHeading = function(){};
-
-Geolocation.prototype.getCurrentPosition = function(){};
-
-Geolocation.prototype.getDistanceFilter = function(){ return this.distanceFilter; };
-
-Geolocation.prototype.getFrequency = function(){ return this.frequency; };
-
-Geolocation.prototype.getHasCompass = function(){ return this.hasCompass; };
-
-Geolocation.prototype.getHeadingFilter = function(){ return this.headingFilter; };
-
-Geolocation.prototype.getLastGeolocation = function(){ return this.lastGeolocation; };
-
-Geolocation.prototype.getLifecycleContainer = function(){ return this.lifecycleContainer; };
-
-Geolocation.prototype.getLocationServicesAuthorization = function(){ return this.locationServicesAuthorization; };
-
-Geolocation.prototype.getLocationServicesEnabled = function(){ return this.locationServicesEnabled; };
-
-Geolocation.prototype.getPauseLocationUpdateAutomatically = function(){ return this.pauseLocationUpdateAutomatically; };
-
-Geolocation.prototype.getPreferredProvider = function(){ return this.preferredProvider; };
-
-Geolocation.prototype.getPurpose = function(){ return this.purpose; };
-
-Geolocation.prototype.getShowCalibration = function(){ return this.showCalibration; };
-
-Geolocation.prototype.getTrackSignificantLocationChange = function(){ return this.trackSignificantLocationChange; };
-
-Geolocation.prototype.removeEventListener = function(){};
-
-Geolocation.prototype.reverseGeocoder = function(){};
-
-Geolocation.prototype.setAccuracy = function(property){ this.accuracy = property; };
-
-Geolocation.prototype.setActivityType = function(property){ this.activityType = property; };
-
-Geolocation.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Geolocation.prototype.setDistanceFilter = function(property){ this.distanceFilter = property; };
-
-Geolocation.prototype.setFrequency = function(property){ this.frequency = property; };
-
-Geolocation.prototype.setHeadingFilter = function(property){ this.headingFilter = property; };
-
-Geolocation.prototype.setLifecycleContainer = function(property){ this.lifecycleContainer = property; };
-
-Geolocation.prototype.setLocationServicesAuthorization = function(property){ this.locationServicesAuthorization = property; };
-
-Geolocation.prototype.setPauseLocationUpdateAutomatically = function(property){ this.pauseLocationUpdateAutomatically = property; };
-
-Geolocation.prototype.setPreferredProvider = function(property){ this.preferredProvider = property; };
-
-Geolocation.prototype.setPurpose = function(property){ this.purpose = property; };
-
-Geolocation.prototype.setShowCalibration = function(property){ this.showCalibration = property; };
-
-Geolocation.prototype.setTrackSignificantLocationChange = function(property){ this.trackSignificantLocationChange = property; };
-
-module.exports = function(properties){ return new Geolocation(properties); };
+Geolocation.prototype.addEventListener = function () {
+};
+Geolocation.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Geolocation.prototype.fireEvent = function () {
+};
+Geolocation.prototype.forwardGeocoder = function () {
+};
+Geolocation.prototype.getAccuracy = function () {
+	return this.accuracy;
+};
+Geolocation.prototype.getActivityType = function () {
+	return this.activityType;
+};
+Geolocation.prototype.getApiName = function () {
+	return this.apiName;
+};
+Geolocation.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Geolocation.prototype.getCurrentHeading = function () {
+};
+Geolocation.prototype.getCurrentPosition = function () {
+};
+Geolocation.prototype.getDistanceFilter = function () {
+	return this.distanceFilter;
+};
+Geolocation.prototype.getFrequency = function () {
+	return this.frequency;
+};
+Geolocation.prototype.getHasCompass = function () {
+	return this.hasCompass;
+};
+Geolocation.prototype.getHeadingFilter = function () {
+	return this.headingFilter;
+};
+Geolocation.prototype.getLastGeolocation = function () {
+	return this.lastGeolocation;
+};
+Geolocation.prototype.getLifecycleContainer = function () {
+	return this.lifecycleContainer;
+};
+Geolocation.prototype.getLocationServicesAuthorization = function () {
+	return this.locationServicesAuthorization;
+};
+Geolocation.prototype.getLocationServicesEnabled = function () {
+	return this.locationServicesEnabled;
+};
+Geolocation.prototype.getPauseLocationUpdateAutomatically = function () {
+	return this.pauseLocationUpdateAutomatically;
+};
+Geolocation.prototype.getPreferredProvider = function () {
+	return this.preferredProvider;
+};
+Geolocation.prototype.getPurpose = function () {
+	return this.purpose;
+};
+Geolocation.prototype.getShowCalibration = function () {
+	return this.showCalibration;
+};
+Geolocation.prototype.getTrackSignificantLocationChange = function () {
+	return this.trackSignificantLocationChange;
+};
+Geolocation.prototype.removeEventListener = function () {
+};
+Geolocation.prototype.reverseGeocoder = function () {
+};
+Geolocation.prototype.setAccuracy = function (property) {
+	this.accuracy = property;
+};
+Geolocation.prototype.setActivityType = function (property) {
+	this.activityType = property;
+};
+Geolocation.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Geolocation.prototype.setDistanceFilter = function (property) {
+	this.distanceFilter = property;
+};
+Geolocation.prototype.setFrequency = function (property) {
+	this.frequency = property;
+};
+Geolocation.prototype.setHeadingFilter = function (property) {
+	this.headingFilter = property;
+};
+Geolocation.prototype.setLifecycleContainer = function (property) {
+	this.lifecycleContainer = property;
+};
+Geolocation.prototype.setLocationServicesAuthorization = function (property) {
+	this.locationServicesAuthorization = property;
+};
+Geolocation.prototype.setPauseLocationUpdateAutomatically = function (property) {
+	this.pauseLocationUpdateAutomatically = property;
+};
+Geolocation.prototype.setPreferredProvider = function (property) {
+	this.preferredProvider = property;
+};
+Geolocation.prototype.setPurpose = function (property) {
+	this.purpose = property;
+};
+Geolocation.prototype.setShowCalibration = function (property) {
+	this.showCalibration = property;
+};
+Geolocation.prototype.setTrackSignificantLocationChange = function (property) {
+	this.trackSignificantLocationChange = property;
+};
+module.exports = function (properties) {
+	return new Geolocation(properties);
+};

@@ -1,6 +1,5 @@
 function Network(properties) {
 	properties = properties || {};
-
 	this.INADDR_ANY = properties.INADDR_ANY || undefined;
 	this.NETWORK_LAN = properties.NETWORK_LAN || undefined;
 	this.NETWORK_MOBILE = properties.NETWORK_MOBILE || undefined;
@@ -33,82 +32,112 @@ function Network(properties) {
 	this.remoteDeviceUUID = properties.remoteDeviceUUID || undefined;
 	this.remoteNotificationTypes = properties.remoteNotificationTypes || undefined;
 	this.remoteNotificationsEnabled = properties.remoteNotificationsEnabled || undefined;
-
 	return this;
 }
-
-Network.prototype.addConnectivityListener = function(){};
-
-Network.prototype.addEventListener = function(){};
-
-Network.prototype.addHTTPCookie = function(){};
-
-Network.prototype.addSystemCookie = function(){};
-
-Network.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Network.prototype.createBonjourBrowser = function(params){ var BonjourBrowser = require('./Network/BonjourBrowser'); return BonjourBrowser(params); };
-
-Network.prototype.createBonjourService = function(params){ var BonjourService = require('./Network/BonjourService'); return BonjourService(params); };
-
-Network.prototype.createCookie = function(params){ var Cookie = require('./Network/Cookie'); return Cookie(params); };
-
-Network.prototype.createHTTPClient = function(params){ var HTTPClient = require('./Network/HTTPClient'); return HTTPClient(params); };
-
-Network.prototype.createTCPSocket = function(params){ var TCPSocket = require('./Network/TCPSocket'); return TCPSocket(params); };
-
-Network.prototype.decodeURIComponent = function(){ return ''; };
-
-Network.prototype.encodeURIComponent = function(){ return ''; };
-
-Network.prototype.fireEvent = function(){};
-
-Network.prototype.getAllHTTPCookies = function(){ return this.allHTTPCookies; };
-
-Network.prototype.getApiName = function(){ return this.apiName; };
-
-Network.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Network.prototype.getHTTPCookies = function(){ return []; };
-
-Network.prototype.getHTTPCookiesForDomain = function(){ return []; };
-
-Network.prototype.getHttpURLFormatter = function(){ return this.httpURLFormatter; };
-
-Network.prototype.getNetworkType = function(){ return this.networkType; };
-
-Network.prototype.getNetworkTypeName = function(){ return this.networkTypeName; };
-
-Network.prototype.getOnline = function(){ return this.online; };
-
-Network.prototype.getRemoteDeviceUUID = function(){ return this.remoteDeviceUUID; };
-
-Network.prototype.getRemoteNotificationTypes = function(){ return this.remoteNotificationTypes; };
-
-Network.prototype.getRemoteNotificationsEnabled = function(){ return this.remoteNotificationsEnabled; };
-
-Network.prototype.getSystemCookies = function(){ return []; };
-
-Network.prototype.registerForPushNotifications = function(){};
-
-Network.prototype.removeAllHTTPCookies = function(){};
-
-Network.prototype.removeAllSystemCookies = function(){};
-
-Network.prototype.removeConnectivityListener = function(){};
-
-Network.prototype.removeEventListener = function(){};
-
-Network.prototype.removeHTTPCookie = function(){};
-
-Network.prototype.removeHTTPCookiesForDomain = function(){};
-
-Network.prototype.removeSystemCookie = function(){};
-
-Network.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Network.prototype.setHttpURLFormatter = function(property){ this.httpURLFormatter = property; };
-
-Network.prototype.unregisterForPushNotifications = function(){};
-
-module.exports = function(properties){ return new Network(properties); };
+Network.prototype.addConnectivityListener = function () {
+};
+Network.prototype.addEventListener = function () {
+};
+Network.prototype.addHTTPCookie = function () {
+};
+Network.prototype.addSystemCookie = function () {
+};
+Network.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Network.prototype.createBonjourBrowser = function (params) {
+	var BonjourBrowser = require('./Network/BonjourBrowser');
+	return BonjourBrowser(params);
+};
+Network.prototype.createBonjourService = function (params) {
+	var BonjourService = require('./Network/BonjourService');
+	return BonjourService(params);
+};
+Network.prototype.createCookie = function (params) {
+	var Cookie = require('./Network/Cookie');
+	return Cookie(params);
+};
+Network.prototype.createHTTPClient = function (params) {
+	var HTTPClient = require('./Network/HTTPClient');
+	return HTTPClient(params);
+};
+Network.prototype.createTCPSocket = function (params) {
+	var TCPSocket = require('./Network/TCPSocket');
+	return TCPSocket(params);
+};
+Network.prototype.decodeURIComponent = function () {
+	return '';
+};
+Network.prototype.encodeURIComponent = function () {
+	return '';
+};
+Network.prototype.fireEvent = function () {
+};
+Network.prototype.getAllHTTPCookies = function () {
+	return this.allHTTPCookies;
+};
+Network.prototype.getApiName = function () {
+	return this.apiName;
+};
+Network.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Network.prototype.getHTTPCookies = function () {
+	return [];
+};
+Network.prototype.getHTTPCookiesForDomain = function () {
+	return [];
+};
+Network.prototype.getHttpURLFormatter = function () {
+	return this.httpURLFormatter;
+};
+Network.prototype.getNetworkType = function () {
+	return this.networkType;
+};
+Network.prototype.getNetworkTypeName = function () {
+	return this.networkTypeName;
+};
+Network.prototype.getOnline = function () {
+	return this.online;
+};
+Network.prototype.getRemoteDeviceUUID = function () {
+	return this.remoteDeviceUUID;
+};
+Network.prototype.getRemoteNotificationTypes = function () {
+	return this.remoteNotificationTypes;
+};
+Network.prototype.getRemoteNotificationsEnabled = function () {
+	return this.remoteNotificationsEnabled;
+};
+Network.prototype.getSystemCookies = function () {
+	return [];
+};
+Network.prototype.registerForPushNotifications = function () {
+};
+Network.prototype.removeAllHTTPCookies = function () {
+};
+Network.prototype.removeAllSystemCookies = function () {
+};
+Network.prototype.removeConnectivityListener = function () {
+};
+Network.prototype.removeEventListener = function () {
+};
+Network.prototype.removeHTTPCookie = function () {
+};
+Network.prototype.removeHTTPCookiesForDomain = function () {
+};
+Network.prototype.removeSystemCookie = function () {
+};
+Network.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Network.prototype.setHttpURLFormatter = function (property) {
+	this.httpURLFormatter = property;
+};
+Network.prototype.unregisterForPushNotifications = function () {
+};
+module.exports = function (properties) {
+	return new Network(properties);
+};

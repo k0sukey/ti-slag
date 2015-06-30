@@ -1,6 +1,5 @@
 function Calendar(properties) {
 	properties = properties || {};
-
 	this.AUTHORIZATION_AUTHORIZED = properties.AUTHORIZATION_AUTHORIZED || undefined;
 	this.AUTHORIZATION_DENIED = properties.AUTHORIZATION_DENIED || undefined;
 	this.AUTHORIZATION_RESTRICTED = properties.AUTHORIZATION_RESTRICTED || undefined;
@@ -40,42 +39,57 @@ function Calendar(properties) {
 	this.eventsAuthorization = properties.eventsAuthorization || undefined;
 	this.lifecycleContainer = properties.lifecycleContainer || undefined;
 	this.selectableCalendars = properties.selectableCalendars || undefined;
-
 	return this;
 }
-
-Calendar.prototype.addEventListener = function(){};
-
-Calendar.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Calendar.prototype.fireEvent = function(){};
-
-Calendar.prototype.getAllAlerts = function(){ return this.allAlerts; };
-
-Calendar.prototype.getAllCalendars = function(){ return this.allCalendars; };
-
-Calendar.prototype.getAllEditableCalendars = function(){ return this.allEditableCalendars; };
-
-Calendar.prototype.getApiName = function(){ return this.apiName; };
-
-Calendar.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Calendar.prototype.getCalendarById = function(){ return {}; };
-
-Calendar.prototype.getDefaultCalendar = function(){ return this.defaultCalendar; };
-
-Calendar.prototype.getEventsAuthorization = function(){ return this.eventsAuthorization; };
-
-Calendar.prototype.getLifecycleContainer = function(){ return this.lifecycleContainer; };
-
-Calendar.prototype.getSelectableCalendars = function(){ return this.selectableCalendars; };
-
-Calendar.prototype.removeEventListener = function(){};
-
-Calendar.prototype.requestEventsAuthorization = function(){};
-
-Calendar.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Calendar.prototype.setLifecycleContainer = function(property){ this.lifecycleContainer = property; };
-
-module.exports = function(properties){ return new Calendar(properties); };
+Calendar.prototype.addEventListener = function () {
+};
+Calendar.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Calendar.prototype.fireEvent = function () {
+};
+Calendar.prototype.getAllAlerts = function () {
+	return this.allAlerts;
+};
+Calendar.prototype.getAllCalendars = function () {
+	return this.allCalendars;
+};
+Calendar.prototype.getAllEditableCalendars = function () {
+	return this.allEditableCalendars;
+};
+Calendar.prototype.getApiName = function () {
+	return this.apiName;
+};
+Calendar.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Calendar.prototype.getCalendarById = function () {
+	return {};
+};
+Calendar.prototype.getDefaultCalendar = function () {
+	return this.defaultCalendar;
+};
+Calendar.prototype.getEventsAuthorization = function () {
+	return this.eventsAuthorization;
+};
+Calendar.prototype.getLifecycleContainer = function () {
+	return this.lifecycleContainer;
+};
+Calendar.prototype.getSelectableCalendars = function () {
+	return this.selectableCalendars;
+};
+Calendar.prototype.removeEventListener = function () {
+};
+Calendar.prototype.requestEventsAuthorization = function () {
+};
+Calendar.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Calendar.prototype.setLifecycleContainer = function (property) {
+	this.lifecycleContainer = property;
+};
+module.exports = function (properties) {
+	return new Calendar(properties);
+};

@@ -1,6 +1,5 @@
 function Attr(properties) {
 	properties = properties || {};
-
 	this.ATTRIBUTE_NODE = properties.ATTRIBUTE_NODE || undefined;
 	this.CDATA_SECTION_NODE = properties.CDATA_SECTION_NODE || undefined;
 	this.COMMENT_NODE = properties.COMMENT_NODE || undefined;
@@ -35,88 +34,126 @@ function Attr(properties) {
 	this.text = properties.text || undefined;
 	this.textContent = properties.textContent || undefined;
 	this.value = properties.value || undefined;
-
 	return this;
 }
-
-Attr.prototype.addEventListener = function(){};
-
-Attr.prototype.appendChild = function(){ return {}; };
-
-Attr.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Attr.prototype.cloneNode = function(){ return {}; };
-
-Attr.prototype.fireEvent = function(){};
-
-Attr.prototype.getApiName = function(){ return this.apiName; };
-
-Attr.prototype.getAttributes = function(){ return this.attributes; };
-
-Attr.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Attr.prototype.getChildNodes = function(){ return this.childNodes; };
-
-Attr.prototype.getFirstChild = function(){ return this.firstChild; };
-
-Attr.prototype.getLastChild = function(){ return this.lastChild; };
-
-Attr.prototype.getLocalName = function(){ return this.localName; };
-
-Attr.prototype.getName = function(){ return this.name; };
-
-Attr.prototype.getNamespaceURI = function(){ return this.namespaceURI; };
-
-Attr.prototype.getNextSibling = function(){ return this.nextSibling; };
-
-Attr.prototype.getNodeName = function(){ return this.nodeName; };
-
-Attr.prototype.getNodeType = function(){ return this.nodeType; };
-
-Attr.prototype.getNodeValue = function(){ return this.nodeValue; };
-
-Attr.prototype.getOwnerDocument = function(){ return this.ownerDocument; };
-
-Attr.prototype.getOwnerElement = function(){ return this.ownerElement; };
-
-Attr.prototype.getParentNode = function(){ return this.parentNode; };
-
-Attr.prototype.getPrefix = function(){ return this.prefix; };
-
-Attr.prototype.getPreviousSibling = function(){ return this.previousSibling; };
-
-Attr.prototype.getSpecified = function(){ return this.specified; };
-
-Attr.prototype.getText = function(){ return this.text; };
-
-Attr.prototype.getTextContent = function(){ return this.textContent; };
-
-Attr.prototype.getValue = function(){ return this.value; };
-
-Attr.prototype.hasAttributes = function(){ return true; };
-
-Attr.prototype.hasChildNodes = function(){ return true; };
-
-Attr.prototype.insertBefore = function(){ return {}; };
-
-Attr.prototype.isSupported = function(){ return true; };
-
-Attr.prototype.normalize = function(){};
-
-Attr.prototype.removeChild = function(){ return {}; };
-
-Attr.prototype.removeEventListener = function(){};
-
-Attr.prototype.replaceChild = function(){ return {}; };
-
-Attr.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Attr.prototype.setLocalName = function(property){ this.localName = property; };
-
-Attr.prototype.setNodeValue = function(property){ this.nodeValue = property; };
-
-Attr.prototype.setPrefix = function(property){ this.prefix = property; };
-
-Attr.prototype.setValue = function(property){ this.value = property; };
-
-module.exports = function(properties){ return new Attr(properties); };
+Attr.prototype.addEventListener = function () {
+};
+Attr.prototype.appendChild = function () {
+	return {};
+};
+Attr.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Attr.prototype.cloneNode = function () {
+	return {};
+};
+Attr.prototype.fireEvent = function () {
+};
+Attr.prototype.getApiName = function () {
+	return this.apiName;
+};
+Attr.prototype.getAttributes = function () {
+	return this.attributes;
+};
+Attr.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Attr.prototype.getChildNodes = function () {
+	return this.childNodes;
+};
+Attr.prototype.getFirstChild = function () {
+	return this.firstChild;
+};
+Attr.prototype.getLastChild = function () {
+	return this.lastChild;
+};
+Attr.prototype.getLocalName = function () {
+	return this.localName;
+};
+Attr.prototype.getName = function () {
+	return this.name;
+};
+Attr.prototype.getNamespaceURI = function () {
+	return this.namespaceURI;
+};
+Attr.prototype.getNextSibling = function () {
+	return this.nextSibling;
+};
+Attr.prototype.getNodeName = function () {
+	return this.nodeName;
+};
+Attr.prototype.getNodeType = function () {
+	return this.nodeType;
+};
+Attr.prototype.getNodeValue = function () {
+	return this.nodeValue;
+};
+Attr.prototype.getOwnerDocument = function () {
+	return this.ownerDocument;
+};
+Attr.prototype.getOwnerElement = function () {
+	return this.ownerElement;
+};
+Attr.prototype.getParentNode = function () {
+	return this.parentNode;
+};
+Attr.prototype.getPrefix = function () {
+	return this.prefix;
+};
+Attr.prototype.getPreviousSibling = function () {
+	return this.previousSibling;
+};
+Attr.prototype.getSpecified = function () {
+	return this.specified;
+};
+Attr.prototype.getText = function () {
+	return this.text;
+};
+Attr.prototype.getTextContent = function () {
+	return this.textContent;
+};
+Attr.prototype.getValue = function () {
+	return this.value;
+};
+Attr.prototype.hasAttributes = function () {
+	return true;
+};
+Attr.prototype.hasChildNodes = function () {
+	return true;
+};
+Attr.prototype.insertBefore = function () {
+	return {};
+};
+Attr.prototype.isSupported = function () {
+	return true;
+};
+Attr.prototype.normalize = function () {
+};
+Attr.prototype.removeChild = function () {
+	return {};
+};
+Attr.prototype.removeEventListener = function () {
+};
+Attr.prototype.replaceChild = function () {
+	return {};
+};
+Attr.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Attr.prototype.setLocalName = function (property) {
+	this.localName = property;
+};
+Attr.prototype.setNodeValue = function (property) {
+	this.nodeValue = property;
+};
+Attr.prototype.setPrefix = function (property) {
+	this.prefix = property;
+};
+Attr.prototype.setValue = function (property) {
+	this.value = property;
+};
+module.exports = function (properties) {
+	return new Attr(properties);
+};

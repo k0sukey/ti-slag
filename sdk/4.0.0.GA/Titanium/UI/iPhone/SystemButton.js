@@ -1,6 +1,5 @@
 function SystemButton(properties) {
 	properties = properties || {};
-
 	this.ACTION = properties.ACTION || undefined;
 	this.ACTIVITY = properties.ACTIVITY || undefined;
 	this.ADD = properties.ADD || undefined;
@@ -29,22 +28,28 @@ function SystemButton(properties) {
 	this.TRASH = properties.TRASH || undefined;
 	this.apiName = 'Titanium.UI.iPhone.SystemButton';
 	this.bubbleParent = properties.bubbleParent || undefined;
-
 	return this;
 }
-
-SystemButton.prototype.addEventListener = function(){};
-
-SystemButton.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-SystemButton.prototype.fireEvent = function(){};
-
-SystemButton.prototype.getApiName = function(){ return this.apiName; };
-
-SystemButton.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-SystemButton.prototype.removeEventListener = function(){};
-
-SystemButton.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-module.exports = function(properties){ return new SystemButton(properties); };
+SystemButton.prototype.addEventListener = function () {
+};
+SystemButton.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+SystemButton.prototype.fireEvent = function () {
+};
+SystemButton.prototype.getApiName = function () {
+	return this.apiName;
+};
+SystemButton.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+SystemButton.prototype.removeEventListener = function () {
+};
+SystemButton.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+module.exports = function (properties) {
+	return new SystemButton(properties);
+};

@@ -1,6 +1,5 @@
 function Media(properties) {
 	properties = properties || {};
-
 	this.AUDIO_FILEFORMAT_3GP2 = properties.AUDIO_FILEFORMAT_3GP2 || undefined;
 	this.AUDIO_FILEFORMAT_3GPP = properties.AUDIO_FILEFORMAT_3GPP || undefined;
 	this.AUDIO_FILEFORMAT_AIFF = properties.AUDIO_FILEFORMAT_AIFF || undefined;
@@ -146,116 +145,159 @@ function Media(properties) {
 	this.peakMicrophonePower = properties.peakMicrophonePower || undefined;
 	this.systemMusicPlayer = properties.systemMusicPlayer || undefined;
 	this.volume = properties.volume || undefined;
-
 	return this;
 }
-
-Media.prototype.addEventListener = function(){};
-
-Media.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Media.prototype.beep = function(){};
-
-Media.prototype.createAudioPlayer = function(params){ var AudioPlayer = require('./Media/AudioPlayer'); return AudioPlayer(params); };
-
-Media.prototype.createAudioRecorder = function(params){ var AudioRecorder = require('./Media/AudioRecorder'); return AudioRecorder(params); };
-
-Media.prototype.createItem = function(params){ var Item = require('./Media/Item'); return Item(params); };
-
-Media.prototype.createMusicPlayer = function(params){ var MusicPlayer = require('./Media/MusicPlayer'); return MusicPlayer(params); };
-
-Media.prototype.createSound = function(params){ var Sound = require('./Media/Sound'); return Sound(params); };
-
-Media.prototype.createVideoPlayer = function(params){ var VideoPlayer = require('./Media/VideoPlayer'); return VideoPlayer(params); };
-
-Media.prototype.fireEvent = function(){};
-
-Media.prototype.getApiName = function(){ return this.apiName; };
-
-Media.prototype.getAppMusicPlayer = function(){ return this.appMusicPlayer; };
-
-Media.prototype.getAudioLineType = function(){ return this.audioLineType; };
-
-Media.prototype.getAudioPlaying = function(){ return this.audioPlaying; };
-
-Media.prototype.getAudioSessionCategory = function(){ return this.audioSessionCategory; };
-
-Media.prototype.getAudioSessionMode = function(){ return this.audioSessionMode; };
-
-Media.prototype.getAvailableCameraMediaTypes = function(){ return this.availableCameraMediaTypes; };
-
-Media.prototype.getAvailableCameras = function(){ return this.availableCameras; };
-
-Media.prototype.getAvailablePhotoGalleryMediaTypes = function(){ return this.availablePhotoGalleryMediaTypes; };
-
-Media.prototype.getAvailablePhotoMediaTypes = function(){ return this.availablePhotoMediaTypes; };
-
-Media.prototype.getAverageMicrophonePower = function(){ return this.averageMicrophonePower; };
-
-Media.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Media.prototype.getCameraFlashMode = function(){ return this.cameraFlashMode; };
-
-Media.prototype.getCanRecord = function(){ return this.canRecord; };
-
-Media.prototype.getIsCameraSupported = function(){ return this.isCameraSupported; };
-
-Media.prototype.getPeakMicrophonePower = function(){ return this.peakMicrophonePower; };
-
-Media.prototype.getSystemMusicPlayer = function(){ return this.systemMusicPlayer; };
-
-Media.prototype.getVolume = function(){ return this.volume; };
-
-Media.prototype.hideCamera = function(){};
-
-Media.prototype.hideMusicLibrary = function(){};
-
-Media.prototype.isMediaTypeSupported = function(){ return true; };
-
-Media.prototype.openMusicLibrary = function(){};
-
-Media.prototype.openPhotoGallery = function(){};
-
-Media.prototype.previewImage = function(){};
-
-Media.prototype.queryMusicLibrary = function(){ return []; };
-
-Media.prototype.removeEventListener = function(){};
-
-Media.prototype.requestAuthorization = function(){};
-
-Media.prototype.saveToPhotoGallery = function(){};
-
-Media.prototype.setAudioSessionCategory = function(property){ this.audioSessionCategory = property; };
-
-Media.prototype.setAudioSessionMode = function(property){ this.audioSessionMode = property; };
-
-Media.prototype.setAvailableCameraMediaTypes = function(property){ this.availableCameraMediaTypes = property; };
-
-Media.prototype.setAvailablePhotoGalleryMediaTypes = function(property){ this.availablePhotoGalleryMediaTypes = property; };
-
-Media.prototype.setAvailablePhotoMediaTypes = function(property){ this.availablePhotoMediaTypes = property; };
-
-Media.prototype.setAverageMicrophonePower = function(property){ this.averageMicrophonePower = property; };
-
-Media.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Media.prototype.setCameraFlashMode = function(property){ this.cameraFlashMode = property; };
-
-Media.prototype.setOverrideAudioRoute = function(){};
-
-Media.prototype.showCamera = function(){};
-
-Media.prototype.startMicrophoneMonitor = function(){};
-
-Media.prototype.stopMicrophoneMonitor = function(){};
-
-Media.prototype.switchCamera = function(){};
-
-Media.prototype.takePicture = function(){};
-
-Media.prototype.takeScreenshot = function(){};
-
-Media.prototype.vibrate = function(){};
-
-module.exports = function(properties){ return new Media(properties); };
+Media.prototype.addEventListener = function () {
+};
+Media.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Media.prototype.beep = function () {
+};
+Media.prototype.createAudioPlayer = function (params) {
+	var AudioPlayer = require('./Media/AudioPlayer');
+	return AudioPlayer(params);
+};
+Media.prototype.createAudioRecorder = function (params) {
+	var AudioRecorder = require('./Media/AudioRecorder');
+	return AudioRecorder(params);
+};
+Media.prototype.createItem = function (params) {
+	var Item = require('./Media/Item');
+	return Item(params);
+};
+Media.prototype.createMusicPlayer = function (params) {
+	var MusicPlayer = require('./Media/MusicPlayer');
+	return MusicPlayer(params);
+};
+Media.prototype.createSound = function (params) {
+	var Sound = require('./Media/Sound');
+	return Sound(params);
+};
+Media.prototype.createVideoPlayer = function (params) {
+	var VideoPlayer = require('./Media/VideoPlayer');
+	return VideoPlayer(params);
+};
+Media.prototype.fireEvent = function () {
+};
+Media.prototype.getApiName = function () {
+	return this.apiName;
+};
+Media.prototype.getAppMusicPlayer = function () {
+	return this.appMusicPlayer;
+};
+Media.prototype.getAudioLineType = function () {
+	return this.audioLineType;
+};
+Media.prototype.getAudioPlaying = function () {
+	return this.audioPlaying;
+};
+Media.prototype.getAudioSessionCategory = function () {
+	return this.audioSessionCategory;
+};
+Media.prototype.getAudioSessionMode = function () {
+	return this.audioSessionMode;
+};
+Media.prototype.getAvailableCameraMediaTypes = function () {
+	return this.availableCameraMediaTypes;
+};
+Media.prototype.getAvailableCameras = function () {
+	return this.availableCameras;
+};
+Media.prototype.getAvailablePhotoGalleryMediaTypes = function () {
+	return this.availablePhotoGalleryMediaTypes;
+};
+Media.prototype.getAvailablePhotoMediaTypes = function () {
+	return this.availablePhotoMediaTypes;
+};
+Media.prototype.getAverageMicrophonePower = function () {
+	return this.averageMicrophonePower;
+};
+Media.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Media.prototype.getCameraFlashMode = function () {
+	return this.cameraFlashMode;
+};
+Media.prototype.getCanRecord = function () {
+	return this.canRecord;
+};
+Media.prototype.getIsCameraSupported = function () {
+	return this.isCameraSupported;
+};
+Media.prototype.getPeakMicrophonePower = function () {
+	return this.peakMicrophonePower;
+};
+Media.prototype.getSystemMusicPlayer = function () {
+	return this.systemMusicPlayer;
+};
+Media.prototype.getVolume = function () {
+	return this.volume;
+};
+Media.prototype.hideCamera = function () {
+};
+Media.prototype.hideMusicLibrary = function () {
+};
+Media.prototype.isMediaTypeSupported = function () {
+	return true;
+};
+Media.prototype.openMusicLibrary = function () {
+};
+Media.prototype.openPhotoGallery = function () {
+};
+Media.prototype.previewImage = function () {
+};
+Media.prototype.queryMusicLibrary = function () {
+	return [];
+};
+Media.prototype.removeEventListener = function () {
+};
+Media.prototype.requestAuthorization = function () {
+};
+Media.prototype.saveToPhotoGallery = function () {
+};
+Media.prototype.setAudioSessionCategory = function (property) {
+	this.audioSessionCategory = property;
+};
+Media.prototype.setAudioSessionMode = function (property) {
+	this.audioSessionMode = property;
+};
+Media.prototype.setAvailableCameraMediaTypes = function (property) {
+	this.availableCameraMediaTypes = property;
+};
+Media.prototype.setAvailablePhotoGalleryMediaTypes = function (property) {
+	this.availablePhotoGalleryMediaTypes = property;
+};
+Media.prototype.setAvailablePhotoMediaTypes = function (property) {
+	this.availablePhotoMediaTypes = property;
+};
+Media.prototype.setAverageMicrophonePower = function (property) {
+	this.averageMicrophonePower = property;
+};
+Media.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Media.prototype.setCameraFlashMode = function (property) {
+	this.cameraFlashMode = property;
+};
+Media.prototype.setOverrideAudioRoute = function () {
+};
+Media.prototype.showCamera = function () {
+};
+Media.prototype.startMicrophoneMonitor = function () {
+};
+Media.prototype.stopMicrophoneMonitor = function () {
+};
+Media.prototype.switchCamera = function () {
+};
+Media.prototype.takePicture = function () {
+};
+Media.prototype.takeScreenshot = function () {
+};
+Media.prototype.vibrate = function () {
+};
+module.exports = function (properties) {
+	return new Media(properties);
+};

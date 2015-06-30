@@ -1,6 +1,5 @@
 function GeocodedAddress(properties) {
 	properties = properties || {};
-
 	this.address = properties.address || undefined;
 	this.city = properties.city || undefined;
 	this.country = properties.country || undefined;
@@ -15,10 +14,8 @@ function GeocodedAddress(properties) {
 	this.street = properties.street || undefined;
 	this.street1 = properties.street1 || undefined;
 	this.zipcode = properties.zipcode || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new GeocodedAddress(properties); };
+module.exports = function (properties) {
+	return new GeocodedAddress(properties);
+};

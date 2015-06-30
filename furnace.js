@@ -1,9 +1,11 @@
 var _ = require('lodash'),
+	acorn = require('acorn'),
+	escodegen = require('escodegen'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./api_3.5.1.GA.json'),
-	root = path.join(__dirname, 'sdk', '3.5.1.GA');
+var apis = require('./api_4.0.0.GA.json'),
+	root = path.join(__dirname, 'sdk', '4.0.0.GA');
 
 _.each(apis, function(api, namespace){
 	var code = '',
@@ -125,6 +127,15 @@ _.each(apis, function(api, namespace){
 	code += methods.join('\n\n');
 
 	code += '\n\nmodule.exports = function(properties){ return new ' + apiname + '(properties); };';
+
+	var ast = acorn.parse(code);
+	code = escodegen.generate(ast, {
+		format: {
+			indent: {
+				style: '\t'
+			}
+		}
+	});
 
 	fs.writeFileSync(path.join(dir, namespaces[namespaces.length - 1] + '.js'), code);
 });

@@ -1,6 +1,5 @@
 function UI(properties) {
 	properties = properties || {};
-
 	this.ANIMATION_CURVE_EASE_IN = properties.ANIMATION_CURVE_EASE_IN || undefined;
 	this.ANIMATION_CURVE_EASE_IN_OUT = properties.ANIMATION_CURVE_EASE_IN_OUT || undefined;
 	this.ANIMATION_CURVE_EASE_OUT = properties.ANIMATION_CURVE_EASE_OUT || undefined;
@@ -146,124 +145,222 @@ function UI(properties) {
 	this.currentTab = properties.currentTab || undefined;
 	this.currentWindow = properties.currentWindow || undefined;
 	this.orientation = properties.orientation || undefined;
-
 	return this;
 }
-
-UI.prototype.addEventListener = function(){};
-
-UI.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-UI.prototype.convertUnits = function(){ return 0; };
-
-UI.prototype.create2DMatrix = function(params){ var TwoDMatrix = require('./UI/2DMatrix'); return TwoDMatrix(params); };
-
-UI.prototype.create3DMatrix = function(params){ var ThreeDMatrix = require('./UI/3DMatrix'); return ThreeDMatrix(params); };
-
-UI.prototype.createActivityIndicator = function(params){ var ActivityIndicator = require('./UI/ActivityIndicator'); return ActivityIndicator(params); };
-
-UI.prototype.createAlertDialog = function(params){ var AlertDialog = require('./UI/AlertDialog'); return AlertDialog(params); };
-
-UI.prototype.createAnimation = function(params){ var Animation = require('./UI/Animation'); return Animation(params); };
-
-UI.prototype.createButton = function(params){ var Button = require('./UI/Button'); return Button(params); };
-
-UI.prototype.createButtonBar = function(params){ var ButtonBar = require('./UI/ButtonBar'); return ButtonBar(params); };
-
-UI.prototype.createCoverFlowView = function(params){ var CoverFlowView = require('./UI/CoverFlowView'); return CoverFlowView(params); };
-
-UI.prototype.createDashboardItem = function(params){ var DashboardItem = require('./UI/DashboardItem'); return DashboardItem(params); };
-
-UI.prototype.createDashboardView = function(params){ var DashboardView = require('./UI/DashboardView'); return DashboardView(params); };
-
-UI.prototype.createEmailDialog = function(params){ var EmailDialog = require('./UI/EmailDialog'); return EmailDialog(params); };
-
-UI.prototype.createImageView = function(params){ var ImageView = require('./UI/ImageView'); return ImageView(params); };
-
-UI.prototype.createLabel = function(params){ var Label = require('./UI/Label'); return Label(params); };
-
-UI.prototype.createListSection = function(params){ var ListSection = require('./UI/ListSection'); return ListSection(params); };
-
-UI.prototype.createListView = function(params){ var ListView = require('./UI/ListView'); return ListView(params); };
-
-UI.prototype.createMaskedImage = function(params){ var MaskedImage = require('./UI/MaskedImage'); return MaskedImage(params); };
-
-UI.prototype.createNotification = function(params){ var Notification = require('./UI/Notification'); return Notification(params); };
-
-UI.prototype.createOptionDialog = function(params){ var OptionDialog = require('./UI/OptionDialog'); return OptionDialog(params); };
-
-UI.prototype.createPicker = function(params){ var Picker = require('./UI/Picker'); return Picker(params); };
-
-UI.prototype.createPickerColumn = function(params){ var PickerColumn = require('./UI/PickerColumn'); return PickerColumn(params); };
-
-UI.prototype.createPickerRow = function(params){ var PickerRow = require('./UI/PickerRow'); return PickerRow(params); };
-
-UI.prototype.createProgressBar = function(params){ var ProgressBar = require('./UI/ProgressBar'); return ProgressBar(params); };
-
-UI.prototype.createRefreshControl = function(params){ var RefreshControl = require('./UI/RefreshControl'); return RefreshControl(params); };
-
-UI.prototype.createSMSDialog = function(params){ var SMSDialog = require('./UI/SMSDialog'); return SMSDialog(params); };
-
-UI.prototype.createScrollView = function(params){ var ScrollView = require('./UI/ScrollView'); return ScrollView(params); };
-
-UI.prototype.createScrollableView = function(params){ var ScrollableView = require('./UI/ScrollableView'); return ScrollableView(params); };
-
-UI.prototype.createSearchBar = function(params){ var SearchBar = require('./UI/SearchBar'); return SearchBar(params); };
-
-UI.prototype.createSlider = function(params){ var Slider = require('./UI/Slider'); return Slider(params); };
-
-UI.prototype.createSwitch = function(params){ var Switch = require('./UI/Switch'); return Switch(params); };
-
-UI.prototype.createTab = function(params){ var Tab = require('./UI/Tab'); return Tab(params); };
-
-UI.prototype.createTabGroup = function(params){ var TabGroup = require('./UI/TabGroup'); return TabGroup(params); };
-
-UI.prototype.createTabbedBar = function(params){ var TabbedBar = require('./UI/TabbedBar'); return TabbedBar(params); };
-
-UI.prototype.createTableView = function(params){ var TableView = require('./UI/TableView'); return TableView(params); };
-
-UI.prototype.createTableViewRow = function(params){ var TableViewRow = require('./UI/TableViewRow'); return TableViewRow(params); };
-
-UI.prototype.createTableViewSection = function(params){ var TableViewSection = require('./UI/TableViewSection'); return TableViewSection(params); };
-
-UI.prototype.createTextArea = function(params){ var TextArea = require('./UI/TextArea'); return TextArea(params); };
-
-UI.prototype.createTextField = function(params){ var TextField = require('./UI/TextField'); return TextField(params); };
-
-UI.prototype.createToolbar = function(params){ var Toolbar = require('./UI/Toolbar'); return Toolbar(params); };
-
-UI.prototype.createView = function(params){ var View = require('./UI/View'); return View(params); };
-
-UI.prototype.createWebView = function(params){ var WebView = require('./UI/WebView'); return WebView(params); };
-
-UI.prototype.createWindow = function(params){ var Window = require('./UI/Window'); return Window(params); };
-
-UI.prototype.fireEvent = function(){};
-
-UI.prototype.getApiName = function(){ return this.apiName; };
-
-UI.prototype.getBackgroundColor = function(){ return this.backgroundColor; };
-
-UI.prototype.getBackgroundImage = function(){ return this.backgroundImage; };
-
-UI.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-UI.prototype.getCurrentTab = function(){ return this.currentTab; };
-
-UI.prototype.getCurrentWindow = function(){ return this.currentWindow; };
-
-UI.prototype.getOrientation = function(){ return this.orientation; };
-
-UI.prototype.removeEventListener = function(){};
-
-UI.prototype.setBackgroundColor = function(property){ this.backgroundColor = property; };
-
-UI.prototype.setBackgroundImage = function(property){ this.backgroundImage = property; };
-
-UI.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-UI.prototype.setCurrentTab = function(property){ this.currentTab = property; };
-
-UI.prototype.setOrientation = function(property){ this.orientation = property; };
-
-module.exports = function(properties){ return new UI(properties); };
+UI.prototype.addEventListener = function () {
+};
+UI.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+UI.prototype.convertUnits = function () {
+	return 0;
+};
+UI.prototype.create2DMatrix = function (params) {
+	var TwoDMatrix = require('./UI/2DMatrix');
+	return TwoDMatrix(params);
+};
+UI.prototype.create3DMatrix = function (params) {
+	var ThreeDMatrix = require('./UI/3DMatrix');
+	return ThreeDMatrix(params);
+};
+UI.prototype.createActivityIndicator = function (params) {
+	var ActivityIndicator = require('./UI/ActivityIndicator');
+	return ActivityIndicator(params);
+};
+UI.prototype.createAlertDialog = function (params) {
+	var AlertDialog = require('./UI/AlertDialog');
+	return AlertDialog(params);
+};
+UI.prototype.createAnimation = function (params) {
+	var Animation = require('./UI/Animation');
+	return Animation(params);
+};
+UI.prototype.createButton = function (params) {
+	var Button = require('./UI/Button');
+	return Button(params);
+};
+UI.prototype.createButtonBar = function (params) {
+	var ButtonBar = require('./UI/ButtonBar');
+	return ButtonBar(params);
+};
+UI.prototype.createCoverFlowView = function (params) {
+	var CoverFlowView = require('./UI/CoverFlowView');
+	return CoverFlowView(params);
+};
+UI.prototype.createDashboardItem = function (params) {
+	var DashboardItem = require('./UI/DashboardItem');
+	return DashboardItem(params);
+};
+UI.prototype.createDashboardView = function (params) {
+	var DashboardView = require('./UI/DashboardView');
+	return DashboardView(params);
+};
+UI.prototype.createEmailDialog = function (params) {
+	var EmailDialog = require('./UI/EmailDialog');
+	return EmailDialog(params);
+};
+UI.prototype.createImageView = function (params) {
+	var ImageView = require('./UI/ImageView');
+	return ImageView(params);
+};
+UI.prototype.createLabel = function (params) {
+	var Label = require('./UI/Label');
+	return Label(params);
+};
+UI.prototype.createListSection = function (params) {
+	var ListSection = require('./UI/ListSection');
+	return ListSection(params);
+};
+UI.prototype.createListView = function (params) {
+	var ListView = require('./UI/ListView');
+	return ListView(params);
+};
+UI.prototype.createMaskedImage = function (params) {
+	var MaskedImage = require('./UI/MaskedImage');
+	return MaskedImage(params);
+};
+UI.prototype.createNotification = function (params) {
+	var Notification = require('./UI/Notification');
+	return Notification(params);
+};
+UI.prototype.createOptionDialog = function (params) {
+	var OptionDialog = require('./UI/OptionDialog');
+	return OptionDialog(params);
+};
+UI.prototype.createPicker = function (params) {
+	var Picker = require('./UI/Picker');
+	return Picker(params);
+};
+UI.prototype.createPickerColumn = function (params) {
+	var PickerColumn = require('./UI/PickerColumn');
+	return PickerColumn(params);
+};
+UI.prototype.createPickerRow = function (params) {
+	var PickerRow = require('./UI/PickerRow');
+	return PickerRow(params);
+};
+UI.prototype.createProgressBar = function (params) {
+	var ProgressBar = require('./UI/ProgressBar');
+	return ProgressBar(params);
+};
+UI.prototype.createRefreshControl = function (params) {
+	var RefreshControl = require('./UI/RefreshControl');
+	return RefreshControl(params);
+};
+UI.prototype.createSMSDialog = function (params) {
+	var SMSDialog = require('./UI/SMSDialog');
+	return SMSDialog(params);
+};
+UI.prototype.createScrollView = function (params) {
+	var ScrollView = require('./UI/ScrollView');
+	return ScrollView(params);
+};
+UI.prototype.createScrollableView = function (params) {
+	var ScrollableView = require('./UI/ScrollableView');
+	return ScrollableView(params);
+};
+UI.prototype.createSearchBar = function (params) {
+	var SearchBar = require('./UI/SearchBar');
+	return SearchBar(params);
+};
+UI.prototype.createSlider = function (params) {
+	var Slider = require('./UI/Slider');
+	return Slider(params);
+};
+UI.prototype.createSwitch = function (params) {
+	var Switch = require('./UI/Switch');
+	return Switch(params);
+};
+UI.prototype.createTab = function (params) {
+	var Tab = require('./UI/Tab');
+	return Tab(params);
+};
+UI.prototype.createTabGroup = function (params) {
+	var TabGroup = require('./UI/TabGroup');
+	return TabGroup(params);
+};
+UI.prototype.createTabbedBar = function (params) {
+	var TabbedBar = require('./UI/TabbedBar');
+	return TabbedBar(params);
+};
+UI.prototype.createTableView = function (params) {
+	var TableView = require('./UI/TableView');
+	return TableView(params);
+};
+UI.prototype.createTableViewRow = function (params) {
+	var TableViewRow = require('./UI/TableViewRow');
+	return TableViewRow(params);
+};
+UI.prototype.createTableViewSection = function (params) {
+	var TableViewSection = require('./UI/TableViewSection');
+	return TableViewSection(params);
+};
+UI.prototype.createTextArea = function (params) {
+	var TextArea = require('./UI/TextArea');
+	return TextArea(params);
+};
+UI.prototype.createTextField = function (params) {
+	var TextField = require('./UI/TextField');
+	return TextField(params);
+};
+UI.prototype.createToolbar = function (params) {
+	var Toolbar = require('./UI/Toolbar');
+	return Toolbar(params);
+};
+UI.prototype.createView = function (params) {
+	var View = require('./UI/View');
+	return View(params);
+};
+UI.prototype.createWebView = function (params) {
+	var WebView = require('./UI/WebView');
+	return WebView(params);
+};
+UI.prototype.createWindow = function (params) {
+	var Window = require('./UI/Window');
+	return Window(params);
+};
+UI.prototype.fireEvent = function () {
+};
+UI.prototype.getApiName = function () {
+	return this.apiName;
+};
+UI.prototype.getBackgroundColor = function () {
+	return this.backgroundColor;
+};
+UI.prototype.getBackgroundImage = function () {
+	return this.backgroundImage;
+};
+UI.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+UI.prototype.getCurrentTab = function () {
+	return this.currentTab;
+};
+UI.prototype.getCurrentWindow = function () {
+	return this.currentWindow;
+};
+UI.prototype.getOrientation = function () {
+	return this.orientation;
+};
+UI.prototype.removeEventListener = function () {
+};
+UI.prototype.setBackgroundColor = function (property) {
+	this.backgroundColor = property;
+};
+UI.prototype.setBackgroundImage = function (property) {
+	this.backgroundImage = property;
+};
+UI.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+UI.prototype.setCurrentTab = function (property) {
+	this.currentTab = property;
+};
+UI.prototype.setOrientation = function (property) {
+	this.orientation = property;
+};
+module.exports = function (properties) {
+	return new UI(properties);
+};

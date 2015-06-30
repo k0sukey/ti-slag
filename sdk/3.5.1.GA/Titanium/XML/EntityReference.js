@@ -1,6 +1,5 @@
 function EntityReference(properties) {
 	properties = properties || {};
-
 	this.ATTRIBUTE_NODE = properties.ATTRIBUTE_NODE || undefined;
 	this.CDATA_SECTION_NODE = properties.CDATA_SECTION_NODE || undefined;
 	this.COMMENT_NODE = properties.COMMENT_NODE || undefined;
@@ -31,78 +30,111 @@ function EntityReference(properties) {
 	this.previousSibling = properties.previousSibling || undefined;
 	this.text = properties.text || undefined;
 	this.textContent = properties.textContent || undefined;
-
 	return this;
 }
-
-EntityReference.prototype.addEventListener = function(){};
-
-EntityReference.prototype.appendChild = function(){ return {}; };
-
-EntityReference.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-EntityReference.prototype.cloneNode = function(){ return {}; };
-
-EntityReference.prototype.fireEvent = function(){};
-
-EntityReference.prototype.getApiName = function(){ return this.apiName; };
-
-EntityReference.prototype.getAttributes = function(){ return this.attributes; };
-
-EntityReference.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-EntityReference.prototype.getChildNodes = function(){ return this.childNodes; };
-
-EntityReference.prototype.getFirstChild = function(){ return this.firstChild; };
-
-EntityReference.prototype.getLastChild = function(){ return this.lastChild; };
-
-EntityReference.prototype.getLocalName = function(){ return this.localName; };
-
-EntityReference.prototype.getNamespaceURI = function(){ return this.namespaceURI; };
-
-EntityReference.prototype.getNextSibling = function(){ return this.nextSibling; };
-
-EntityReference.prototype.getNodeName = function(){ return this.nodeName; };
-
-EntityReference.prototype.getNodeType = function(){ return this.nodeType; };
-
-EntityReference.prototype.getNodeValue = function(){ return this.nodeValue; };
-
-EntityReference.prototype.getOwnerDocument = function(){ return this.ownerDocument; };
-
-EntityReference.prototype.getParentNode = function(){ return this.parentNode; };
-
-EntityReference.prototype.getPrefix = function(){ return this.prefix; };
-
-EntityReference.prototype.getPreviousSibling = function(){ return this.previousSibling; };
-
-EntityReference.prototype.getText = function(){ return this.text; };
-
-EntityReference.prototype.getTextContent = function(){ return this.textContent; };
-
-EntityReference.prototype.hasAttributes = function(){ return true; };
-
-EntityReference.prototype.hasChildNodes = function(){ return true; };
-
-EntityReference.prototype.insertBefore = function(){ return {}; };
-
-EntityReference.prototype.isSupported = function(){ return true; };
-
-EntityReference.prototype.normalize = function(){};
-
-EntityReference.prototype.removeChild = function(){ return {}; };
-
-EntityReference.prototype.removeEventListener = function(){};
-
-EntityReference.prototype.replaceChild = function(){ return {}; };
-
-EntityReference.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-EntityReference.prototype.setLocalName = function(property){ this.localName = property; };
-
-EntityReference.prototype.setNodeValue = function(property){ this.nodeValue = property; };
-
-EntityReference.prototype.setPrefix = function(property){ this.prefix = property; };
-
-module.exports = function(properties){ return new EntityReference(properties); };
+EntityReference.prototype.addEventListener = function () {
+};
+EntityReference.prototype.appendChild = function () {
+	return {};
+};
+EntityReference.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+EntityReference.prototype.cloneNode = function () {
+	return {};
+};
+EntityReference.prototype.fireEvent = function () {
+};
+EntityReference.prototype.getApiName = function () {
+	return this.apiName;
+};
+EntityReference.prototype.getAttributes = function () {
+	return this.attributes;
+};
+EntityReference.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+EntityReference.prototype.getChildNodes = function () {
+	return this.childNodes;
+};
+EntityReference.prototype.getFirstChild = function () {
+	return this.firstChild;
+};
+EntityReference.prototype.getLastChild = function () {
+	return this.lastChild;
+};
+EntityReference.prototype.getLocalName = function () {
+	return this.localName;
+};
+EntityReference.prototype.getNamespaceURI = function () {
+	return this.namespaceURI;
+};
+EntityReference.prototype.getNextSibling = function () {
+	return this.nextSibling;
+};
+EntityReference.prototype.getNodeName = function () {
+	return this.nodeName;
+};
+EntityReference.prototype.getNodeType = function () {
+	return this.nodeType;
+};
+EntityReference.prototype.getNodeValue = function () {
+	return this.nodeValue;
+};
+EntityReference.prototype.getOwnerDocument = function () {
+	return this.ownerDocument;
+};
+EntityReference.prototype.getParentNode = function () {
+	return this.parentNode;
+};
+EntityReference.prototype.getPrefix = function () {
+	return this.prefix;
+};
+EntityReference.prototype.getPreviousSibling = function () {
+	return this.previousSibling;
+};
+EntityReference.prototype.getText = function () {
+	return this.text;
+};
+EntityReference.prototype.getTextContent = function () {
+	return this.textContent;
+};
+EntityReference.prototype.hasAttributes = function () {
+	return true;
+};
+EntityReference.prototype.hasChildNodes = function () {
+	return true;
+};
+EntityReference.prototype.insertBefore = function () {
+	return {};
+};
+EntityReference.prototype.isSupported = function () {
+	return true;
+};
+EntityReference.prototype.normalize = function () {
+};
+EntityReference.prototype.removeChild = function () {
+	return {};
+};
+EntityReference.prototype.removeEventListener = function () {
+};
+EntityReference.prototype.replaceChild = function () {
+	return {};
+};
+EntityReference.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+EntityReference.prototype.setLocalName = function (property) {
+	this.localName = property;
+};
+EntityReference.prototype.setNodeValue = function (property) {
+	this.nodeValue = property;
+};
+EntityReference.prototype.setPrefix = function (property) {
+	this.prefix = property;
+};
+module.exports = function (properties) {
+	return new EntityReference(properties);
+};

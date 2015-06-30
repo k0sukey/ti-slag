@@ -1,6 +1,5 @@
 function ListItem(properties) {
 	properties = properties || {};
-
 	this.accessoryType = properties.accessoryType || undefined;
 	this.apiName = 'Titanium.UI.ListItem';
 	this.backgroundColor = properties.backgroundColor || undefined;
@@ -20,10 +19,11 @@ function ListItem(properties) {
 	this.selectionStyle = properties.selectionStyle || undefined;
 	this.subtitle = properties.subtitle || undefined;
 	this.title = properties.title || undefined;
-
 	return this;
 }
-
-ListItem.prototype.getApiName = function(){ return this.apiName; };
-
-module.exports = function(properties){ return new ListItem(properties); };
+ListItem.prototype.getApiName = function () {
+	return this.apiName;
+};
+module.exports = function (properties) {
+	return new ListItem(properties);
+};

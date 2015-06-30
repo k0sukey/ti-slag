@@ -14,11 +14,7 @@
     "slag": "bin/slag"
   },
   "preferGlobal": true,
-  "author": {
-    "name": "Kosuke Isobe",
-    "email": "isobe@k0suke.be",
-    "url": "https://github.com/k0sukey"
-  },
+  "author": "Kosuke Isobe",
   "homepage": "https://github.com/k0sukey/ti-slag",
   "repository": {
     "type": "git",
@@ -30,7 +26,6 @@
   "scripts": {
     "test": ""
   },
-  "author": "Kosuke Isobe",
   "license": "MIT",
   "dependencies": {
     "chalk": "^1.0.0",
@@ -40,5 +35,9 @@
   },
   "engines": {
     "node": ">=0.10"
+  },
+  "devDependencies": {
+    "acorn": "^2.0.4",
+    "escodegen": "^1.6.1"
   }
 }

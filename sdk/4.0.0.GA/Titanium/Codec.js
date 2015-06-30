@@ -1,6 +1,5 @@
 function Codec(properties) {
 	properties = properties || {};
-
 	this.BIG_ENDIAN = properties.BIG_ENDIAN || undefined;
 	this.CHARSET_ASCII = properties.CHARSET_ASCII || undefined;
 	this.CHARSET_ISO_LATIN_1 = properties.CHARSET_ISO_LATIN_1 || undefined;
@@ -18,36 +17,49 @@ function Codec(properties) {
 	this.apiName = 'Titanium.Codec';
 	this.bubbleParent = properties.bubbleParent || undefined;
 	this.lifecycleContainer = properties.lifecycleContainer || undefined;
-
 	return this;
 }
-
-Codec.prototype.addEventListener = function(){};
-
-Codec.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Codec.prototype.decodeNumber = function(){ return 0; };
-
-Codec.prototype.decodeString = function(){ return ''; };
-
-Codec.prototype.encodeNumber = function(){ return 0; };
-
-Codec.prototype.encodeString = function(){ return 0; };
-
-Codec.prototype.fireEvent = function(){};
-
-Codec.prototype.getApiName = function(){ return this.apiName; };
-
-Codec.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Codec.prototype.getLifecycleContainer = function(){ return this.lifecycleContainer; };
-
-Codec.prototype.getNativeByteOrder = function(){ return 0; };
-
-Codec.prototype.removeEventListener = function(){};
-
-Codec.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Codec.prototype.setLifecycleContainer = function(property){ this.lifecycleContainer = property; };
-
-module.exports = function(properties){ return new Codec(properties); };
+Codec.prototype.addEventListener = function () {
+};
+Codec.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Codec.prototype.decodeNumber = function () {
+	return 0;
+};
+Codec.prototype.decodeString = function () {
+	return '';
+};
+Codec.prototype.encodeNumber = function () {
+	return 0;
+};
+Codec.prototype.encodeString = function () {
+	return 0;
+};
+Codec.prototype.fireEvent = function () {
+};
+Codec.prototype.getApiName = function () {
+	return this.apiName;
+};
+Codec.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Codec.prototype.getLifecycleContainer = function () {
+	return this.lifecycleContainer;
+};
+Codec.prototype.getNativeByteOrder = function () {
+	return 0;
+};
+Codec.prototype.removeEventListener = function () {
+};
+Codec.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Codec.prototype.setLifecycleContainer = function (property) {
+	this.lifecycleContainer = property;
+};
+module.exports = function (properties) {
+	return new Codec(properties);
+};

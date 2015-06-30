@@ -1,6 +1,5 @@
 function iOS(properties) {
 	properties = properties || {};
-
 	this.AD_SIZE_LANDSCAPE = properties.AD_SIZE_LANDSCAPE || undefined;
 	this.AD_SIZE_PORTRAIT = properties.AD_SIZE_PORTRAIT || undefined;
 	this.ANIMATION_CURVE_EASE_IN = properties.ANIMATION_CURVE_EASE_IN || undefined;
@@ -97,56 +96,96 @@ function iOS(properties) {
 	this.WEBVIEW_NAVIGATIONTYPE_RELOAD = properties.WEBVIEW_NAVIGATIONTYPE_RELOAD || undefined;
 	this.apiName = 'Titanium.UI.iOS';
 	this.bubbleParent = properties.bubbleParent || undefined;
-
 	return this;
 }
-
-iOS.prototype.addEventListener = function(){};
-
-iOS.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-iOS.prototype.create3DMatrix = function(params){ var ThreeDMatrix = require('./iOS/3DMatrix'); return ThreeDMatrix(params); };
-
-iOS.prototype.createAdView = function(params){ var AdView = require('./iOS/AdView'); return AdView(params); };
-
-iOS.prototype.createAnchorAttachmentBehavior = function(params){ var AnchorAttachmentBehavior = require('./iOS/AnchorAttachmentBehavior'); return AnchorAttachmentBehavior(params); };
-
-iOS.prototype.createAnimator = function(params){ var Animator = require('./iOS/Animator'); return Animator(params); };
-
-iOS.prototype.createAttributedString = function(params){ var AttributedString = require('./iOS/AttributedString'); return AttributedString(params); };
-
-iOS.prototype.createCollisionBehavior = function(params){ var CollisionBehavior = require('./iOS/CollisionBehavior'); return CollisionBehavior(params); };
-
-iOS.prototype.createCoverFlowView = function(params){ var CoverFlowView = require('./iOS/CoverFlowView'); return CoverFlowView(params); };
-
-iOS.prototype.createDocumentViewer = function(params){ var DocumentViewer = require('./iOS/DocumentViewer'); return DocumentViewer(params); };
-
-iOS.prototype.createDynamicItemBehavior = function(params){ var DynamicItemBehavior = require('./iOS/DynamicItemBehavior'); return DynamicItemBehavior(params); };
-
-iOS.prototype.createGravityBehavior = function(params){ var GravityBehavior = require('./iOS/GravityBehavior'); return GravityBehavior(params); };
-
-iOS.prototype.createNavigationWindow = function(params){ var NavigationWindow = require('./iOS/NavigationWindow'); return NavigationWindow(params); };
-
-iOS.prototype.createPushBehavior = function(params){ var PushBehavior = require('./iOS/PushBehavior'); return PushBehavior(params); };
-
-iOS.prototype.createSnapBehavior = function(params){ var SnapBehavior = require('./iOS/SnapBehavior'); return SnapBehavior(params); };
-
-iOS.prototype.createTabbedBar = function(params){ var TabbedBar = require('./iOS/TabbedBar'); return TabbedBar(params); };
-
-iOS.prototype.createToolbar = function(params){ var Toolbar = require('./iOS/Toolbar'); return Toolbar(params); };
-
-iOS.prototype.createTransitionAnimation = function(params){ var TransitionAnimation = require('./iOS/TransitionAnimation'); return TransitionAnimation(params); };
-
-iOS.prototype.createViewAttachmentBehavior = function(params){ var ViewAttachmentBehavior = require('./iOS/ViewAttachmentBehavior'); return ViewAttachmentBehavior(params); };
-
-iOS.prototype.fireEvent = function(){};
-
-iOS.prototype.getApiName = function(){ return this.apiName; };
-
-iOS.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-iOS.prototype.removeEventListener = function(){};
-
-iOS.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-module.exports = function(properties){ return new iOS(properties); };
+iOS.prototype.addEventListener = function () {
+};
+iOS.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+iOS.prototype.create3DMatrix = function (params) {
+	var ThreeDMatrix = require('./iOS/3DMatrix');
+	return ThreeDMatrix(params);
+};
+iOS.prototype.createAdView = function (params) {
+	var AdView = require('./iOS/AdView');
+	return AdView(params);
+};
+iOS.prototype.createAnchorAttachmentBehavior = function (params) {
+	var AnchorAttachmentBehavior = require('./iOS/AnchorAttachmentBehavior');
+	return AnchorAttachmentBehavior(params);
+};
+iOS.prototype.createAnimator = function (params) {
+	var Animator = require('./iOS/Animator');
+	return Animator(params);
+};
+iOS.prototype.createAttributedString = function (params) {
+	var AttributedString = require('./iOS/AttributedString');
+	return AttributedString(params);
+};
+iOS.prototype.createCollisionBehavior = function (params) {
+	var CollisionBehavior = require('./iOS/CollisionBehavior');
+	return CollisionBehavior(params);
+};
+iOS.prototype.createCoverFlowView = function (params) {
+	var CoverFlowView = require('./iOS/CoverFlowView');
+	return CoverFlowView(params);
+};
+iOS.prototype.createDocumentViewer = function (params) {
+	var DocumentViewer = require('./iOS/DocumentViewer');
+	return DocumentViewer(params);
+};
+iOS.prototype.createDynamicItemBehavior = function (params) {
+	var DynamicItemBehavior = require('./iOS/DynamicItemBehavior');
+	return DynamicItemBehavior(params);
+};
+iOS.prototype.createGravityBehavior = function (params) {
+	var GravityBehavior = require('./iOS/GravityBehavior');
+	return GravityBehavior(params);
+};
+iOS.prototype.createNavigationWindow = function (params) {
+	var NavigationWindow = require('./iOS/NavigationWindow');
+	return NavigationWindow(params);
+};
+iOS.prototype.createPushBehavior = function (params) {
+	var PushBehavior = require('./iOS/PushBehavior');
+	return PushBehavior(params);
+};
+iOS.prototype.createSnapBehavior = function (params) {
+	var SnapBehavior = require('./iOS/SnapBehavior');
+	return SnapBehavior(params);
+};
+iOS.prototype.createTabbedBar = function (params) {
+	var TabbedBar = require('./iOS/TabbedBar');
+	return TabbedBar(params);
+};
+iOS.prototype.createToolbar = function (params) {
+	var Toolbar = require('./iOS/Toolbar');
+	return Toolbar(params);
+};
+iOS.prototype.createTransitionAnimation = function (params) {
+	var TransitionAnimation = require('./iOS/TransitionAnimation');
+	return TransitionAnimation(params);
+};
+iOS.prototype.createViewAttachmentBehavior = function (params) {
+	var ViewAttachmentBehavior = require('./iOS/ViewAttachmentBehavior');
+	return ViewAttachmentBehavior(params);
+};
+iOS.prototype.fireEvent = function () {
+};
+iOS.prototype.getApiName = function () {
+	return this.apiName;
+};
+iOS.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+iOS.prototype.removeEventListener = function () {
+};
+iOS.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+module.exports = function (properties) {
+	return new iOS(properties);
+};

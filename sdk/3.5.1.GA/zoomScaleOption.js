@@ -1,11 +1,8 @@
 function zoomScaleOption(properties) {
 	properties = properties || {};
-
 	this.animated = properties.animated || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new zoomScaleOption(properties); };
+module.exports = function (properties) {
+	return new zoomScaleOption(properties);
+};

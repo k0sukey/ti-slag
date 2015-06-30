@@ -1,6 +1,5 @@
 function LocationCoordinates(properties) {
 	properties = properties || {};
-
 	this.accuracy = properties.accuracy || undefined;
 	this.altitude = properties.altitude || undefined;
 	this.altitudeAccuracy = properties.altitudeAccuracy || undefined;
@@ -9,10 +8,8 @@ function LocationCoordinates(properties) {
 	this.longitude = properties.longitude || undefined;
 	this.speed = properties.speed || undefined;
 	this.timestamp = properties.timestamp || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new LocationCoordinates(properties); };
+module.exports = function (properties) {
+	return new LocationCoordinates(properties);
+};

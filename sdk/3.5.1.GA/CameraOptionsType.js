@@ -1,6 +1,5 @@
 function CameraOptionsType(properties) {
 	properties = properties || {};
-
 	this.allowEditing = properties.allowEditing || undefined;
 	this.animated = properties.animated || undefined;
 	this.arrowDirection = properties.arrowDirection || undefined;
@@ -18,10 +17,8 @@ function CameraOptionsType(properties) {
 	this.transform = properties.transform || undefined;
 	this.videoMaximumDuration = properties.videoMaximumDuration || undefined;
 	this.videoQuality = properties.videoQuality || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new CameraOptionsType(properties); };
+module.exports = function (properties) {
+	return new CameraOptionsType(properties);
+};

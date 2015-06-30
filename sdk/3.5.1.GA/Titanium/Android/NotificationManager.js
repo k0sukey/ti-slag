@@ -1,6 +1,5 @@
 function NotificationManager(properties) {
 	properties = properties || {};
-
 	this.DEFAULT_ALL = properties.DEFAULT_ALL || undefined;
 	this.DEFAULT_LIGHTS = properties.DEFAULT_LIGHTS || undefined;
 	this.DEFAULT_SOUND = properties.DEFAULT_SOUND || undefined;
@@ -14,28 +13,34 @@ function NotificationManager(properties) {
 	this.STREAM_DEFAULT = properties.STREAM_DEFAULT || undefined;
 	this.apiName = 'Titanium.Android.NotificationManager';
 	this.bubbleParent = properties.bubbleParent || undefined;
-
 	return this;
 }
-
-NotificationManager.prototype.addEventListener = function(){};
-
-NotificationManager.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-NotificationManager.prototype.cancel = function(){};
-
-NotificationManager.prototype.cancelAll = function(){};
-
-NotificationManager.prototype.fireEvent = function(){};
-
-NotificationManager.prototype.getApiName = function(){ return this.apiName; };
-
-NotificationManager.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-NotificationManager.prototype.notify = function(){};
-
-NotificationManager.prototype.removeEventListener = function(){};
-
-NotificationManager.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-module.exports = function(properties){ return new NotificationManager(properties); };
+NotificationManager.prototype.addEventListener = function () {
+};
+NotificationManager.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+NotificationManager.prototype.cancel = function () {
+};
+NotificationManager.prototype.cancelAll = function () {
+};
+NotificationManager.prototype.fireEvent = function () {
+};
+NotificationManager.prototype.getApiName = function () {
+	return this.apiName;
+};
+NotificationManager.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+NotificationManager.prototype.notify = function () {
+};
+NotificationManager.prototype.removeEventListener = function () {
+};
+NotificationManager.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+module.exports = function (properties) {
+	return new NotificationManager(properties);
+};

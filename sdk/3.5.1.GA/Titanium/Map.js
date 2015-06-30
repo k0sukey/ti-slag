@@ -1,6 +1,5 @@
 function Map(properties) {
 	properties = properties || {};
-
 	this.ANNOTATION_DRAG_STATE_CANCEL = properties.ANNOTATION_DRAG_STATE_CANCEL || undefined;
 	this.ANNOTATION_DRAG_STATE_DRAG = properties.ANNOTATION_DRAG_STATE_DRAG || undefined;
 	this.ANNOTATION_DRAG_STATE_END = properties.ANNOTATION_DRAG_STATE_END || undefined;
@@ -15,26 +14,36 @@ function Map(properties) {
 	this.TERRAIN_TYPE = properties.TERRAIN_TYPE || undefined;
 	this.apiName = 'Titanium.Map';
 	this.bubbleParent = properties.bubbleParent || undefined;
-
 	return this;
 }
-
-Map.prototype.addEventListener = function(){};
-
-Map.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Map.prototype.createAnnotation = function(params){ var Annotation = require('./Map/Annotation'); return Annotation(params); };
-
-Map.prototype.createView = function(params){ var View = require('./Map/View'); return View(params); };
-
-Map.prototype.fireEvent = function(){};
-
-Map.prototype.getApiName = function(){ return this.apiName; };
-
-Map.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Map.prototype.removeEventListener = function(){};
-
-Map.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-module.exports = function(properties){ return new Map(properties); };
+Map.prototype.addEventListener = function () {
+};
+Map.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Map.prototype.createAnnotation = function (params) {
+	var Annotation = require('./Map/Annotation');
+	return Annotation(params);
+};
+Map.prototype.createView = function (params) {
+	var View = require('./Map/View');
+	return View(params);
+};
+Map.prototype.fireEvent = function () {
+};
+Map.prototype.getApiName = function () {
+	return this.apiName;
+};
+Map.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Map.prototype.removeEventListener = function () {
+};
+Map.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+module.exports = function (properties) {
+	return new Map(properties);
+};

@@ -1,6 +1,5 @@
 function openWindowParams(properties) {
 	properties = properties || {};
-
 	this.activityEnterAnimation = properties.activityEnterAnimation || undefined;
 	this.activityExitAnimation = properties.activityExitAnimation || undefined;
 	this.animated = properties.animated || undefined;
@@ -16,10 +15,8 @@ function openWindowParams(properties) {
 	this.top = properties.top || undefined;
 	this.transition = properties.transition || undefined;
 	this.width = properties.width || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new openWindowParams(properties); };
+module.exports = function (properties) {
+	return new openWindowParams(properties);
+};

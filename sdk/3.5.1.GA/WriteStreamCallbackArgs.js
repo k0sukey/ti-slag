@@ -1,6 +1,5 @@
 function WriteStreamCallbackArgs(properties) {
 	properties = properties || {};
-
 	this.bytesProcessed = properties.bytesProcessed || undefined;
 	this.code = properties.code || undefined;
 	this.error = properties.error || undefined;
@@ -9,10 +8,8 @@ function WriteStreamCallbackArgs(properties) {
 	this.fromStream = properties.fromStream || undefined;
 	this.success = properties.success || undefined;
 	this.toStream = properties.toStream || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new WriteStreamCallbackArgs(properties); };
+module.exports = function (properties) {
+	return new WriteStreamCallbackArgs(properties);
+};

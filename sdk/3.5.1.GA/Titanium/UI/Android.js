@@ -1,6 +1,5 @@
 function Android(properties) {
 	properties = properties || {};
-
 	this.LINKIFY_ALL = properties.LINKIFY_ALL || undefined;
 	this.LINKIFY_EMAIL_ADDRESSES = properties.LINKIFY_EMAIL_ADDRESSES || undefined;
 	this.LINKIFY_MAP_ADDRESSES = properties.LINKIFY_MAP_ADDRESSES || undefined;
@@ -49,30 +48,40 @@ function Android(properties) {
 	this.WEBVIEW_PLUGINS_ON_DEMAND = properties.WEBVIEW_PLUGINS_ON_DEMAND || undefined;
 	this.apiName = 'Titanium.UI.Android';
 	this.bubbleParent = properties.bubbleParent || undefined;
-
 	return this;
 }
-
-Android.prototype.addEventListener = function(){};
-
-Android.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Android.prototype.createProgressIndicator = function(params){ var ProgressIndicator = require('./Android/ProgressIndicator'); return ProgressIndicator(params); };
-
-Android.prototype.createSearchView = function(params){ var SearchView = require('./Android/SearchView'); return SearchView(params); };
-
-Android.prototype.fireEvent = function(){};
-
-Android.prototype.getApiName = function(){ return this.apiName; };
-
-Android.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Android.prototype.hideSoftKeyboard = function(){};
-
-Android.prototype.openPreferences = function(){};
-
-Android.prototype.removeEventListener = function(){};
-
-Android.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-module.exports = function(properties){ return new Android(properties); };
+Android.prototype.addEventListener = function () {
+};
+Android.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Android.prototype.createProgressIndicator = function (params) {
+	var ProgressIndicator = require('./Android/ProgressIndicator');
+	return ProgressIndicator(params);
+};
+Android.prototype.createSearchView = function (params) {
+	var SearchView = require('./Android/SearchView');
+	return SearchView(params);
+};
+Android.prototype.fireEvent = function () {
+};
+Android.prototype.getApiName = function () {
+	return this.apiName;
+};
+Android.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Android.prototype.hideSoftKeyboard = function () {
+};
+Android.prototype.openPreferences = function () {
+};
+Android.prototype.removeEventListener = function () {
+};
+Android.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+module.exports = function (properties) {
+	return new Android(properties);
+};

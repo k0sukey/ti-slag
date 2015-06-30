@@ -1,6 +1,5 @@
 function ForwardGeocodeResponse(properties) {
 	properties = properties || {};
-
 	this.accuracy = properties.accuracy || undefined;
 	this.address = properties.address || undefined;
 	this.city = properties.city || undefined;
@@ -18,10 +17,8 @@ function ForwardGeocodeResponse(properties) {
 	this.street = properties.street || undefined;
 	this.street1 = properties.street1 || undefined;
 	this.success = properties.success || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new ForwardGeocodeResponse(properties); };
+module.exports = function (properties) {
+	return new ForwardGeocodeResponse(properties);
+};

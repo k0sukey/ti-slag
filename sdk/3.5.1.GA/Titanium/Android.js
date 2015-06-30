@@ -1,6 +1,5 @@
 function Android(properties) {
 	properties = properties || {};
-
 	this.ACTION_AIRPLANE_MODE_CHANGED = properties.ACTION_AIRPLANE_MODE_CHANGED || undefined;
 	this.ACTION_ALL_APPS = properties.ACTION_ALL_APPS || undefined;
 	this.ACTION_ANSWER = properties.ACTION_ANSWER || undefined;
@@ -194,54 +193,81 @@ function Android(properties) {
 	this.bubbleParent = properties.bubbleParent || undefined;
 	this.currentActivity = properties.currentActivity || undefined;
 	this.currentService = properties.currentService || undefined;
-
 	return this;
 }
-
-Android.prototype.addEventListener = function(){};
-
-Android.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Android.prototype.createBroadcastIntent = function(params){ var BroadcastIntent = require('./Android/BroadcastIntent'); return BroadcastIntent(params); };
-
-Android.prototype.createBroadcastReceiver = function(params){ var BroadcastReceiver = require('./Android/BroadcastReceiver'); return BroadcastReceiver(params); };
-
-Android.prototype.createIntent = function(params){ var Intent = require('./Android/Intent'); return Intent(params); };
-
-Android.prototype.createIntentChooser = function(params){ var IntentChooser = require('./Android/IntentChooser'); return IntentChooser(params); };
-
-Android.prototype.createNotification = function(params){ var Notification = require('./Android/Notification'); return Notification(params); };
-
-Android.prototype.createPendingIntent = function(params){ var PendingIntent = require('./Android/PendingIntent'); return PendingIntent(params); };
-
-Android.prototype.createRemoteViews = function(params){ var RemoteViews = require('./Android/RemoteViews'); return RemoteViews(params); };
-
-Android.prototype.createService = function(params){ var Service = require('./Android/Service'); return Service(params); };
-
-Android.prototype.createServiceIntent = function(params){ var ServiceIntent = require('./Android/ServiceIntent'); return ServiceIntent(params); };
-
-Android.prototype.fireEvent = function(){};
-
-Android.prototype.getApiName = function(){ return this.apiName; };
-
-Android.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Android.prototype.getCurrentActivity = function(){ return this.currentActivity; };
-
-Android.prototype.getCurrentService = function(){ return this.currentService; };
-
-Android.prototype.isServiceRunning = function(){ return true; };
-
-Android.prototype.registerBroadcastReceiver = function(){};
-
-Android.prototype.removeEventListener = function(){};
-
-Android.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Android.prototype.startService = function(){};
-
-Android.prototype.stopService = function(){};
-
-Android.prototype.unregisterBroadcastReceiver = function(){};
-
-module.exports = function(properties){ return new Android(properties); };
+Android.prototype.addEventListener = function () {
+};
+Android.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Android.prototype.createBroadcastIntent = function (params) {
+	var BroadcastIntent = require('./Android/BroadcastIntent');
+	return BroadcastIntent(params);
+};
+Android.prototype.createBroadcastReceiver = function (params) {
+	var BroadcastReceiver = require('./Android/BroadcastReceiver');
+	return BroadcastReceiver(params);
+};
+Android.prototype.createIntent = function (params) {
+	var Intent = require('./Android/Intent');
+	return Intent(params);
+};
+Android.prototype.createIntentChooser = function (params) {
+	var IntentChooser = require('./Android/IntentChooser');
+	return IntentChooser(params);
+};
+Android.prototype.createNotification = function (params) {
+	var Notification = require('./Android/Notification');
+	return Notification(params);
+};
+Android.prototype.createPendingIntent = function (params) {
+	var PendingIntent = require('./Android/PendingIntent');
+	return PendingIntent(params);
+};
+Android.prototype.createRemoteViews = function (params) {
+	var RemoteViews = require('./Android/RemoteViews');
+	return RemoteViews(params);
+};
+Android.prototype.createService = function (params) {
+	var Service = require('./Android/Service');
+	return Service(params);
+};
+Android.prototype.createServiceIntent = function (params) {
+	var ServiceIntent = require('./Android/ServiceIntent');
+	return ServiceIntent(params);
+};
+Android.prototype.fireEvent = function () {
+};
+Android.prototype.getApiName = function () {
+	return this.apiName;
+};
+Android.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Android.prototype.getCurrentActivity = function () {
+	return this.currentActivity;
+};
+Android.prototype.getCurrentService = function () {
+	return this.currentService;
+};
+Android.prototype.isServiceRunning = function () {
+	return true;
+};
+Android.prototype.registerBroadcastReceiver = function () {
+};
+Android.prototype.removeEventListener = function () {
+};
+Android.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Android.prototype.startService = function () {
+};
+Android.prototype.stopService = function () {
+};
+Android.prototype.unregisterBroadcastReceiver = function () {
+};
+module.exports = function (properties) {
+	return new Android(properties);
+};

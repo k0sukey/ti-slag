@@ -1,6 +1,5 @@
 function Android(properties) {
 	properties = properties || {};
-
 	this.LINKIFY_ALL = properties.LINKIFY_ALL || undefined;
 	this.LINKIFY_EMAIL_ADDRESSES = properties.LINKIFY_EMAIL_ADDRESSES || undefined;
 	this.LINKIFY_MAP_ADDRESSES = properties.LINKIFY_MAP_ADDRESSES || undefined;
@@ -51,34 +50,46 @@ function Android(properties) {
 	this.apiName = 'Titanium.UI.Android';
 	this.bubbleParent = properties.bubbleParent || undefined;
 	this.lifecycleContainer = properties.lifecycleContainer || undefined;
-
 	return this;
 }
-
-Android.prototype.addEventListener = function(){};
-
-Android.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-Android.prototype.createProgressIndicator = function(params){ var ProgressIndicator = require('./Android/ProgressIndicator'); return ProgressIndicator(params); };
-
-Android.prototype.createSearchView = function(params){ var SearchView = require('./Android/SearchView'); return SearchView(params); };
-
-Android.prototype.fireEvent = function(){};
-
-Android.prototype.getApiName = function(){ return this.apiName; };
-
-Android.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-Android.prototype.getLifecycleContainer = function(){ return this.lifecycleContainer; };
-
-Android.prototype.hideSoftKeyboard = function(){};
-
-Android.prototype.openPreferences = function(){};
-
-Android.prototype.removeEventListener = function(){};
-
-Android.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-Android.prototype.setLifecycleContainer = function(property){ this.lifecycleContainer = property; };
-
-module.exports = function(properties){ return new Android(properties); };
+Android.prototype.addEventListener = function () {
+};
+Android.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+Android.prototype.createProgressIndicator = function (params) {
+	var ProgressIndicator = require('./Android/ProgressIndicator');
+	return ProgressIndicator(params);
+};
+Android.prototype.createSearchView = function (params) {
+	var SearchView = require('./Android/SearchView');
+	return SearchView(params);
+};
+Android.prototype.fireEvent = function () {
+};
+Android.prototype.getApiName = function () {
+	return this.apiName;
+};
+Android.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+Android.prototype.getLifecycleContainer = function () {
+	return this.lifecycleContainer;
+};
+Android.prototype.hideSoftKeyboard = function () {
+};
+Android.prototype.openPreferences = function () {
+};
+Android.prototype.removeEventListener = function () {
+};
+Android.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+Android.prototype.setLifecycleContainer = function (property) {
+	this.lifecycleContainer = property;
+};
+module.exports = function (properties) {
+	return new Android(properties);
+};

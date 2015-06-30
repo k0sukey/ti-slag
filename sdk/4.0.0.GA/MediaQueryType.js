@@ -1,6 +1,5 @@
 function MediaQueryType(properties) {
 	properties = properties || {};
-
 	this.albumArtist = properties.albumArtist || undefined;
 	this.albumTitle = properties.albumTitle || undefined;
 	this.artist = properties.artist || undefined;
@@ -10,10 +9,8 @@ function MediaQueryType(properties) {
 	this.isCompilation = properties.isCompilation || undefined;
 	this.mediaType = properties.mediaType || undefined;
 	this.title = properties.title || undefined;
-
 	return this;
 }
-
-
-
-module.exports = function(properties){ return new MediaQueryType(properties); };
+module.exports = function (properties) {
+	return new MediaQueryType(properties);
+};

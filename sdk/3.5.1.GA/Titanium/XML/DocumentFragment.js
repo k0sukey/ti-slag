@@ -1,6 +1,5 @@
 function DocumentFragment(properties) {
 	properties = properties || {};
-
 	this.ATTRIBUTE_NODE = properties.ATTRIBUTE_NODE || undefined;
 	this.CDATA_SECTION_NODE = properties.CDATA_SECTION_NODE || undefined;
 	this.COMMENT_NODE = properties.COMMENT_NODE || undefined;
@@ -31,78 +30,111 @@ function DocumentFragment(properties) {
 	this.previousSibling = properties.previousSibling || undefined;
 	this.text = properties.text || undefined;
 	this.textContent = properties.textContent || undefined;
-
 	return this;
 }
-
-DocumentFragment.prototype.addEventListener = function(){};
-
-DocumentFragment.prototype.appendChild = function(){ return {}; };
-
-DocumentFragment.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };
-
-DocumentFragment.prototype.cloneNode = function(){ return {}; };
-
-DocumentFragment.prototype.fireEvent = function(){};
-
-DocumentFragment.prototype.getApiName = function(){ return this.apiName; };
-
-DocumentFragment.prototype.getAttributes = function(){ return this.attributes; };
-
-DocumentFragment.prototype.getBubbleParent = function(){ return this.bubbleParent; };
-
-DocumentFragment.prototype.getChildNodes = function(){ return this.childNodes; };
-
-DocumentFragment.prototype.getFirstChild = function(){ return this.firstChild; };
-
-DocumentFragment.prototype.getLastChild = function(){ return this.lastChild; };
-
-DocumentFragment.prototype.getLocalName = function(){ return this.localName; };
-
-DocumentFragment.prototype.getNamespaceURI = function(){ return this.namespaceURI; };
-
-DocumentFragment.prototype.getNextSibling = function(){ return this.nextSibling; };
-
-DocumentFragment.prototype.getNodeName = function(){ return this.nodeName; };
-
-DocumentFragment.prototype.getNodeType = function(){ return this.nodeType; };
-
-DocumentFragment.prototype.getNodeValue = function(){ return this.nodeValue; };
-
-DocumentFragment.prototype.getOwnerDocument = function(){ return this.ownerDocument; };
-
-DocumentFragment.prototype.getParentNode = function(){ return this.parentNode; };
-
-DocumentFragment.prototype.getPrefix = function(){ return this.prefix; };
-
-DocumentFragment.prototype.getPreviousSibling = function(){ return this.previousSibling; };
-
-DocumentFragment.prototype.getText = function(){ return this.text; };
-
-DocumentFragment.prototype.getTextContent = function(){ return this.textContent; };
-
-DocumentFragment.prototype.hasAttributes = function(){ return true; };
-
-DocumentFragment.prototype.hasChildNodes = function(){ return true; };
-
-DocumentFragment.prototype.insertBefore = function(){ return {}; };
-
-DocumentFragment.prototype.isSupported = function(){ return true; };
-
-DocumentFragment.prototype.normalize = function(){};
-
-DocumentFragment.prototype.removeChild = function(){ return {}; };
-
-DocumentFragment.prototype.removeEventListener = function(){};
-
-DocumentFragment.prototype.replaceChild = function(){ return {}; };
-
-DocumentFragment.prototype.setBubbleParent = function(property){ this.bubbleParent = property; };
-
-DocumentFragment.prototype.setLocalName = function(property){ this.localName = property; };
-
-DocumentFragment.prototype.setNodeValue = function(property){ this.nodeValue = property; };
-
-DocumentFragment.prototype.setPrefix = function(property){ this.prefix = property; };
-
-module.exports = function(properties){ return new DocumentFragment(properties); };
+DocumentFragment.prototype.addEventListener = function () {
+};
+DocumentFragment.prototype.appendChild = function () {
+	return {};
+};
+DocumentFragment.prototype.applyProperties = function (params) {
+	for (var key in params) {
+		this[key] = params[key];
+	}
+};
+DocumentFragment.prototype.cloneNode = function () {
+	return {};
+};
+DocumentFragment.prototype.fireEvent = function () {
+};
+DocumentFragment.prototype.getApiName = function () {
+	return this.apiName;
+};
+DocumentFragment.prototype.getAttributes = function () {
+	return this.attributes;
+};
+DocumentFragment.prototype.getBubbleParent = function () {
+	return this.bubbleParent;
+};
+DocumentFragment.prototype.getChildNodes = function () {
+	return this.childNodes;
+};
+DocumentFragment.prototype.getFirstChild = function () {
+	return this.firstChild;
+};
+DocumentFragment.prototype.getLastChild = function () {
+	return this.lastChild;
+};
+DocumentFragment.prototype.getLocalName = function () {
+	return this.localName;
+};
+DocumentFragment.prototype.getNamespaceURI = function () {
+	return this.namespaceURI;
+};
+DocumentFragment.prototype.getNextSibling = function () {
+	return this.nextSibling;
+};
+DocumentFragment.prototype.getNodeName = function () {
+	return this.nodeName;
+};
+DocumentFragment.prototype.getNodeType = function () {
+	return this.nodeType;
+};
+DocumentFragment.prototype.getNodeValue = function () {
+	return this.nodeValue;
+};
+DocumentFragment.prototype.getOwnerDocument = function () {
+	return this.ownerDocument;
+};
+DocumentFragment.prototype.getParentNode = function () {
+	return this.parentNode;
+};
+DocumentFragment.prototype.getPrefix = function () {
+	return this.prefix;
+};
+DocumentFragment.prototype.getPreviousSibling = function () {
+	return this.previousSibling;
+};
+DocumentFragment.prototype.getText = function () {
+	return this.text;
+};
+DocumentFragment.prototype.getTextContent = function () {
+	return this.textContent;
+};
+DocumentFragment.prototype.hasAttributes = function () {
+	return true;
+};
+DocumentFragment.prototype.hasChildNodes = function () {
+	return true;
+};
+DocumentFragment.prototype.insertBefore = function () {
+	return {};
+};
+DocumentFragment.prototype.isSupported = function () {
+	return true;
+};
+DocumentFragment.prototype.normalize = function () {
+};
+DocumentFragment.prototype.removeChild = function () {
+	return {};
+};
+DocumentFragment.prototype.removeEventListener = function () {
+};
+DocumentFragment.prototype.replaceChild = function () {
+	return {};
+};
+DocumentFragment.prototype.setBubbleParent = function (property) {
+	this.bubbleParent = property;
+};
+DocumentFragment.prototype.setLocalName = function (property) {
+	this.localName = property;
+};
+DocumentFragment.prototype.setNodeValue = function (property) {
+	this.nodeValue = property;
+};
+DocumentFragment.prototype.setPrefix = function (property) {
+	this.prefix = property;
+};
+module.exports = function (properties) {
+	return new DocumentFragment(properties);
+};
