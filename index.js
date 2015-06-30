@@ -23,10 +23,8 @@ module.exports = function(file, sdk, platform){
 
 	var titanium = require(sdkpath),
 		Titanium = titanium(path.join(__dirname, 'sdk', sdk), {
-			flags: {
-				sdk: sdk,
-				platform: platform
-			}
+			version: sdk.replace(/\.GA$/, ''),
+			platform: platform
 		});
 
 	function createContext() {
