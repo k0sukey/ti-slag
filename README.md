@@ -15,7 +15,7 @@ Titanium faker API, Titanium App running on Node.js.
 * Full support of Alloy
 * Full support of native module
 * gulp plugin
-* Test
+* ~~Test~~
 
 ## CLI
 
