@@ -18,7 +18,7 @@ Titanium faker API, Titanium App running on Node.js.
 ### Tasks
 
 * Full support of Alloy
-* Full support of native module
+* ~~Full support of native module~~
 * gulp plugin
 * ~~Test~~
 
@@ -57,7 +57,7 @@ slag(path.join(__dirname, 'Resources', 'app.js'), '4.0.0.GA', 'ios');
 
 ### API
 
-#### object ```<vm.context>``` slag(string ```<file path>```, string ```<SDK version>```, string ```<platfrom>```)
+#### object ```<vm.context>``` slag(string ```<file path>```, string ```<SDK version>```, string ```<platfrom>```, object ```<modules>```)
 
 ##### file path
 
@@ -71,6 +71,31 @@ path/to/example.js
 ##### platform
 
 ios or android.
+
+##### modules
+
+Native module simulate.
+
+###### Titanium code
+
+```js
+var anymodule = require('be.k0suke.anymodule'),
+	anything = anymodule.createAnything();
+
+anything.anyMethod();
+```
+
+###### ti-slag code
+```js
+slag('path/to/app.js', '4.0.0.GA', 'ios', {
+	'be.k0suke.anymodule': {
+		createAnything: function(){
+			return this;
+		},
+		anyMethod: function(){}
+	}
+});
+```
 
 ## Generate the faker API
 
