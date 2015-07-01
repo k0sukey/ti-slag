@@ -37,9 +37,7 @@ module.exports = function(file, sdk, platform, modules){
 		var context = vm.createContext({
 			Titanium: Titanium,
 			Ti: Titanium,
-			L: function(params){
-				return params;
-			},
+			L: function(params){ return params; },
 			String: _.extend(String, {
 				format: function(params){ return params; },
 				formatCurrency: function(params){ return params; },
@@ -49,9 +47,7 @@ module.exports = function(file, sdk, platform, modules){
 			}),
 			JSON: JSON,
 			console: console,
-			alert: function(params){
-				console.log(params);
-			},
+			alert: function(params){ console.log(params); },
 			exports: {},
 			module: module,
 			require: function(original){
