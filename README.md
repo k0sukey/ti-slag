@@ -2,6 +2,8 @@
 
 Titanium faker API, Titanium App running on Node.js.
 
+[![Build Status](https://travis-ci.org/k0sukey/ti-slag.svg?branch=master)](https://travis-ci.org/k0sukey/ti-slag)
+
 **WORKING IN PROGRESS** If vm crash, Please feedback with the code you run :smile:
 
 ## Why
