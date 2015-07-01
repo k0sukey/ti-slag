@@ -28,6 +28,14 @@
     "coverage": "nyc npm test && nyc report",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
+  "config": {
+    "nyc": {
+      "exclude": [
+        "node_modules/",
+        "sdk/"
+      ]
+    }
+  },
   "license": "MIT",
   "dependencies": {
     "chalk": "^1.0.0",
