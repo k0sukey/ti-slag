@@ -24,7 +24,9 @@
     "url": "https://github.com/k0sukey/ti-slag/issues"
   },
   "scripts": {
-    "test": ""
+    "test": "mocha test.js",
+    "coverage": "nyc npm test && nyc report",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "license": "MIT",
   "dependencies": {
@@ -38,6 +40,9 @@
   },
   "devDependencies": {
     "acorn": "^2.0.4",
-    "escodegen": "^1.6.1"
+    "coveralls": "^2.11.2",
+    "escodegen": "^1.6.1",
+    "mocha": "^2.2.5",
+    "nyc": "^3.0.0"
   }
 }

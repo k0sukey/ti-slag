@@ -3,7 +3,7 @@ var _ = require('lodash'),
 	path = require('path'),
 	vm = require('vm');
 
-module.exports = function(file, sdk, platform){
+module.exports = function(file, sdk, platform, modules){
 	var sdkpath = path.join(__dirname, 'lib', sdk + '.js');
 
 	if (!fs.existsSync(file)) {
@@ -19,6 +19,12 @@ module.exports = function(file, sdk, platform){
 		throw new Error('Invalid platform specified ' + platform);
 	} else if (platform === 'ios') {
 		platform = 'iphone';
+	}
+
+	modules = modules || {};
+
+	if (Object.prototype.toString.apply(modules).slice(8, -1) !== 'Object') {
+		throw new Error('Invalid modules specified ' + JSON.stringify(modules));
 	}
 
 	var titanium = require(sdkpath),
@@ -56,6 +62,8 @@ module.exports = function(file, sdk, platform){
 					vm.runInContext(fs.readFileSync(source, 'utf8'), context);
 
 					return _.isEmpty(context.exports) ? context.module.exports : context.exports;
+				} else if (_.has(modules, original)) {
+					return modules[original];
 				} else {
 					throw new Error('Unknown module detect ' + original);
 				}
