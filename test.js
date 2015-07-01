@@ -43,6 +43,43 @@ describe('slag', function(){
 		});
 	});
 
+	it('should simulate L', function(){
+		var context = slag(appjs, '4.0.0.GA', 'ios');
+		assert.equal('Hello, world.', context.L('Hello, world.'));
+	});
+
+	it('should simulate String.format', function(){
+		var context = slag(appjs, '4.0.0.GA', 'ios');
+		assert.equal('Hello, world.', context.String.format('Hello, world.'));
+	});
+
+	it('should simulate String.formatCurrency', function(){
+		var context = slag(appjs, '4.0.0.GA', 'ios');
+		assert.equal('Hello, world.', context.String.formatCurrency('Hello, world.'));
+	});
+
+	it('should simulate String.formatDate', function(){
+		var context = slag(appjs, '4.0.0.GA', 'ios');
+		assert.equal('Hello, world.', context.String.formatDate('Hello, world.'));
+	});
+
+	it('should simulate String.formatDecimal', function(){
+		var context = slag(appjs, '4.0.0.GA', 'ios');
+		assert.equal('Hello, world.', context.String.formatDecimal('Hello, world.'));
+	});
+
+	it('should simulate String.formatTime', function(){
+		var context = slag(appjs, '4.0.0.GA', 'ios');
+		assert.equal('Hello, world.', context.String.formatTime('Hello, world.'));
+	});
+
+	it('should simulate alert', function(){
+		var context = slag(appjs, '4.0.0.GA', 'ios');
+		assert.doesNotThrow(function(){
+			context.alert('Hello, world.');
+		}, Error);
+	});
+
 	it('should throw exception invalid file path', function(){
 		assert.throws(function(){
 			slag('file_does_not_exist.js', '4.0.0.GA', 'ios');
@@ -64,6 +101,12 @@ describe('slag', function(){
 	it('should throw exception invalid modules specified', function(){
 		assert.throws(function(){
 			slag(modjs, '4.0.0.GA', 'ios', []);
+		}, Error);
+	});
+
+	it('should throw exception unknown module detect', function(){
+		assert.throws(function(){
+			slag(modjs, '4.0.0.GA', 'ios', {});
 		}, Error);
 	});
 });
