@@ -4,5 +4,7 @@ npm-debug.log
 node_modules
 coverage
 .nyc_output
-api_3.5.1.GA.json
-api_4.0.0.GA.json
+Titanium_3.5.1.GA.json
+Titanium_4.0.0.GA.json
+Alloy_1.5.1.json
+Alloy_1.6.2.json

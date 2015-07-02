@@ -4,8 +4,8 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./api_4.0.0.GA.json'),
-	root = path.join(__dirname, 'sdk', '4.0.0.GA');
+var apis = require('./Alloy_1.5.1.json'),
+	root = path.join(__dirname, 'lib', 'alloy', '1.5.1');
 
 _.each(apis, function(api, namespace){
 	var code = '',
@@ -43,7 +43,7 @@ _.each(apis, function(api, namespace){
 	code += '\n\treturn this;\n}\n\n';
 
 	var methods = [];
-	_.each(api.methods, function(item){
+	_.each(api.method, function(item){
 		if (item.name === 'applyProperties') {
 			methods.push(apiname + '.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };');
 			return;

@@ -18,6 +18,24 @@ describe('slag', function(){
 		});
 	});
 
+	it('should support Alloy version 1.6.2', function(){
+		assert.doesNotThrow(function(){
+			slag(appjs, {
+				titanium: '4.0.0.GA',
+				alloy: '1.6.2'
+			}, 'ios');
+		});
+	});
+
+	it('should support Alloy version 1.5.1', function(){
+		assert.doesNotThrow(function(){
+			slag(appjs, {
+				titanium: '3.5.1.GA',
+				alloy: '1.5.1'
+			}, 'ios');
+		});
+	});
+
 	it('should support platform iOS', function(){
 		assert.doesNotThrow(function(){
 			slag(appjs, '4.0.0.GA', 'ios');
@@ -89,6 +107,15 @@ describe('slag', function(){
 	it('should throw exception invalid Titanium SDK version', function(){
 		assert.throws(function(){
 			slag(appjs, '0.0.0.GA', 'ios');
+		}, Error);
+	});
+
+	it('should throw exception invalid Alloy version', function(){
+		assert.throws(function(){
+			slag(appjs, {
+				titanium: '4.0.0.GA',
+				alloy: '0.0.0',
+			}, 'ios');
 		}, Error);
 	});
 
