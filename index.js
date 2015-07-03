@@ -98,6 +98,8 @@ module.exports = function(file, version, platform, modules){
 				formatTime: function(params){ return params; }
 			}),
 			JSON: JSON,
+			setInterval: setInterval,
+			setTimeout: setTimeout,
 			console: console,
 			alert: function(params){ console.log(params); },
 			exports: {},
