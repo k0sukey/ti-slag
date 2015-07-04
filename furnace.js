@@ -1,11 +1,16 @@
 var _ = require('lodash'),
 	acorn = require('acorn'),
+	backbone = require('backbone'),
 	escodegen = require('escodegen'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Alloy_1.5.1.json'),
-	root = path.join(__dirname, 'lib', 'alloy', '1.5.1');
+/* var apis = require('./Titanium_4.0.0.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '4.0.0.GA'),
+	isAlloy = false; */
+var apis = require('./Alloy_1.6.2.json'),
+	root = path.join(__dirname, 'lib', 'alloy', '1.6.2'),
+	isAlloy = true;
 
 _.each(apis, function(api, namespace){
 	var code = '',
@@ -29,20 +34,61 @@ _.each(apis, function(api, namespace){
 
 	var properties = [];
 	_.each(api.properties, function(item){
-		properties.push(item.name);
+		if (item.deprecated) {
+			properties.push('\tif(properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); }');
+		} else if (item.name === 'apiName') {
+			properties.push('\tthis.' + item.name + ' = \'' + namespace.replace(/^Titanium/, 'Ti') + '\';'); 
+		} else {
+			properties.push('\tthis.' + item.name + ' = properties.' + item.name + ' || undefined;');
+		}
 	});
 
 	code += 'function ' + apiname + '(properties) {\n\tproperties = properties || {};\n\n';
-	_.each(properties, function(item){
-		if (item === 'apiName') {
-			code += '\tthis.' + item + ' = \'' + namespace + '\';\n'; 
-		} else {
-			code += '\tthis.' + item + ' = properties.' + item + ' || undefined;\n'; 
-		}
-	});
+	code += properties.join('\n');
 	code += '\n\treturn this;\n}\n\n';
 
+	if (isAlloy) {
+		if (apiname === 'Controller' || apiname === 'Widget') {
+			_.each(_.keys(backbone.Events), function(event){
+				api.method.push({
+					name: event,
+					returns: {
+						type: 'void'
+					},
+					description: '',
+					parameters: [],
+					filename: ''
+				});
+			});
+		} else if (apiname === 'Collections') {
+			_.each(_.keys(backbone.Collection.prototype), function(event){
+				api.method.push({
+					name: event,
+					returns: {
+						type: 'void'
+					},
+					description: '',
+					parameters: [],
+					filename: ''
+				});
+			});
+		} else if (apiname === 'Models') {
+			_.each(_.keys(backbone.Model.prototype), function(event){
+				api.method.push({
+					name: event,
+					returns: {
+						type: 'void'
+					},
+					description: '',
+					parameters: [],
+					filename: ''
+				});
+			});
+		}
+	}
+
 	var methods = [];
+//	_.each(api.methods, function(item){
 	_.each(api.method, function(item){
 		if (item.name === 'applyProperties') {
 			methods.push(apiname + '.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };');
@@ -59,7 +105,17 @@ _.each(apis, function(api, namespace){
 				childFile = 'ThreeDMatrix';
 			}
 
-			methods.push(apiname + '.prototype.' + item.name + ' = function(params){ var ' + childFile + ' = require(\'./' + childPath + '\'); return ' + childFile + '(params); };');
+			if (item.deprecated) {
+				methods.push(apiname + '.prototype.' + item.name + ' = function(){ throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); };');
+			} else {
+				methods.push(apiname + '.prototype.' + item.name + ' = function(params){ var ' + childFile + ' = require(\'./' + childPath + '\'); return ' + childFile + '(params); };');
+			}
+
+			return;
+		}
+
+		if (item.deprecated) {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(){ throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); };');
 			return;
 		}
 
