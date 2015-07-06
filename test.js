@@ -60,6 +60,7 @@ describe('slag', function(){
 					}
 				}
 			});
+			context.Controller();
 		});
 	});
 
@@ -78,6 +79,7 @@ describe('slag', function(){
 				},
 				backbone: '0.9.2'
 			});
+			context.Controller();
 		});
 	});
 
@@ -96,6 +98,7 @@ describe('slag', function(){
 				},
 				backbone: '1.1.2'
 			});
+			context.Controller();
 		});
 	});
 

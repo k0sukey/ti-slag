@@ -1,6 +1,6 @@
 var _ = require('lodash'),
 	acorn = require('acorn'),
-	backbone = require('backbone'),
+	backbone = require('./lib/vendor/backbone-0.9.2'),
 	escodegen = require('escodegen'),
 	fs = require('fs'),
 	path = require('path');
@@ -111,6 +111,11 @@ _.each(apis, function(api, namespace){
 				methods.push(apiname + '.prototype.' + item.name + ' = function(params){ var ' + childFile + ' = require(\'./' + childPath + '\'); return ' + childFile + '(params); };');
 			}
 
+			return;
+		}
+
+		if (isAlloy && namespace === 'Alloy.Controller' && item.name === 'getView') {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(params){ return require(\'../TiProxy\'); };');
 			return;
 		}
 

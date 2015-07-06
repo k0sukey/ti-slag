@@ -32,7 +32,9 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
-    var controller = Alloy.createController('foo');
+    var controller = Alloy.createController('foo'),
+        proxy = controller.getView();
+    proxy.open();
     controller.on('dummy', function(){});
     controller.trigger('dummy');
     _.extend($, exports);
