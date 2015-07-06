@@ -28,7 +28,7 @@ Titanium faker API, Titanium App running on Node.js.
 
 ```sh
 $ cd path/to/your_app_project
-$ npm install ti-slag
+$ npm install ti-slag --save
 ```
 
 ### Using
@@ -37,17 +37,25 @@ $ npm install ti-slag
 var path = require('path'),
 	slag = require('ti-slag');
 
-slag(path.join(__dirname, 'Resources', 'app.js'), '4.0.0.GA', 'ios');
+slag(path.join(__dirname, 'Resources', 'app.js'), {
+	titanium: '4.0.0.GA',
+	platform: 'ios'
+});
 ```
 
 ### API
 
-#### object ```<vm.context>``` slag(string ```<file path>```, string/object ```<SDK version>```, string ```<platfrom>```, object ```<modules>```)
+**IMPORTANT** arguments chenged, since 0.0.7
+
+#### object ```<vm.context>``` slag(string ```<file path>```, object ```<options>```)
 
 **Classic**
 
 ```js
-slag(path.join(__dirname, 'Resources', 'app.js'), '4.0.0.GA', 'ios');
+slag(path.join(__dirname, 'Resources', 'app.js'), {
+	titanium: '4.0.0.GA',
+	platform: 'ios'
+});
 ```
 
 **Alloy**
@@ -55,15 +63,20 @@ slag(path.join(__dirname, 'Resources', 'app.js'), '4.0.0.GA', 'ios');
 Please be Alloy compiled before. ```$ alloy compile --config platform=ios```
 
 ```js
+var config = require('./app/config.json');
+
 slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'foo.js'), {
 	titanium: '4.0.0.GA,
-	alloy: '1.6.2'
-}, 'ios', {
-	Alloy: {
-		CFG: require('path/to/config.json'),
-		Globals: {},
-		Collections: {}
-	}
+	alloy: '1.6.2',
+	platform: 'ios',
+	module: {
+		Alloy: {
+			CFG: _.extend(config.global, config['os:ios'], config['env:test']),
+			Globals: {},
+			Collections: {}
+		}
+	},
+	backbone: '0.9.2'
 });
 ```
 
@@ -71,27 +84,22 @@ slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'foo.js
 
 path/to/example.js
 
-##### SDK version
-
-###### stirng
+##### Titanium SDK version
 
 * 4.0.0.GA
 * 3.5.1.GA
 
-###### object
+##### Alloy version
 
-```js
-{
-	titanium: '4.0.0.GA',
-	alloy: '1.6.2'
-}
-```
+* 1.6.2
+* 1.5.1
 
 ##### platform
 
-ios or android.
+* ios
+* android
 
-##### modules
+##### module
 
 Native module simulate.
 
@@ -106,15 +114,31 @@ anything.anyMethod();
 
 ###### ti-slag code
 ```js
-slag('path/to/app.js', '4.0.0.GA', 'ios', {
-	'be.k0suke.anymodule': {
-		createAnything: function(){
-			return this;
-		},
-		anyMethod: function(){}
+slag('path/to/app.js', {
+	titanium: '4.0.0.GA',
+	platform: 'ios',
+	module: {
+		'be.k0suke.anymodule': {
+			createAnything: function(){
+				return this;
+			},
+			anyMethod: function(){}
+		}
 	}
 });
 ```
+
+##### Backbone.js version
+
+* 0.9.2 (default)
+* 1.1.2
+
+##### silent
+
+```console.*```, ```Ti.API.*```, ```alert``` quiet.
+
+* false (default)
+* true
 
 ### Testing in mocha
 
@@ -157,14 +181,17 @@ var assert = require('assert'),
 
 describe('foo.js', function(){
 	var foojs = path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'foo.js'),
+		config = require('./app/config.json'),
 		context = slag(foojs, {
 			titanium: '4.0.0.GA',
-			alloy: '1.6.2'
-		}, 'ios', {
-			Alloy: {
-				CFG: require('./app/config.json'),
-				Globals: {},
-				Collections: {}
+			alloy: '1.6.2',
+			platform: 'ios',
+			module: {
+				Alloy: {
+					CFG: _.extend(config.global, config['os:ios'], config['env:test']),
+					Globals: {},
+					Collections: {}
+				}
 			}
 		});
 

@@ -12,13 +12,19 @@ describe('slag', function(){
 
 	it('should support Titanium SDK version 4.0.0.GA', function(){
 		assert.doesNotThrow(function(){
-			slag(appjs, '4.0.0.GA', 'ios');
+			slag(appjs, {
+				titanium: '4.0.0.GA',
+				platform: 'ios'
+			});
 		});
 	});
 
 	it('should support Titanium SDK version 3.5.1.GA', function(){
 		assert.doesNotThrow(function(){
-			slag(appjs, '3.5.1.GA', 'ios');
+			slag(appjs, {
+				titanium: '3.5.1.GA',
+				platform: 'ios'
+			});
 		});
 	});
 
@@ -26,12 +32,14 @@ describe('slag', function(){
 		assert.doesNotThrow(function(){
 			var context = slag(alyjs, {
 				titanium: '4.0.0.GA',
-				alloy: '1.6.2'
-			}, 'ios', {
-				Alloy: {
-					CFG: {},
-					Globals: {},
-					Collections: {}
+				alloy: '1.6.2',
+				platform: 'ios',
+				module: {
+					Alloy: {
+						CFG: {},
+						Globals: {},
+						Collections: {}
+					}
 				}
 			});
 			context.Controller();
@@ -40,76 +48,146 @@ describe('slag', function(){
 
 	it('should support Alloy version 1.5.1', function(){
 		assert.doesNotThrow(function(){
-			slag(alyjs, {
+			var context = slag(alyjs, {
 				titanium: '3.5.1.GA',
-				alloy: '1.5.1'
-			}, 'ios', {
-				Alloy: {
-					CFG: {},
-					Globals: {},
-					Collections: {}
+				alloy: '1.5.1',
+				platform: 'ios',
+				module: {
+					Alloy: {
+						CFG: {},
+						Globals: {},
+						Collections: {}
+					}
 				}
+			});
+		});
+	});
+
+	it('should support Backbone.js version 0.9.2', function(){
+		assert.doesNotThrow(function(){
+			var context = slag(alyjs, {
+				titanium: '4.0.0.GA',
+				alloy: '1.6.2',
+				platform: 'ios',
+				module: {
+					Alloy: {
+						CFG: {},
+						Globals: {},
+						Collections: {}
+					}
+				},
+				backbone: '0.9.2'
+			});
+		});
+	});
+
+	it('should support Backbone.js version 1.1.2', function(){
+		assert.doesNotThrow(function(){
+			var context = slag(alyjs, {
+				titanium: '4.0.0.GA',
+				alloy: '1.6.2',
+				platform: 'ios',
+				module: {
+					Alloy: {
+						CFG: {},
+						Globals: {},
+						Collections: {}
+					}
+				},
+				backbone: '1.1.2'
 			});
 		});
 	});
 
 	it('should support platform iOS', function(){
 		assert.doesNotThrow(function(){
-			slag(appjs, '4.0.0.GA', 'ios');
+			slag(appjs, {
+				titanium: '4.0.0.GA',
+				platform: 'ios'
+			});
 		});
 	});
 
 	it('should support platform Android', function(){
 		assert.doesNotThrow(function(){
-			slag(appjs, '4.0.0.GA', 'android');
+			slag(appjs, {
+				titanium: '4.0.0.GA',
+				platform: 'android'
+			});
 		});
 	});
 
 	it('should support modules specified', function(){
 		assert.doesNotThrow(function(){
-			slag(modjs, '4.0.0.GA', 'ios', {
-				'be.k0suke.module': {
-					createWindow: function(){
-						return this;
-					},
-					open: function(){}
+			slag(modjs, {
+				titanium: '4.0.0.GA',
+				platform: 'ios',
+				module: {
+					'be.k0suke.module': {
+						createWindow: function(){
+							return this;
+						},
+						open: function(){}
+					}
 				}
 			});
 		});
 	});
 
 	it('should simulate L', function(){
-		var context = slag(appjs, '4.0.0.GA', 'ios');
+		var context = slag(appjs, {
+			titanium: '4.0.0.GA',
+			platform: 'ios'
+		});
 		assert.equal('Hello, world.', context.L('Hello, world.'));
 	});
 
 	it('should simulate String.format', function(){
-		var context = slag(appjs, '4.0.0.GA', 'ios');
+		var context = slag(appjs, {
+			titanium: '4.0.0.GA',
+			platform: 'ios'
+		});
 		assert.equal('Hello, world.', context.String.format('Hello, world.'));
 	});
 
 	it('should simulate String.formatCurrency', function(){
-		var context = slag(appjs, '4.0.0.GA', 'ios');
+		var context = slag(appjs, {
+			titanium: '4.0.0.GA',
+			platform: 'ios'
+		});
 		assert.equal('Hello, world.', context.String.formatCurrency('Hello, world.'));
 	});
 
 	it('should simulate String.formatDate', function(){
-		var context = slag(appjs, '4.0.0.GA', 'ios');
+		var context = slag(appjs, {
+			titanium: '4.0.0.GA',
+			platform: 'ios'
+		});
 		assert.equal('Hello, world.', context.String.formatDate('Hello, world.'));
 	});
 
 	it('should simulate String.formatDecimal', function(){
-		var context = slag(appjs, '4.0.0.GA', 'ios');
+		var context = slag(appjs, {
+			titanium: '4.0.0.GA',
+			platform: 'ios'
+		});
 		assert.equal('Hello, world.', context.String.formatDecimal('Hello, world.'));
 	});
 
 	it('should simulate String.formatTime', function(){
-		var context = slag(appjs, '4.0.0.GA', 'ios');
+		var context = slag(appjs, {
+			titanium: '4.0.0.GA',
+			platform: 'ios'
+		});
 		assert.equal('Hello, world.', context.String.formatTime('Hello, world.'));
 	});
 
 	it('should simulate alert', function(){
-		var context = slag(appjs, '4.0.0.GA', 'ios');
+		var context = slag(appjs, {
+			titanium: '4.0.0.GA',
+			platform: 'ios',
+			silent: true
+		});
 		assert.doesNotThrow(function(){
 			context.alert('Hello, world.');
 		}, Error);
@@ -117,13 +195,19 @@ describe('slag', function(){
 
 	it('should throw exception invalid file path', function(){
 		assert.throws(function(){
-			slag('file_does_not_exist.js', '4.0.0.GA', 'ios');
+			slag('file_does_not_exist.js', {
+				titanium: '4.0.0.GA',
+				platform: 'ios'
+			});
 		}, Error);
 	});
 
 	it('should throw exception invalid Titanium SDK version', function(){
 		assert.throws(function(){
-			slag(appjs, '0.0.0.GA', 'ios');
+			slag(appjs, {
+				titanium: '0.0.0.GA',
+				platform: 'ios'
+			});
 		}, Error);
 	});
 
@@ -132,37 +216,53 @@ describe('slag', function(){
 			slag(alyjs, {
 				titanium: '4.0.0.GA',
 				alloy: '0.0.0',
-			}, 'ios', {
-				Alloy: {
-					CFG: {},
-					Globals: {},
-					Collections: {}
-				}
+				platform: 'ios',
+				module: {
+					Alloy: {
+						CFG: {},
+						Globals: {},
+						Collections: {}
+					}
+				},
 			});
 		}, Error);
 	});
 
 	it('should throw exception invalid plafrom specified', function(){
 		assert.throws(function(){
-			slag(appjs, '4.0.0.GA', 'tizen');
+			slag(appjs, {
+				titanium: '4.0.0.GA',
+				platform: 'tizen'
+			});
 		}, Error);
 	});
 
 	it('should throw exception invalid modules specified', function(){
 		assert.throws(function(){
-			slag(modjs, '4.0.0.GA', 'ios', []);
+			slag(modjs, {
+				titanium: '4.0.0.GA',
+				platform: 'ios',
+				module: 'invalid_module'
+			});
 		}, Error);
 	});
 
 	it('should throw exception unknown module detect', function(){
 		assert.throws(function(){
-			slag(modjs, '4.0.0.GA', 'ios', {});
+			slag(modjs, {
+				titanium: '4.0.0.GA',
+				platform: 'ios',
+				module: {}
+			});
 		}, Error);
 	});
 
 	it('should throw exception deprecated detect', function(){
 		assert.throws(function(){
-			slag(depjs, '4.0.0.GA', 'ios', {});
+			slag(depjs, {
+				titanium: '4.0.0.GA',
+				platform: 'ios'
+			});
 		}, Error);
 	});
 });

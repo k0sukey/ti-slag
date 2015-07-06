@@ -3,25 +3,22 @@ var _ = require('lodash'),
 	path = require('path'),
 	vm = require('vm');
 
-module.exports = function(file, version, platform, modules){
-	var alloyversion,
+module.exports = function(file, options){
+	// options
+	options = options || {};
+	options.titanium = options.titanium || null;
+	options.alloy = options.alloy || null;
+	options.platform = options.platform || null;
+	options.module = options.module || {};
+	options.backbone = options.backbone || '0.9.2';
+	options.silent = options.silent || false;
+
+	var titaniumpath,
+		titanium,
+		Titanium,
 		alloypath,
 		alloy,
 		Alloy;
-
-	// version check
-	if (Object.prototype.toString.apply(version).slice(8, -1) === 'Object') {
-		// has Alloy
-		if (_.has(version, 'alloy')) {
-			alloyversion = version.alloy;
-		}
-
-		if (_.has(version, 'titanium')) {
-			version = version.titanium;
-		}
-	}
-
-	var sdkpath = path.join(__dirname, 'lib', 'titanium', version + '.js');
 
 	// check file path the JavaScript file
 	if (!fs.existsSync(file)) {
@@ -29,59 +26,53 @@ module.exports = function(file, version, platform, modules){
 	}
 
 	// check the Titanium SDK version
-	if (!fs.existsSync(sdkpath)) {
-		throw new Error('Invalid SDK version ' + version);
+	titaniumpath = path.join(__dirname, 'lib', 'titanium', options.titanium + '.js');
+	if (!fs.existsSync(titaniumpath)) {
+		throw new Error('Invalid SDK version ' + options.titanium);
 	}
 
 	// check the Alloy version
-	if (alloyversion) {
-		alloypath = path.join(__dirname, 'lib', 'alloy', alloyversion + '.js');
+	if (options.alloy) {
+		alloypath = path.join(__dirname, 'lib', 'alloy', options.alloy + '.js');
 
 		if (!fs.existsSync(alloypath)) {
-			throw new Error('Invalid Alloy version ' + alloyversion);
+			throw new Error('Invalid Alloy version ' + options.alloy);
 		}
 	}
 
 	// check the platform
-	if (platform !== 'ios' &&
-		platform !== 'android') {
-		throw new Error('Invalid platform specified ' + platform);
-	} else if (platform === 'ios') {
+	if (options.platform !== 'ios' &&
+		options.platform !== 'android') {
+		throw new Error('Invalid platform specified ' + options.platform);
+	} else if (options.platform === 'ios') {
 		// ios is iphone
-		platform = 'iphone';
-	}
-
-	modules = modules || {};
-
-	// module check
-	if (Object.prototype.toString.apply(modules).slice(8, -1) !== 'Object') {
-		throw new Error('Invalid modules specified ' + JSON.stringify(modules));
+		options.platform = 'iphone';
 	}
 
 	// load the Titanium SDK
-	var titanium = require(sdkpath),
-		Titanium = titanium(path.join(__dirname, 'lib', 'titanium', version), {
-			version: version.replace(/\.GA$/, ''),
-			platform: platform
-		});
+	titanium = require(titaniumpath);
+	Titanium = titanium(path.join(__dirname, 'lib', 'titanium', options.titanium), {
+		version: options.titanium.replace(/\.GA$/, ''),
+		platform: options.platform
+	});
 
 	// load the Alloy
 	if (alloypath) {
 		alloy = require(alloypath);
-		Alloy = alloy(path.join(__dirname, 'lib', 'alloy', alloyversion));
+		Alloy = alloy(path.join(__dirname, 'lib', 'alloy', options.alloy));
 
 		// load the Backbone.js and Underscore.js
-		_.extend(modules, {
+		_.extend(options.module, {
 			alloy: _.extend(Alloy, {
-				Backbone: require('backbone'),
-				_: require('underscore')
+				Backbone: require(path.join(__dirname, 'lib', 'vendor', 'backbone-' + options.backbone)),
+				_: require(path.join(__dirname, 'lib', 'vendor', 'underscore-1.6.0'))
 			})
 		});
 
 		// extend "Alloy" namespace 
-		if (_.has(modules, 'Alloy')) {
-			_.extend(modules.alloy, modules.Alloy);
-			delete modules.Alloy;
+		if (_.has(options.module, 'Alloy')) {
+			_.extend(options.module.alloy, options.module.Alloy);
+			delete options.module.Alloy;
 		}
 	}
 
@@ -100,8 +91,8 @@ module.exports = function(file, version, platform, modules){
 			JSON: JSON,
 			setInterval: setInterval,
 			setTimeout: setTimeout,
-			console: console,
-			alert: function(params){ console.log(params); },
+			console: !options.silent ? console : function(){},
+			alert: !options.silent ? function(params){ console.log(params); } : function(){},
 			exports: {},
 			module: module,
 			require: function(original){
@@ -113,10 +104,10 @@ module.exports = function(file, version, platform, modules){
 					vm.runInContext(fs.readFileSync(source, 'utf8'), newcontext);
 
 					return _.isEmpty(newcontext.exports) ? newcontext.module.exports : newcontext.exports;
-				} else if (_.has(modules, original)) {
-					return modules[original];
+				} else if (_.has(options.module, original)) {
+					return options.module[original];
 				} else if (alloypath && original === 'alloy/controllers/BaseController') {
-					source = path.resolve(path.join(__dirname, 'lib', 'alloy', alloyversion, 'BaseController.js'));
+					source = path.resolve(path.join(__dirname, 'lib', 'alloy', options.alloy, 'BaseController.js'));
 
 					if (fs.existsSync(source)) {
 						newcontext = createContext();
