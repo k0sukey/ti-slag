@@ -5,12 +5,12 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-/* var apis = require('./Titanium_4.0.0.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '4.0.0.GA'),
-	isAlloy = false; */
-var apis = require('./Alloy_1.6.2.json'),
+var apis = require('./Titanium_3.5.1.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '3.5.1.GA'),
+	isAlloy = false;
+/* var apis = require('./Alloy_1.6.2.json'),
 	root = path.join(__dirname, 'lib', 'alloy', '1.6.2'),
-	isAlloy = true;
+	isAlloy = true; */
 
 _.each(apis, function(api, namespace){
 	var code = '',
@@ -88,8 +88,8 @@ _.each(apis, function(api, namespace){
 	}
 
 	var methods = [];
-//	_.each(api.methods, function(item){
-	_.each(api.method, function(item){
+	_.each(api.methods, function(item){
+//	_.each(api.method, function(item){
 		if (item.name === 'applyProperties') {
 			methods.push(apiname + '.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };');
 			return;
@@ -161,6 +161,9 @@ _.each(apis, function(api, namespace){
 			case /Number/.test(item.returns.type):
 				returns = ' return 0; ';
 				break;
+			case /Date/.test(item.returns.type):
+				returns = ' return new Date(); ';
+				break;
 			case /Gradient/.test(item.returns.type):
 				returns = ' return {}; ';
 				break;
@@ -172,7 +175,7 @@ _.each(apis, function(api, namespace){
 				returns = ' return {}; ';
 				break;
 			default:
-				return ' return {}; ';
+				returns = ' return {}; ';
 		}
 
 		var guessprop = item.name.length > 3 ? item.name[3].toLowerCase() + item.name.substr(4) : '';
