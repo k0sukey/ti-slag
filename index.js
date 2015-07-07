@@ -91,6 +91,8 @@ module.exports = function(file, options){
 			JSON: JSON,
 			setInterval: setInterval,
 			setTimeout: setTimeout,
+			clearInterval: clearInterval,
+			clearTimeout: clearTimeout,
 			console: !options.silent ? console : function(){},
 			alert: !options.silent ? function(params){ console.log(params); } : function(){},
 			exports: {},
