@@ -5,8 +5,8 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Titanium_3.5.1.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '3.5.1.GA'),
+var apis = require('./Titanium_4.0.0.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '4.0.0.GA'),
 	isAlloy = false;
 /* var apis = require('./Alloy_1.6.2.json'),
 	root = path.join(__dirname, 'lib', 'alloy', '1.6.2'),
@@ -39,7 +39,49 @@ _.each(apis, function(api, namespace){
 		} else if (item.name === 'apiName') {
 			properties.push('\tthis.' + item.name + ' = \'' + namespace.replace(/^Titanium/, 'Ti') + '\';'); 
 		} else {
-			properties.push('\tthis.' + item.name + ' = properties.' + item.name + ' || undefined;');
+			var defaults = '';
+
+			if (_.isArray(item.type)) {
+				item.type = item.type[0];
+			}
+
+			switch (true) {
+				case /void/.test(item.type):
+					defaults = undefined;
+					break;
+				case /Point/.test(item.type):
+					defaults = '{ x: 0, y: 0 }';
+					break;
+				case /Dimension/.test(item.type):
+					defaults = '{ x: 0, y: 0, width: 0, height: 0 }';
+					break;
+				case /Boolean/.test(item.type):
+					defaults = 'true';
+					break;
+				case /String/.test(item.type):
+					defaults = '\'\'';
+					break;
+				case /Number/.test(item.type):
+					defaults = '0';
+					break;
+				case /Date/.test(item.type):
+					defaults = 'new Date()';
+					break;
+				case /Gradient/.test(item.type):
+					defaults = '{}';
+					break;
+				case /Array.*/.test(item.type):
+					defaults = '[]';
+					break;
+				case /Titanium.*/.test(item.type):
+				case /titleAttributesParams/.test(item.type):
+					defaults = '{}';
+					break;
+				default:
+					defaults = '{}';
+			}
+
+			properties.push('\tthis.' + item.name + ' = properties.' + item.name + ' || ' + defaults + ';');
 		}
 	});
 
