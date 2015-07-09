@@ -10,6 +10,15 @@ describe('slag', function(){
 		modjs = path.join(__dirname, 'test', 'Resources', 'module.js'),
 		depjs = path.join(__dirname, 'test', 'Resources', 'deprecated.js');
 
+	it('should support Titanium SDK version 4.1.0.GA', function(){
+		assert.doesNotThrow(function(){
+			slag(appjs, {
+				titanium: '4.1.0.GA',
+				platform: 'ios'
+			});
+		});
+	});
+
 	it('should support Titanium SDK version 4.0.0.GA', function(){
 		assert.doesNotThrow(function(){
 			slag(appjs, {
@@ -31,7 +40,7 @@ describe('slag', function(){
 	it('should support Alloy version 1.6.2', function(){
 		assert.doesNotThrow(function(){
 			var context = slag(alyjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				alloy: '1.6.2',
 				platform: 'ios',
 				module: {
@@ -67,7 +76,7 @@ describe('slag', function(){
 	it('should support Backbone.js version 0.9.2', function(){
 		assert.doesNotThrow(function(){
 			var context = slag(alyjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				alloy: '1.6.2',
 				platform: 'ios',
 				module: {
@@ -86,7 +95,7 @@ describe('slag', function(){
 	it('should support Backbone.js version 1.1.2', function(){
 		assert.doesNotThrow(function(){
 			var context = slag(alyjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				alloy: '1.6.2',
 				platform: 'ios',
 				module: {
@@ -105,7 +114,7 @@ describe('slag', function(){
 	it('should support platform iOS', function(){
 		assert.doesNotThrow(function(){
 			slag(appjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'ios'
 			});
 		});
@@ -114,7 +123,7 @@ describe('slag', function(){
 	it('should support platform Android', function(){
 		assert.doesNotThrow(function(){
 			slag(appjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'android'
 			});
 		});
@@ -123,7 +132,7 @@ describe('slag', function(){
 	it('should support modules specified', function(){
 		assert.doesNotThrow(function(){
 			slag(modjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'ios',
 				module: {
 					'be.k0suke.module': {
@@ -139,7 +148,7 @@ describe('slag', function(){
 
 	it('should simulate L', function(){
 		var context = slag(appjs, {
-			titanium: '4.0.0.GA',
+			titanium: '4.1.0.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.L('Hello, world.'));
@@ -147,7 +156,7 @@ describe('slag', function(){
 
 	it('should simulate String.format', function(){
 		var context = slag(appjs, {
-			titanium: '4.0.0.GA',
+			titanium: '4.1.0.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.format('Hello, world.'));
@@ -155,7 +164,7 @@ describe('slag', function(){
 
 	it('should simulate String.formatCurrency', function(){
 		var context = slag(appjs, {
-			titanium: '4.0.0.GA',
+			titanium: '4.1.0.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatCurrency('Hello, world.'));
@@ -163,7 +172,7 @@ describe('slag', function(){
 
 	it('should simulate String.formatDate', function(){
 		var context = slag(appjs, {
-			titanium: '4.0.0.GA',
+			titanium: '4.1.0.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatDate('Hello, world.'));
@@ -171,7 +180,7 @@ describe('slag', function(){
 
 	it('should simulate String.formatDecimal', function(){
 		var context = slag(appjs, {
-			titanium: '4.0.0.GA',
+			titanium: '4.1.0.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatDecimal('Hello, world.'));
@@ -179,7 +188,7 @@ describe('slag', function(){
 
 	it('should simulate String.formatTime', function(){
 		var context = slag(appjs, {
-			titanium: '4.0.0.GA',
+			titanium: '4.1.0.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatTime('Hello, world.'));
@@ -187,7 +196,7 @@ describe('slag', function(){
 
 	it('should simulate alert', function(){
 		var context = slag(appjs, {
-			titanium: '4.0.0.GA',
+			titanium: '4.1.0.GA',
 			platform: 'ios',
 			silent: true
 		});
@@ -199,7 +208,7 @@ describe('slag', function(){
 	it('should throw exception invalid file path', function(){
 		assert.throws(function(){
 			slag('file_does_not_exist.js', {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'ios'
 			});
 		}, Error);
@@ -217,7 +226,7 @@ describe('slag', function(){
 	it('should throw exception invalid Alloy version', function(){
 		assert.throws(function(){
 			slag(alyjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				alloy: '0.0.0',
 				platform: 'ios',
 				module: {
@@ -234,7 +243,7 @@ describe('slag', function(){
 	it('should throw exception invalid plafrom specified', function(){
 		assert.throws(function(){
 			slag(appjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'tizen'
 			});
 		}, Error);
@@ -243,7 +252,7 @@ describe('slag', function(){
 	it('should throw exception invalid modules specified', function(){
 		assert.throws(function(){
 			slag(modjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'ios',
 				module: 'invalid_module'
 			});
@@ -253,7 +262,7 @@ describe('slag', function(){
 	it('should throw exception unknown module detect', function(){
 		assert.throws(function(){
 			slag(modjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'ios',
 				module: {}
 			});
@@ -263,7 +272,7 @@ describe('slag', function(){
 	it('should throw exception deprecated detect', function(){
 		assert.throws(function(){
 			slag(depjs, {
-				titanium: '4.0.0.GA',
+				titanium: '4.1.0.GA',
 				platform: 'ios'
 			});
 		}, Error);

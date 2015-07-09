@@ -5,8 +5,8 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Titanium_4.0.0.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '4.0.0.GA'),
+var apis = require('./Titanium_4.1.0.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '4.1.0.GA'),
 	isAlloy = false;
 /* var apis = require('./Alloy_1.6.2.json'),
 	root = path.join(__dirname, 'lib', 'alloy', '1.6.2'),
