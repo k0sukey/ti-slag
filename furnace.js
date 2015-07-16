@@ -32,6 +32,20 @@ _.each(apis, function(api, namespace){
 		apiname = 'ThreeDMatrix';
 	}
 
+	if (apiname === 'CoreMotionRotationMatrix') {
+		_.each(api.properties, function(item, index){
+			if (item.name === 'm11-m33') {
+				api.properties.splice(index, 1);
+
+				_.each(['m11', 'm12', 'm13', 'm21', 'm22', 'm23', 'm31', 'm32', 'm33'], function(m){
+					api.properties.push(_.cloneDeep(_.extend(item, {
+						name: m
+					})));
+				});
+			}
+		});
+	}
+
 	var properties = [];
 	_.each(api.properties, function(item){
 		if (item.deprecated) {
