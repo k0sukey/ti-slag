@@ -63,22 +63,72 @@ slag(path.join(__dirname, 'Resources', 'app.js'), {
 Please be Alloy compiled before. ```$ alloy compile --config platform=ios```
 
 ```js
-var config = require('./app/config.json');
+	var underscore = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'underscore.js'), {
+			titanium: '4.0.0.GA',
+			platform: 'ios'
+		}),
+		backbone = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'backbone.js'), 		{
+			titanium: '4.0.0.GA',
+			platform: 'ios',
+			module: {
+				'alloy/underscore': underscore.exports
+			}
+		}),
+		constants = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'constants.js'), {
+			titanium: '4.0.0.GA',
+			platform: 'ios',
+			module: {
+				'alloy/underscore': underscore.exports
+			}
+		})
+		CFG = require('./Resources/alloy/CFG'),
+		prealloy = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy.js'), {
+			titanium: '4.0.0.GA',
+			platform: 'ios',
+			module: {
+				'alloy/underscore': underscore.exports,
+				'alloy/backbone': backbone.exports,
+				'alloy/constants': constants.exports,
+				'alloy/CFG': CFG
+			}
+		}),
+		alloy = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy.js'), {
+			titanium: '4.0.0.GA',
+			platform: 'ios',
+			module: {
+				alloy: prealloy.exports,
+				'alloy/underscore': underscore.exports,
+				'alloy/backbone': backbone.exports,
+				'alloy/constants': constants.exports,
+				'alloy/CFG': CFG
+			}
+		}),
+		BaseController = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'), {
+			titanium: '4.0.0.GA',
+			platform: 'ios',
+			module: {
+				alloy: prealloy.exports,
+				'alloy/underscore': underscore.exports,
+				'alloy/backbone': backbone.exports,
+				'alloy/constants': constants.exports,
+				'alloy/CFG': CFG
+			}
+		}),
+		context = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'index.js'), {
+			titanium:'4.0.0.GA',
+			platform: 'ios',
+			module: {
+				alloy: alloy.exports,
+				'alloy/controllers/BaseController': BaseController.module.exports
+			}
+		});
 
-slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'foo.js'), {
-	titanium: '4.0.0.GA,
-	alloy: '1.6.2',
-	platform: 'ios',
-	module: {
-		Alloy: {
-			CFG: _.extend(config.global, config['os:ios'], config['env:test']),
-			Globals: {},
-			Collections: {}
-		}
-	},
-	backbone: '0.9.2'
-});
+	context.Controller(); // This is Alloy controller
 ```
+
+ti-slag stop the Alloy internal support, since 0.0.14.
+
+Why ```prealloy```? Alloy has createController method. createController(loading the other controller) is load the Alloy.
 
 ##### file path
 
@@ -90,11 +140,6 @@ path/to/example.js
 * 4.0.0.GA
 * 3.5.1.GA
 
-##### Alloy version
-
-* 1.6.2
-* 1.5.1
-
 ##### platform
 
 * ios
@@ -102,7 +147,7 @@ path/to/example.js
 
 ##### module
 
-Native module simulate.
+Native or CommonJS module simulate.
 
 ###### Titanium code
 
@@ -128,11 +173,6 @@ slag('path/to/app.js', {
 	}
 });
 ```
-
-##### Backbone.js version
-
-* 0.9.2 (default)
-* 1.1.2
 
 ##### silent
 
@@ -181,24 +221,12 @@ var assert = require('assert'),
 	slag = require('ti-slag');
 
 describe('foo.js', function(){
-	var foojs = path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'foo.js'),
-		config = require('./app/config.json'),
-		context = slag(foojs, {
-			titanium: '4.0.0.GA',
-			alloy: '1.6.2',
-			platform: 'ios',
-			module: {
-				Alloy: {
-					CFG: _.extend(config.global, config['os:ios'], config['env:test']),
-					Globals: {},
-					Collections: {}
-				}
-			}
-		});
-
 	it('should does not throw exception', function(){
 		assert.doesNotThrow(function(){
-			context.Controller();
+			slag(path.join(__dirname, 'Resources', 'foo.js'), {
+				titanium: '4.0.0.GA',
+				platform: 'ios'
+			});
 		});
 	});
 });

@@ -6,7 +6,6 @@ var assert = require('assert'),
 
 describe('slag', function(){
 	var appjs = path.join(__dirname, 'test', 'Resources', 'app.js'),
-		alyjs = path.join(__dirname, 'test', 'Resources', 'index.js'),
 		modjs = path.join(__dirname, 'test', 'Resources', 'module.js'),
 		depjs = path.join(__dirname, 'test', 'Resources', 'deprecated.js');
 
@@ -34,80 +33,6 @@ describe('slag', function(){
 				titanium: '3.5.1.GA',
 				platform: 'ios'
 			});
-		});
-	});
-
-	it('should support Alloy version 1.6.2', function(){
-		assert.doesNotThrow(function(){
-			var context = slag(alyjs, {
-				titanium: '4.1.0.GA',
-				alloy: '1.6.2',
-				platform: 'ios',
-				module: {
-					Alloy: {
-						CFG: {},
-						Globals: {},
-						Collections: {}
-					}
-				}
-			});
-			context.Controller();
-		});
-	});
-
-	it('should support Alloy version 1.5.1', function(){
-		assert.doesNotThrow(function(){
-			var context = slag(alyjs, {
-				titanium: '3.5.1.GA',
-				alloy: '1.5.1',
-				platform: 'ios',
-				module: {
-					Alloy: {
-						CFG: {},
-						Globals: {},
-						Collections: {}
-					}
-				}
-			});
-			context.Controller();
-		});
-	});
-
-	it('should support Backbone.js version 0.9.2', function(){
-		assert.doesNotThrow(function(){
-			var context = slag(alyjs, {
-				titanium: '4.1.0.GA',
-				alloy: '1.6.2',
-				platform: 'ios',
-				module: {
-					Alloy: {
-						CFG: {},
-						Globals: {},
-						Collections: {}
-					}
-				},
-				backbone: '0.9.2'
-			});
-			context.Controller();
-		});
-	});
-
-	it('should support Backbone.js version 1.1.2', function(){
-		assert.doesNotThrow(function(){
-			var context = slag(alyjs, {
-				titanium: '4.1.0.GA',
-				alloy: '1.6.2',
-				platform: 'ios',
-				module: {
-					Alloy: {
-						CFG: {},
-						Globals: {},
-						Collections: {}
-					}
-				},
-				backbone: '1.1.2'
-			});
-			context.Controller();
 		});
 	});
 
@@ -219,23 +144,6 @@ describe('slag', function(){
 			slag(appjs, {
 				titanium: '0.0.0.GA',
 				platform: 'ios'
-			});
-		}, Error);
-	});
-
-	it('should throw exception invalid Alloy version', function(){
-		assert.throws(function(){
-			slag(alyjs, {
-				titanium: '4.1.0.GA',
-				alloy: '0.0.0',
-				platform: 'ios',
-				module: {
-					Alloy: {
-						CFG: {},
-						Globals: {},
-						Collections: {}
-					}
-				},
 			});
 		}, Error);
 	});
