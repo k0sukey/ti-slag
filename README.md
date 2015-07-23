@@ -63,18 +63,18 @@ slag(path.join(__dirname, 'Resources', 'app.js'), {
 Please be Alloy compiled before. ```$ alloy compile --config platform=ios```
 
 ```js
-	var underscore = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'underscore.js'), {
+	var underscore = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'underscore.js'), {
 			titanium: '4.0.0.GA',
 			platform: 'ios'
 		}),
-		backbone = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'backbone.js'), 		{
+		backbone = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'backbone.js'), 		{
 			titanium: '4.0.0.GA',
 			platform: 'ios',
 			module: {
 				'alloy/underscore': underscore.exports
 			}
 		}),
-		constants = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'constants.js'), {
+		constants = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'constants.js'), {
 			titanium: '4.0.0.GA',
 			platform: 'ios',
 			module: {
@@ -82,7 +82,7 @@ Please be Alloy compiled before. ```$ alloy compile --config platform=ios```
 			}
 		})
 		CFG = require('./Resources/alloy/CFG'),
-		prealloy = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy.js'), {
+		prealloy = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy.js'), {
 			titanium: '4.0.0.GA',
 			platform: 'ios',
 			module: {
@@ -92,18 +92,7 @@ Please be Alloy compiled before. ```$ alloy compile --config platform=ios```
 				'alloy/CFG': CFG
 			}
 		}),
-		alloy = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy.js'), {
-			titanium: '4.0.0.GA',
-			platform: 'ios',
-			module: {
-				alloy: prealloy.exports,
-				'alloy/underscore': underscore.exports,
-				'alloy/backbone': backbone.exports,
-				'alloy/constants': constants.exports,
-				'alloy/CFG': CFG
-			}
-		}),
-		BaseController = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'), {
+		alloy = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy.js'), {
 			titanium: '4.0.0.GA',
 			platform: 'ios',
 			module: {
@@ -114,7 +103,18 @@ Please be Alloy compiled before. ```$ alloy compile --config platform=ios```
 				'alloy/CFG': CFG
 			}
 		}),
-		context = new slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'index.js'), {
+		BaseController = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'), {
+			titanium: '4.0.0.GA',
+			platform: 'ios',
+			module: {
+				alloy: prealloy.exports,
+				'alloy/underscore': underscore.exports,
+				'alloy/backbone': backbone.exports,
+				'alloy/constants': constants.exports,
+				'alloy/CFG': CFG
+			}
+		}),
+		context = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'index.js'), {
 			titanium:'4.0.0.GA',
 			platform: 'ios',
 			module: {
