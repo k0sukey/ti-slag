@@ -80,7 +80,7 @@ Please be Alloy compiled before. ```$ alloy compile --config platform=ios```
 			module: {
 				'alloy/underscore': underscore.exports
 			}
-		})
+		}),
 		CFG = require('./Resources/alloy/CFG'),
 		prealloy = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy.js'), {
 			titanium: '4.0.0.GA',
