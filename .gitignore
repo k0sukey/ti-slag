@@ -2,6 +2,7 @@
 ._*
 npm-debug.log
 node_modules
+build
 coverage
 .nyc_output
 Titanium_3.5.1.GA.json

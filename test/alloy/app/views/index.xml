@@ -1,0 +1,6 @@
+<Alloy>
+	<Window class="container">
+		<Label id="label" onClick="doClick" platform="ios">Hello, iOS</Label>
+		<Label id="label" onClick="doClick" platform="android">Hello, Android</Label>
+	</Window>
+</Alloy>
