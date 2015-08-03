@@ -3,7 +3,8 @@
 var _ = require('lodash'),
 	assert = require('assert'),
 	path = require('path'),
-	slag = require('./');
+	slag = require('./'),
+	alloy = require('./lib/Alloy');
 
 describe('ti-slag', function(){
 	var appjs = path.join(__dirname, 'test', 'classic', 'Resources', 'app.js'),
@@ -225,69 +226,143 @@ describe('Classic', function(){
 	});
 });
 
+describe('lib/alloy.js', function(){
+	var context;
+
+	it('should does not throw exception default Titanium SDK version is 4.0.0.GA', function(){
+		assert.doesNotThrow(function(){
+			alloy.load({
+				platform: 'ios',
+				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+				backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+				constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+				CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
+			});
+		});
+	});
+
+	it('should does not throw exception default platform is iOS', function(){
+		assert.doesNotThrow(function(){
+			alloy.load({
+				titanium: '4.1.0.GA',
+				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+				backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+				constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+				CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
+			});
+		});
+	});
+
+	it('should throw exception alloy path specified, default path is Resources/iphone/alloy.js', function(){
+		assert.throws(function(){
+			alloy.load({
+				titanium: '4.1.0.GA',
+				platform: 'ios',
+				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+				backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+				constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+				CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
+			});
+		}, Error);
+	});
+
+	it('should throw exception BaseController path specified, default path is Resources/iphone/alloy/controllers/BaseController.js', function(){
+		assert.throws(function(){
+			alloy.load({
+				titanium: '4.1.0.GA',
+				platform: 'ios',
+				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+				backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+				constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+				CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
+			});
+		}, Error);
+	});
+
+	it('should throw exception underscore path specified, default path is Resources/iphone/alloy/underscore.js', function(){
+		assert.throws(function(){
+			alloy.load({
+				titanium: '4.1.0.GA',
+				platform: 'ios',
+				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+				backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+				constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+				CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
+			});
+		}, Error);
+	});
+
+	it('should throw exception backbone path specified, default path is Resources/iphone/alloy/backbone.js', function(){
+		assert.throws(function(){
+			alloy.load({
+				titanium: '4.1.0.GA',
+				platform: 'ios',
+				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+				constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+				CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
+			});
+		}, Error);
+	});
+
+	it('should throw exception constants path specified, default path is Resources/iphone/alloy/constants.js', function(){
+		assert.throws(function(){
+			alloy.load({
+				titanium: '4.1.0.GA',
+				platform: 'ios',
+				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+				backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+				CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
+			});
+		}, Error);
+	});
+
+	it('should throw exception CFG path specified, default path is Resources/alloy/CFG.js', function(){
+		assert.throws(function(){
+			alloy.load({
+				titanium: '4.1.0.GA',
+				platform: 'ios',
+				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+				backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+				constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js')
+			});
+		}, Error);
+	});
+});
+
 describe('Alloy iOS', function(){
 	var views,
-		listeners;
-
-	var underscore = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios'
-		}),
-		backbone = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),        {
+		listeners,
+		Alloy = alloy.load({
 			titanium: '4.1.0.GA',
 			platform: 'ios',
-			module: {
-				'alloy/underscore': underscore.exports
-			}
-		}),
-		constants = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				'alloy/underscore': underscore.exports
-			}
-		}),
-		CFG = require('./test/alloy/Resources/alloy/CFG'),
-		prealloy = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				'alloy/underscore': underscore.exports,
-				'alloy/backbone': backbone.exports,
-				'alloy/constants': constants.exports,
-				'alloy/CFG': CFG
-			}
-		}),
-		alloy = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				alloy: prealloy.exports,
-				'alloy/underscore': underscore.exports,
-				'alloy/backbone': backbone.exports,
-				'alloy/constants': constants.exports,
-				'alloy/CFG': CFG
-			}
-		}),
-		BaseController = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				alloy: prealloy.exports,
-				'alloy/underscore': underscore.exports,
-				'alloy/backbone': backbone.exports,
-				'alloy/constants': constants.exports,
-				'alloy/CFG': CFG
-			}
+			alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
+			BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
+			underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+			backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+			constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+			CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
 		});
 
 	var context = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'index.js'), {
-		titanium:'4.1.0.GA',
+		titanium: '4.1.0.GA',
 		platform: 'ios',
 		silent: true,
 		module: {
-			alloy: alloy.exports,
-			'alloy/controllers/BaseController': BaseController.module.exports
+			alloy: Alloy.core,
+			'alloy/controllers/BaseController': Alloy.BaseController
 		}
 	});
 
@@ -322,67 +397,25 @@ describe('Alloy iOS', function(){
 
 describe('Alloy Android', function(){
 	var views,
-		listeners;
-
-	var underscore = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'underscore.js'), {
+		listeners,
+		Alloy = alloy.load({
 			titanium: '4.1.0.GA',
-			platform: 'ios'
-		}),
-		backbone = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'backbone.js'),        {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				'alloy/underscore': underscore.exports
-			}
-		}),
-		constants = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'constants.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				'alloy/underscore': underscore.exports
-			}
-		}),
-		CFG = require('./test/alloy/Resources/alloy/CFG'),
-		prealloy = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				'alloy/underscore': underscore.exports,
-				'alloy/backbone': backbone.exports,
-				'alloy/constants': constants.exports,
-				'alloy/CFG': CFG
-			}
-		}),
-		alloy = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				alloy: prealloy.exports,
-				'alloy/underscore': underscore.exports,
-				'alloy/backbone': backbone.exports,
-				'alloy/constants': constants.exports,
-				'alloy/CFG': CFG
-			}
-		}),
-		BaseController = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'controllers', 'BaseController.js'), {
-			titanium: '4.1.0.GA',
-			platform: 'ios',
-			module: {
-				alloy: prealloy.exports,
-				'alloy/underscore': underscore.exports,
-				'alloy/backbone': backbone.exports,
-				'alloy/constants': constants.exports,
-				'alloy/CFG': CFG
-			}
+			platform: 'android',
+			alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy.js'),
+			BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'controllers', 'BaseController.js'),
+			underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
+			backbone: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'backbone.js'),
+			constants: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'constants.js'),
+			CFG: path.join(__dirname, 'test', 'alloy', 'Resources', 'alloy', 'CFG.js')
 		});
 
 	var context = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'controllers', 'index.js'), {
 		titanium:'4.1.0.GA',
-		platform: 'ios',
+		platform: 'android',
 		silent: true,
 		module: {
-			alloy: alloy.exports,
-			'alloy/controllers/BaseController': BaseController.module.exports
+			alloy: Alloy.core,
+			'alloy/controllers/BaseController': Alloy.BaseController
 		}
 	});
 
