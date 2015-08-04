@@ -4,11 +4,53 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Titanium_4.1.0.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '4.1.0.GA');
+var apis = require('./Titanium_3.5.1.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '3.5.1.GA');
+
+function getType(type) {
+	var result;
+
+	switch (true) {
+		case /void/.test(type):
+			result = undefined;
+			break;
+		case /Point/.test(type):
+			result = '{ x: 0, y: 0 }';
+			break;
+		case /Dimension/.test(type):
+			result = '{ x: 0, y: 0, width: 0, height: 0 }';
+			break;
+		case /Boolean/.test(type):
+			result = 'true';
+			break;
+		case /String/.test(type):
+			result = '\'\'';
+			break;
+		case /Number/.test(type):
+			result = '0';
+			break;
+		case /Date/.test(type):
+			result = 'new Date()';
+			break;
+		case /Gradient/.test(type):
+			result = '{}';
+			break;
+		case /Array.*/.test(type):
+			result = '[]';
+			break;
+		case /Titanium.*/.test(type):
+		case /titleAttributesParams/.test(type):
+			result = '{}';
+			break;
+		default:
+			result = '{}';
+	}
+
+	return result;
+}
 
 _.each(apis, function(api, namespace){
-	var code = 'var crypto = require(\'crypto\');\n',
+	var code = 'var crypto = require(\'crypto\');',
 		namespaces = namespace.split('.');
 
 	var dir = root;
@@ -48,77 +90,41 @@ _.each(apis, function(api, namespace){
 		names.push('\'' + item.name + '\'');
 
 		if (item.name === 'apiName') {
-			properties.push('\tif (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
-			properties.push('\tthis.' + item.name + ' = \'' + namespace.replace(/^Titanium/, 'Ti') + '\';'); 
+			properties.push('if (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
+			properties.push('this.' + item.name + ' = \'' + namespace.replace(/^Titanium/, 'Ti') + '\';'); 
 		} else {
 			if (item.deprecated) {
-				properties.push('\tif (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); }');
+				properties.push('if (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); }');
 				return;
 			}
-
-			var defaults = '';
 
 			if (_.isArray(item.type)) {
 				item.type = item.type[0];
 			}
 
-			switch (true) {
-				case /void/.test(item.type):
-					defaults = undefined;
-					break;
-				case /Point/.test(item.type):
-					defaults = '{ x: 0, y: 0 }';
-					break;
-				case /Dimension/.test(item.type):
-					defaults = '{ x: 0, y: 0, width: 0, height: 0 }';
-					break;
-				case /Boolean/.test(item.type):
-					defaults = 'true';
-					break;
-				case /String/.test(item.type):
-					defaults = '\'\'';
-					break;
-				case /Number/.test(item.type):
-					defaults = '0';
-					break;
-				case /Date/.test(item.type):
-					defaults = 'new Date()';
-					break;
-				case /Gradient/.test(item.type):
-					defaults = '{}';
-					break;
-				case /Array.*/.test(item.type):
-					defaults = '[]';
-					break;
-				case /Titanium.*/.test(item.type):
-				case /titleAttributesParams/.test(item.type):
-					defaults = '{}';
-					break;
-				default:
-					defaults = '{}';
-			}
+			var defaults = getType(item.type);
 
 			if (item.permission && item.permission === 'read-only') {
-				properties.push('\tif (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
-				properties.push('\tthis.' + item.name + ' = ' + defaults + ';');
+				properties.push('if (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
+				properties.push('this.' + item.name + ' = ' + defaults + ';');
 			} else {
-				properties.push('\tthis.' + item.name + ' = __SLAG__properties.' + item.name + ' || ' + defaults + ';');
+				properties.push('this.' + item.name + ' = __SLAG__properties.' + item.name + ' || ' + defaults + ';');
 			}
 		}
 	});
 
 	names.push('\'id\'');
-	properties.push('\tthis.id = __SLAG__properties.id || \'\';');
+	properties.push('this.id = __SLAG__properties.id || \'\';');
 
-	code += 'function ' + apiname + '(__SLAG__properties) {\n';
-	code += '\t__SLAG__properties = __SLAG__properties || {};\n';
-	code += '\tvar __SLAG__checks = [], __SLAG__names = [' + names.join(', ') + '];';
-	code += '\tif (__SLAG__names.length > 0 && process.env.SLAG_STRICT) { for (var __SLAG__name in __SLAG__properties) { if (__SLAG__names.indexOf(__SLAG__name) === -1) { throw new Error(\'Use user custom property \' + __SLAG__name); } } } else if (__SLAG__names.length === 0 && __SLAG__properties.length > 0 && process.env.SLAG_STRICT) { throw new Error(\'Use user custom properties. \' + __SLAG__properties.join(\', \')); }';
-	code += '\tvar md5 = crypto.createHash(\'md5\'); md5.update(crypto.randomBytes(32), \'binary\');';
-	code += '\tthis.__SLAG_ID = md5.digest(\'hex\');';
-	code += '\tthis.__SLAG_PARENT;';
-	code += properties.join('\n');
-	code += '\n\treturn this;\n}\n\n';
+	code += 'function ' + apiname + '(__SLAG__properties) {';
+	code += '__SLAG__properties = __SLAG__properties || {};';
+	code += 'var __SLAG__checks = [], __SLAG__names = [' + names.join(', ') + '];';
+	code += 'if (__SLAG__names.length > 0 && process.env.SLAG_STRICT === \'true\') { for (var __SLAG__name in __SLAG__properties) { if (__SLAG__names.indexOf(__SLAG__name) === -1) { throw new Error(\'Use user custom property \' + __SLAG__name); } } } else if (__SLAG__names.length === 0 && __SLAG__properties.length > 0 && process.env.SLAG_STRICT === \'true\') { throw new Error(\'Use user custom properties. \' + __SLAG__properties.join(\', \')); }';
+	code += 'var md5 = crypto.createHash(\'md5\'); md5.update(crypto.randomBytes(32), \'binary\');';
+	code += 'this.__SLAG_ID = md5.digest(\'hex\');';
+	code += 'this.__SLAG_PARENT;';
+	code += properties.join('');
+	code += 'return this; }';
 
 	var methods = [];
 
@@ -177,62 +183,32 @@ _.each(apis, function(api, namespace){
 			return;
 		}
 
-		var returns = '';
-
 		if (_.isArray(item.returns)) {
 			item.returns = {
 				type: item.returns[0].type
 			};
 		}
 
-		switch (true) {
-			case /void/.test(item.returns.type):
-				break;
-			case /Point/.test(item.returns.type):
-				returns = ' return { x: 0, y: 0 }; ';
-				break;
-			case /Dimension/.test(item.returns.type):
-				returns = ' return { x: 0, y: 0, width: 0, height: 0 }; ';
-				break;
-			case /Boolean/.test(item.returns.type):
-				returns = ' return true; ';
-				break;
-			case /String/.test(item.returns.type):
-				returns = ' return \'\'; ';
-				break;
-			case /Number/.test(item.returns.type):
-				returns = ' return 0; ';
-				break;
-			case /Date/.test(item.returns.type):
-				returns = ' return new Date(); ';
-				break;
-			case /Gradient/.test(item.returns.type):
-				returns = ' return {}; ';
-				break;
-			case /Array.*/.test(item.returns.type):
-				returns = ' return []; ';
-				break;
-			case /Titanium.*/.test(item.returns.type):
-			case /titleAttributesParams/.test(item.returns.type):
-				returns = ' return {}; ';
-				break;
-			default:
-				returns = ' return {}; ';
-		}
+		var returns = getType(item.returns.type),
+			guessprop = item.name.length > 3 ? item.name[3].toLowerCase() + item.name.substr(4) : '';
 
-		var guessprop = item.name.length > 3 ? item.name[3].toLowerCase() + item.name.substr(4) : '';
+		if (/void/.test(item.returns.type)) {
+			returns = '';
+		} else {
+			returns = 'return ' + returns + ';';
+		}
 
 		if (/^set[A-Z0-9]/.test(item.name) && _.indexOf(names, '\'' + guessprop + '\'') > -1) {
 			methods.push(apiname + '.prototype.' + item.name + ' = function(property){ this.' + guessprop + ' = property; };');
 		} else if (/^get[A-Z0-9]/.test(item.name) && _.indexOf(names, '\'' + guessprop + '\'') > -1) {
 			methods.push(apiname + '.prototype.' + item.name + ' = function(){ return this.' + guessprop + '; };');
 		} else {
-			methods.push(apiname + '.prototype.' + item.name + ' = function(){' + returns + '};');
+			methods.push(apiname + '.prototype.' + item.name + ' = function(){ ' + returns + ' };');
 		}
 	});
-	code += methods.join('\n\n');
+	code += methods.join('');
 
-	code += '\n\nmodule.exports = function(properties){ return new ' + apiname + '(properties); };';
+	code += 'module.exports = function(properties){ return new ' + apiname + '(properties); };';
 
 	var ast = acorn.parse(code);
 	code = escodegen.generate(ast, {
