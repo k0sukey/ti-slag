@@ -12,6 +12,8 @@ var slag = function(file, options){
 	options.injection = options.injection || null;
 	options.silent = options.silent || false;
 
+	process.env.SLAG_STRICT = _.isBoolean(options.strict) ? options.strict : true;
+
 	var titaniumpath,
 		titanium,
 		Titanium;

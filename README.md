@@ -1,6 +1,6 @@
 # ti-slag
 
-Titanium faker API, Titanium App running on Node.js.
+Titanium faker API, Titanium app running on Node.js.
 
 [![Build Status](https://travis-ci.org/k0sukey/ti-slag.svg?branch=master)](https://travis-ci.org/k0sukey/ti-slag)
 [![Coverage Status](https://coveralls.io/repos/k0sukey/ti-slag/badge.svg?branch=master)](https://coveralls.io/r/k0sukey/ti-slag?branch=master)
@@ -132,6 +132,13 @@ slag('path/to/app.js', {
 	}
 });
 ```
+
+##### strict mode
+
+It throws an exception If you use a custom property.
+
+* false
+* true (default)
 
 ##### silent
 

@@ -9,7 +9,8 @@ var _ = require('lodash'),
 describe('ti-slag', function(){
 	var appjs = path.join(__dirname, 'test', 'classic', 'Resources', 'app.js'),
 		modjs = path.join(__dirname, 'test', 'classic', 'Resources', 'module.js'),
-		depjs = path.join(__dirname, 'test', 'classic', 'Resources', 'deprecated.js');
+		depjs = path.join(__dirname, 'test', 'classic', 'Resources', 'deprecated.js'),
+		prpjs = path.join(__dirname, 'test', 'classic', 'Resources', 'customprop.js');
 
 	it('should support Titanium SDK version 4.1.0.GA', function(){
 		assert.doesNotThrow(function(){
@@ -184,6 +185,25 @@ describe('ti-slag', function(){
 			slag(depjs, {
 				titanium: '4.1.0.GA',
 				platform: 'ios'
+			});
+		}, Error);
+	});
+
+	it('should throw exception custom property detect', function(){
+		assert.throws(function(){
+			slag(prpjs, {
+				titanium: '4.1.0.GA',
+				platform: 'ios'
+			});
+		}, Error);
+	});
+
+	it('should strict mode avoidance custom property detect', function(){
+		assert.doesNotThrow(function(){
+			slag(prpjs, {
+				titanium: '4.1.0.GA',
+				platform: 'ios',
+				strict: false
 			});
 		}, Error);
 	});

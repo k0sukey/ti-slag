@@ -1,19 +1,14 @@
 var _ = require('lodash'),
 	acorn = require('acorn'),
-	backbone = require('./lib/vendor/backbone-0.9.2'),
 	escodegen = require('escodegen'),
 	fs = require('fs'),
 	path = require('path');
 
 var apis = require('./Titanium_4.1.0.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '4.1.0.GA'),
-	isAlloy = false;
-/* var apis = require('./Alloy_1.6.2.json'),
-	root = path.join(__dirname, 'lib', 'alloy', '1.6.2'),
-	isAlloy = true; */
+	root = path.join(__dirname, 'lib', 'titanium', '4.1.0.GA');
 
 _.each(apis, function(api, namespace){
-	var code = '',
+	var code = 'var crypto = require(\'crypto\');\n',
 		namespaces = namespace.split('.');
 
 	var dir = root;
@@ -46,13 +41,21 @@ _.each(apis, function(api, namespace){
 		});
 	}
 
-	var properties = [];
+	var properties = [],
+		names = [];
+
 	_.each(api.properties, function(item){
-		if (item.deprecated) {
-			properties.push('\tif(properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); }');
-		} else if (item.name === 'apiName') {
+		names.push('\'' + item.name + '\'');
+
+		if (item.name === 'apiName') {
+			properties.push('\tif (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
 			properties.push('\tthis.' + item.name + ' = \'' + namespace.replace(/^Titanium/, 'Ti') + '\';'); 
 		} else {
+			if (item.deprecated) {
+				properties.push('\tif (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); }');
+				return;
+			}
+
 			var defaults = '';
 
 			if (_.isArray(item.type)) {
@@ -95,59 +98,52 @@ _.each(apis, function(api, namespace){
 					defaults = '{}';
 			}
 
-			properties.push('\tthis.' + item.name + ' = properties.' + item.name + ' || ' + defaults + ';');
+			if (item.permission && item.permission === 'read-only') {
+				properties.push('\tif (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
+				properties.push('\tthis.' + item.name + ' = ' + defaults + ';');
+			} else {
+				properties.push('\tthis.' + item.name + ' = __SLAG__properties.' + item.name + ' || ' + defaults + ';');
+			}
 		}
 	});
 
-	code += 'function ' + apiname + '(properties) {\n\tproperties = properties || {};\n\n';
+	names.push('\'id\'');
+	properties.push('\tthis.id = __SLAG__properties.id || \'\';');
+
+	code += 'function ' + apiname + '(__SLAG__properties) {\n';
+	code += '\t__SLAG__properties = __SLAG__properties || {};\n';
+	code += '\tvar __SLAG__checks = [], __SLAG__names = [' + names.join(', ') + '];';
+	code += '\tif (__SLAG__names.length > 0 && process.env.SLAG_STRICT) { for (var __SLAG__name in __SLAG__properties) { if (__SLAG__names.indexOf(__SLAG__name) === -1) { throw new Error(\'Use user custom property \' + __SLAG__name); } } } else if (__SLAG__names.length === 0 && __SLAG__properties.length > 0 && process.env.SLAG_STRICT) { throw new Error(\'Use user custom properties. \' + __SLAG__properties.join(\', \')); }';
+	code += '\tvar md5 = crypto.createHash(\'md5\'); md5.update(crypto.randomBytes(32), \'binary\');';
+	code += '\tthis.__SLAG_ID = md5.digest(\'hex\');';
+	code += '\tthis.__SLAG_PARENT;';
 	code += properties.join('\n');
 	code += '\n\treturn this;\n}\n\n';
 
-	if (isAlloy) {
-		if (apiname === 'Controller' || apiname === 'Widget') {
-			_.each(_.keys(backbone.Events), function(event){
-				api.method.push({
-					name: event,
-					returns: {
-						type: 'void'
-					},
-					description: '',
-					parameters: [],
-					filename: ''
-				});
-			});
-		} else if (apiname === 'Collections') {
-			_.each(_.keys(backbone.Collection.prototype), function(event){
-				api.method.push({
-					name: event,
-					returns: {
-						type: 'void'
-					},
-					description: '',
-					parameters: [],
-					filename: ''
-				});
-			});
-		} else if (apiname === 'Models') {
-			_.each(_.keys(backbone.Model.prototype), function(event){
-				api.method.push({
-					name: event,
-					returns: {
-						type: 'void'
-					},
-					description: '',
-					parameters: [],
-					filename: ''
-				});
-			});
-		}
-	}
-
 	var methods = [];
+
 	_.each(api.methods, function(item){
-//	_.each(api.method, function(item){
+		if (item.deprecated) {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(){ throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); };');
+			return;
+		}
+
+		if (item.name === 'getChildren') {
+			methods.push(apiname + '.prototype.getParent = function(){ return this.__SLAG_PARENT; };');
+		}
+
+		if (item.name === 'add' && _.indexOf(names, '\'children\'') > -1) {
+			methods.push(apiname + '.prototype.add = function(params){ this.children.push(params); params.__SLAG_PARENT = this; };');
+			return;
+		}
+
+		if (item.name === 'remove' && _.indexOf(names, '\'children\'') > -1) {
+			methods.push(apiname + '.prototype.remove = function(params){ for (var __SLAG_COUNTER = 0; __SLAG_COUNTER < this.children.length; __SLAG_COUNTER++) { if (this.children[__SLAG_COUNTER].__SLAG_ID === params.__SLAG_ID) { this.children.splice(__SLAG_COUNTER, 1); break; } } params.__SLAG_PARENT = undefined; };');
+			return;
+		}
+
 		if (item.name === 'applyProperties') {
-			methods.push(apiname + '.prototype.applyProperties = function(params){ for (var key in params) { this[key] = params[key]; } };');
+			methods.push(apiname + '.prototype.applyProperties = function(params){ for (var __SLAG__name in params) { this[__SLAG__name] = params[__SLAG__name]; } };');
 			return;
 		}
 
@@ -167,16 +163,6 @@ _.each(apis, function(api, namespace){
 				methods.push(apiname + '.prototype.' + item.name + ' = function(params){ var ' + childFile + ' = require(\'./' + childPath + '\'); return ' + childFile + '(params); };');
 			}
 
-			return;
-		}
-
-		if (isAlloy && namespace === 'Alloy.Controller' && item.name === 'getView') {
-			methods.push(apiname + '.prototype.' + item.name + ' = function(params){ return require(\'../TiProxy\'); };');
-			return;
-		}
-
-		if (item.deprecated) {
-			methods.push(apiname + '.prototype.' + item.name + ' = function(){ throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); };');
 			return;
 		}
 
@@ -236,9 +222,9 @@ _.each(apis, function(api, namespace){
 
 		var guessprop = item.name.length > 3 ? item.name[3].toLowerCase() + item.name.substr(4) : '';
 
-		if (/set.+/.test(item.name) && _.indexOf(properties, guessprop) > -1) {
+		if (/^set[A-Z0-9]/.test(item.name) && _.indexOf(names, '\'' + guessprop + '\'') > -1) {
 			methods.push(apiname + '.prototype.' + item.name + ' = function(property){ this.' + guessprop + ' = property; };');
-		} else if (/get.+/.test(item.name) && _.indexOf(properties, guessprop) > -1) {
+		} else if (/^get[A-Z0-9]/.test(item.name) && _.indexOf(names, '\'' + guessprop + '\'') > -1) {
 			methods.push(apiname + '.prototype.' + item.name + ' = function(){ return this.' + guessprop + '; };');
 		} else {
 			methods.push(apiname + '.prototype.' + item.name + ' = function(){' + returns + '};');
