@@ -1,6 +1,6 @@
 {
   "name": "ti-slag",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Titanium faker API, Titanium app running on Node.js.",
   "keywords": [
     "appcelerator",

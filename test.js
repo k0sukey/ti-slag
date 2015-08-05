@@ -8,6 +8,8 @@ var _ = require('lodash'),
 
 describe('ti-slag', function(){
 	var appjs = path.join(__dirname, 'test', 'classic', 'Resources', 'app.js'),
+		iosjs = path.join(__dirname, 'test', 'classic', 'Resources', 'ios.js'),
+		andjs = path.join(__dirname, 'test', 'classic', 'Resources', 'android.js'),
 		modjs = path.join(__dirname, 'test', 'classic', 'Resources', 'module.js'),
 		depjs = path.join(__dirname, 'test', 'classic', 'Resources', 'deprecated.js'),
 		prpjs = path.join(__dirname, 'test', 'classic', 'Resources', 'customprop.js');
@@ -41,7 +43,7 @@ describe('ti-slag', function(){
 
 	it('should support platform iOS', function(){
 		assert.doesNotThrow(function(){
-			slag(appjs, {
+			slag(iosjs, {
 				titanium: '4.1.0.GA',
 				platform: 'ios'
 			});
@@ -50,7 +52,7 @@ describe('ti-slag', function(){
 
 	it('should support platform Android', function(){
 		assert.doesNotThrow(function(){
-			slag(appjs, {
+			slag(andjs, {
 				titanium: '4.1.0.GA',
 				platform: 'android'
 			});
@@ -156,6 +158,24 @@ describe('ti-slag', function(){
 			slag(appjs, {
 				titanium: '4.1.0.GA',
 				platform: 'tizen'
+			});
+		}, Error);
+	});
+
+	it('should throw exception invalid plafrom specified', function(){
+		assert.throws(function(){
+			slag(andjs, {
+				titanium: '4.1.0.GA',
+				platform: 'ios'
+			});
+		}, Error);
+	});
+
+	it('should throw exception invalid plafrom specified', function(){
+		assert.throws(function(){
+			slag(iosjs, {
+				titanium: '4.1.0.GA',
+				platform: 'android'
 			});
 		}, Error);
 	});

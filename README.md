@@ -71,7 +71,7 @@ Please be Alloy compiled before. ```$ alloy compile --config platform=ios``` or 
 			BaseController: 'path/to/BaseController.js',	// optional, default Resources/iphone/alloy/controllers/BaseController.js
 			underscore: 'path/to/underscore.js',			// optional, default Resources/iphone/alloy/underscore.js
 			backbone: 'path/to/backbone.js',				// optional, default Resources/iphone/alloy/backbone.js
-			constats: 'path/to/constants.js',				// optional, default Resources/iphone/alloy/constants.js
+			constants: 'path/to/constants.js',				// optional, default Resources/iphone/alloy/constants.js
 			CFG: 'path/to/CFG.js'							// optional, default Resources/alloy/CFG.js
 		}),
 		context = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'index.js'), {

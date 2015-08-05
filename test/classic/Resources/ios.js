@@ -1,0 +1,1 @@
+var toolbar = Ti.UI.iOS.createToolbar();

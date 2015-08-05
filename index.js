@@ -13,6 +13,7 @@ var slag = function(file, options){
 	options.silent = options.silent || false;
 
 	process.env.SLAG_STRICT = _.isBoolean(options.strict) ? options.strict : true;
+	process.env.SLAG_PLATFORM = options.platform;
 
 	var titaniumpath,
 		titanium,
@@ -31,7 +32,8 @@ var slag = function(file, options){
 
 	// check the platform
 	if (options.platform !== 'ios' &&
-		options.platform !== 'android') {
+		options.platform !== 'android' &&
+		options.platform !== 'windowsphone') {
 		throw new Error('Invalid platform specified ' + options.platform);
 	}
 

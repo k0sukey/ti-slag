@@ -1,0 +1,1 @@
+var searchview = Ti.UI.Android.createSearchView();

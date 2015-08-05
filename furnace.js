@@ -90,11 +90,11 @@ _.each(apis, function(api, namespace){
 		names.push('\'' + item.name + '\'');
 
 		if (item.name === 'apiName') {
-			properties.push('if (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
+			properties.push('if (__SLAG_PROPERTIES.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
 			properties.push('this.' + item.name + ' = \'' + namespace.replace(/^Titanium/, 'Ti') + '\';'); 
 		} else {
 			if (item.deprecated) {
-				properties.push('if (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); }');
+				properties.push('if (__SLAG_PROPERTIES.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); }');
 				return;
 			}
 
@@ -105,21 +105,21 @@ _.each(apis, function(api, namespace){
 			var defaults = getType(item.type);
 
 			if (item.permission && item.permission === 'read-only') {
-				properties.push('if (__SLAG__properties.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
+				properties.push('if (__SLAG_PROPERTIES.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
 				properties.push('this.' + item.name + ' = ' + defaults + ';');
 			} else {
-				properties.push('this.' + item.name + ' = __SLAG__properties.' + item.name + ' || ' + defaults + ';');
+				properties.push('this.' + item.name + ' = __SLAG_PROPERTIES.' + item.name + ' || ' + defaults + ';');
 			}
 		}
 	});
 
 	names.push('\'id\'');
-	properties.push('this.id = __SLAG__properties.id || \'\';');
+	properties.push('this.id = __SLAG_PROPERTIES.id || \'\';');
 
-	code += 'function ' + apiname + '(__SLAG__properties) {';
-	code += '__SLAG__properties = __SLAG__properties || {};';
-	code += 'var __SLAG__checks = [], __SLAG__names = [' + names.join(', ') + '];';
-	code += 'if (__SLAG__names.length > 0 && process.env.SLAG_STRICT === \'true\') { for (var __SLAG__name in __SLAG__properties) { if (__SLAG__names.indexOf(__SLAG__name) === -1) { throw new Error(\'Use user custom property \' + __SLAG__name); } } } else if (__SLAG__names.length === 0 && __SLAG__properties.length > 0 && process.env.SLAG_STRICT === \'true\') { throw new Error(\'Use user custom properties. \' + __SLAG__properties.join(\', \')); }';
+	code += 'function ' + apiname + '(__SLAG_PROPERTIES) {';
+	code += '__SLAG_PROPERTIES = __SLAG_PROPERTIES || {};';
+	code += 'var __SLAG_CHECKS = [], __SLAG_NAMES = [' + names.join(', ') + '];';
+	code += 'if (__SLAG_NAMES.length > 0 && process.env.SLAG_STRICT === \'true\') { for (var __SLAG_NAME in __SLAG_PROPERTIES) { if (__SLAG_NAMES.indexOf(__SLAG_NAME) === -1) { throw new Error(\'Use user custom property \' + __SLAG_NAME); } } } else if (__SLAG_NAMES.length === 0 && __SLAG_PROPERTIES.length > 0 && process.env.SLAG_STRICT === \'true\') { throw new Error(\'Use user custom properties. \' + __SLAG_PROPERTIES.join(\', \')); }';
 	code += 'var md5 = crypto.createHash(\'md5\'); md5.update(crypto.randomBytes(32), \'binary\');';
 	code += 'this.__SLAG_ID = md5.digest(\'hex\');';
 	code += 'this.__SLAG_PARENT;';
@@ -129,6 +129,18 @@ _.each(apis, function(api, namespace){
 	var methods = [];
 
 	_.each(api.methods, function(item){
+		var platforms = [];
+
+		_.each(item.platforms, function(platform){
+			if (platform.name === 'iphone' || platform.name === 'ipad') {
+				platform.name = 'ios';
+			}
+
+			if (_.indexOf(platforms, '\'' + platform.name + '\'') === -1) {
+				platforms.push('\'' + platform.name + '\'');
+			}
+		});
+
 		if (item.deprecated) {
 			methods.push(apiname + '.prototype.' + item.name + ' = function(){ throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); };');
 			return;
@@ -139,17 +151,17 @@ _.each(apis, function(api, namespace){
 		}
 
 		if (item.name === 'add' && _.indexOf(names, '\'children\'') > -1) {
-			methods.push(apiname + '.prototype.add = function(params){ this.children.push(params); params.__SLAG_PARENT = this; };');
+			methods.push(apiname + '.prototype.add = function(__SLAG_PARAMETER){ this.children.push(__SLAG_PARAMETER); __SLAG_PARAMETER.__SLAG_PARENT = this; };');
 			return;
 		}
 
 		if (item.name === 'remove' && _.indexOf(names, '\'children\'') > -1) {
-			methods.push(apiname + '.prototype.remove = function(params){ for (var __SLAG_COUNTER = 0; __SLAG_COUNTER < this.children.length; __SLAG_COUNTER++) { if (this.children[__SLAG_COUNTER].__SLAG_ID === params.__SLAG_ID) { this.children.splice(__SLAG_COUNTER, 1); break; } } params.__SLAG_PARENT = undefined; };');
+			methods.push(apiname + '.prototype.remove = function(__SLAG_PARAMETER){ for (var __SLAG_COUNTER = 0; __SLAG_COUNTER < this.children.length; __SLAG_COUNTER++) { if (this.children[__SLAG_COUNTER].__SLAG_ID === __SLAG_PARAMETER.__SLAG_ID) { this.children.splice(__SLAG_COUNTER, 1); break; } } __SLAG_PARAMETER.__SLAG_PARENT = undefined; };');
 			return;
 		}
 
 		if (item.name === 'applyProperties') {
-			methods.push(apiname + '.prototype.applyProperties = function(params){ for (var __SLAG__name in params) { this[__SLAG__name] = params[__SLAG__name]; } };');
+			methods.push(apiname + '.prototype.applyProperties = function(__SLAG_PROPERTIES){ for (var __SLAG_NAME in __SLAG_PROPERTIES) { this[__SLAG_NAME] = __SLAG_PROPERTIES[__SLAG_NAME]; } };');
 			return;
 		}
 
@@ -166,7 +178,7 @@ _.each(apis, function(api, namespace){
 			if (item.deprecated) {
 				methods.push(apiname + '.prototype.' + item.name + ' = function(){ throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' was deprecated, since ' + item.deprecated.since + '\'); };');
 			} else {
-				methods.push(apiname + '.prototype.' + item.name + ' = function(params){ var ' + childFile + ' = require(\'./' + childPath + '\'); return ' + childFile + '(params); };');
+				methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG_PROPERTY){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } var ' + childFile + ' = require(\'./' + childPath + '\'); return ' + childFile + '(__SLAG_PROPERTY); };');
 			}
 
 			return;
@@ -176,9 +188,9 @@ _.each(apis, function(api, namespace){
 			(item.name === 'debug' || item.name === 'error' || item.name === 'info' ||
 			item.name === 'log' || item.name === 'trace' || item.name === 'warn')) {
 			if (item.name === 'debug') {
-				methods.push(apiname + '.prototype.' + item.name + ' = function(params){ console.info(params); };');
+				methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG_PARAMETER){ console.info(__SLAG_PARAMETER); };');
 			} else {
-				methods.push(apiname + '.prototype.' + item.name + ' = function(params){ console.' + item.name + '(params); };');
+				methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG_PARAMETER){ console.' + item.name + '(__SLAG_PARAMETER); };');
 			}
 			return;
 		}
@@ -199,11 +211,11 @@ _.each(apis, function(api, namespace){
 		}
 
 		if (/^set[A-Z0-9]/.test(item.name) && _.indexOf(names, '\'' + guessprop + '\'') > -1) {
-			methods.push(apiname + '.prototype.' + item.name + ' = function(property){ this.' + guessprop + ' = property; };');
+			methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG__PROPERTY){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } this.' + guessprop + ' = __SLAG__PROPERTY; };');
 		} else if (/^get[A-Z0-9]/.test(item.name) && _.indexOf(names, '\'' + guessprop + '\'') > -1) {
-			methods.push(apiname + '.prototype.' + item.name + ' = function(){ return this.' + guessprop + '; };');
+			methods.push(apiname + '.prototype.' + item.name + ' = function(){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } return this.' + guessprop + '; };');
 		} else {
-			methods.push(apiname + '.prototype.' + item.name + ' = function(){ ' + returns + ' };');
+			methods.push(apiname + '.prototype.' + item.name + ' = function(){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } ' + returns + ' };');
 		}
 	});
 	code += methods.join('');
