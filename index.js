@@ -1,5 +1,9 @@
 var _ = require('lodash'),
 	fs = require('fs'),
+	istanbul = require('istanbul'),
+	instrumenter = new istanbul.Instrumenter({
+		coverageVariable: '__coverage__'
+	}),
 	path = require('path'),
 	vm = require('vm');
 
@@ -11,6 +15,7 @@ var slag = function(file, options){
 	options.module = options.module || {};
 	options.injection = options.injection || null;
 	options.silent = options.silent || false;
+	options.coverage = options.coverage || false;
 
 	process.env.SLAG_STRICT = _.isBoolean(options.strict) ? options.strict : true;
 	process.env.SLAG_PLATFORM = options.platform;
@@ -88,8 +93,14 @@ var slag = function(file, options){
 	// running in vm
 	var context = createContext(),
 		code = fs.readFileSync(file, 'utf8');
+
 	options.injection && (code = options.injection(code));
-	vm.runInContext(code, context);
+
+	if (options.coverage) {
+		vm.runInContext(instrumenter.instrumentSync(code, path.relative(process.cwd(), file)), context);
+	} else {
+		vm.runInContext(code, context);
+	}
 
 	return context;
 };
