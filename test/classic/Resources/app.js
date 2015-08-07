@@ -59,5 +59,9 @@ tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);  
 
 
+tabGroup.addEventListener('open', function(){
+	// do stuff
+});
+
 // open tab group
 tabGroup.open();

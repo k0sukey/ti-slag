@@ -147,6 +147,11 @@ It throws an exception If you use a custom property.
 * false (default)
 * true
 
+##### coverage
+
+* false (default)
+* true
+
 ### Testing in mocha
 
 And coverage.
@@ -221,8 +226,29 @@ $ npm test
 
 **Coverage**
 
-```sh
-$ npm run coverage
+Edit the test.js
+
+```js
+var istanbul = require('istanbul'),
+	collector = new istanbul.Collector(),
+	reporter = new istanbul.Reporter();
+
+describe('example test', function(){
+	it('should does not throw exception', function(){
+		assert.doesNotThrow(function(){
+			var context = slag('path/to/app.js', {
+				titanium: '4.0.0.GA',
+				platform: 'ios',
+				coverage: true
+			});
+			collector.add(context.__coverage__);
+
+			reporter.add('text');
+			reporter.addAll([ 'lcov', 'clover' ]);
+			reporter.write(collector, true);
+		});
+	});
+});
 ```
 
 ## CLI
