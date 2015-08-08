@@ -58,10 +58,22 @@ win2.add(label2);
 tabGroup.addTab(tab1);  
 tabGroup.addTab(tab2);  
 
+function doOpen() {
+	console.log('TabGroup opened');
+}
 
-tabGroup.addEventListener('open', function(){
-	// do stuff
-});
+function doFocus(e) {
+	if (e.index === 0) {
+		console.log('tab1 clicked');
+	} else if (e.index === 1) {
+		console.log('tab2 clicked');
+	} else {
+		console.log('tabX clicked');
+	}
+}
+
+tabGroup.addEventListener('open', doOpen);
+tabGroup.addEventListener('focus', doFocus);
 
 // open tab group
 tabGroup.open();
