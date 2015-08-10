@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>ti-slag</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github-gist.min.css">
+		<link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notosansjapanese.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+	</head>
+	<body>
+		<div id="sidebar">
+			<p class="title"><a href="#">ti-slag</a></p>
+			<a class="toc" href="#introduction">はじめに</a>
+			<a class="toc" href="#environment">環境構築</a>
+			<ul class="menu">
+				<li><a href="#environment-01">Titanium プロジェクトを作成する</a></li>
+				<li><a href="#environment-02">npm パッケージをインストールする</a></li>
+				<li><a href="#environment-03">package.json を編集する</a></li>
+			</ul>
+			<a class="toc" href="#testscript">テストスクリプト</a>
+			<ul class="menu">
+				<li><a href="#testscript-01">Classic プロジェクト</a></li>
+				<li><a href="#testscript-02">Alloy プロジェクト</a></li>
+				<li><a href="#testscript-03">カバレッジ</a></li>
+			</ul>
+			<a class="toc" href="#reference">リファレンスマニュアル</a>
+			<ul class="menu">
+				<li><a href="#reference-01">第一引数</a></li>
+				<li><a href="#reference-02">第二引数</a>
+					<ul class="submenu">
+						<li><a href="#reference-02-01">SDK バージョン</a></li>
+						<li><a href="#reference-02-02">プラットフォーム</a></li>
+						<li><a href="#reference-02-03">モジュール</a></li>
+						<li><a href="#reference-02-04">Strict</a></li>
+						<li><a href="#reference-02-05">サイレント</a></li>
+						<li><a href="#reference-02-06">カバレッジ</a></li>
+						<li><a href="#reference-02-07">Injection</a></li>
+					</ul>
+				</li>
+				<li><a href="#reference-03">戻り値</a></li>
+			</ul>
+		</div>
+
+		<div id="content">
+			<h1><a href="https://github.com/k0sukey/ti-slag">ti-slag</a> <small>Titanium faker API, Titanium app running on Node.js</small></h1>
+			<h2 id="introduction">はじめに</h2>
+			<p>ti-slag は Node.js 実行環境で動く、Titanium アプリケーション用のテストフレームワークです。</p>
+			<p>これまで Titanium にはいくつかのテストフレームワークがありましたが、どのフレームワークにもシミュレータ／エミュレータ、もしくは実機が必要でした。
+				つまり Titanium は容易にユニットテストをすることができなかったのです。
+				ti-slag は Node.js 実行環境さえあれば、完全にターミナル上でテストを完結することができます。
+				アプリケーションのターゲットになるプラットフォームを用意する必要はありません。</p>
+			<p>ti-slag は現在も開発中です。
+				万が一実行中に VM がクラッシュしたりする場合は、Issues 等でコードと一緒にご連絡ください。</p>
+			<h3>ti-slag のアーキテクチャ</h3>
+			<dl>
+				<dt>Titanium faker API</dt>
+				<dd>ti-slag の核となる、Titanium API を Node.js 実行環境で動作できるようする API 郡です。
+					この API 郡は Appcelerator 社から提供されている、公式リマレンスマニュアルの JSON を元に自動生成しています。
+					コードを ti-slag で実行する際に、SDK のバージョンやプラットフォームを指定することができます。</dd>
+				<dt>VM モジュール</dt>
+				<dd>簡単に言ってしまうと、安全な eval 環境を提供してくれます。
+					サンドボックスなコンテキストを作り、その中で JavaScript を実行することができます。
+					require さえ存在しない環境ですが、この require をうまくフックすることにより、アプリケーションコード内部で Titanium のコードを require された場合でも、継続して ti-slag が実行しています。</dd>
+				<dt>Mocha</dt>
+				<dd>とてもシンプルで柔軟な JavaScript 用テストフレームワークです。
+					たぶんその他のテストフレームワークを利用することもできますが、今回は Mocha を採用しています。
+					それは Mocha が大好きだからです。</dd>
+				<dt>Instanbul</dt>
+				<dd>JavaScript 用 のカバレッジフレームワークです。
+					ti-slag のカバレッジオプションを有効にすると、テストスクリプト内で Instanbul のコレクタでカバレッジを収集できるようになります。
+					テストスクリプトが完走した際、収集されたカバレッジを元にレポートとして出力することができます。</dd>
+			</dl>
+			<h3>いくつかのオプション</h3>
+			<p>ti-slag は Titanium SDK のバージョン、プラットフォームをシミュレートします。
+				ご利用の開発環境にあったオプションを指定してください。</p>
+			<p>ti-slag はネイティブモジュールをシミュレートすることができます。
+				例えば地図を扱う ti.map モジュールであれば、プロパティ・メソッドを JavaScript で記述し、オプションで指定すると Titanium API 以外の API を実行することができます。
+				ただし、これはご自身で用意する必要があります。</p>
+			<p>ti-slag はテストを厳格にするため、いくつかの例外をスローします。
+				詳細な使い方はリファレンスマニュアルを参照してください。</p>
+			<ul>
+				<li>廃止されたメソッドを実行すると例外をスローします</li>
+				<li>オプションで指定されているプラットフォーム以外の Titanium API を使用すると例外をスローします</li>
+				<li>Titanium オブジェクトに対して、カスタムプロパティを定義すると例外をスローします。
+					strict オプションを false にすることにより許容するようになります</li>
+			</ul>
+
+			<hr>
+
+			<h2 id="environment">環境構築</h2>
+			<h3 id="environment-01">Titanium プロジェクトを作成する</h3>
+			<p>まずはじめにこれがないと実行することができません。
+				すでにご自身のプロジェクトがある方は読み飛ばしてください。</p>
+			<pre><code class="bash">$ appc ti create --type app --id be.k0suke.sandbox --name Sandbox --platforms ios,android --url http://sandbox.k0suke.be --workspace-dir ./</code></pre>
+			<h3 id="environment-02">npm パッケージをインストールする</h3>
+			<p>テストをおこなうには、最低でも ti-slag と Mocha をインストールする必要があります。
+				カバレッジを計測する場合は、Instanbul と signal-exit をインストールしてください。
+				signal-exit は Node.js のプロセスが終了するときのイベントを取得することができるので、ここで、カバレッジのレポートを出力するようにします。</p>
+			<pre><code class="bash">$ npm init
+$ npm install ti-slag mocha istanbul signal-exit --save-dev</code></pre>
+			<h3 id="environment-03">package.json を編集する</h3>
+			<p>script.test を編集します。
+				Mocha でテストを動かすことができるように編集してください。
+				テストスクリプトは test.js とします。</p>
+			<p>npm パッケージインストール時に --save-dev オプションを付与していると、devDependencies にインストールしたパッケージが羅列されています（パッケージのバージョンは執筆時のものとなります）。</p>
+			<pre><code class="json">{
+  "name": "sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.17",
+    "mocha": "^2.2.5",
+    "signal-exit": "^2.1.2",
+    "ti-slag": "0.0.20"
+  }
+}</code></pre>
+
+			<hr>
+
+			<h2 id="testscript">テストスクリプト</h2>
+			<p>package.json へ記述されているとおり、test.js ファイルをプロジェクト直下へ設置します。</p>
+			<pre><code class="javascript">var slag = require(ti-slag),
+    context = slag('path/to/titaniumcode.js', {
+        titanium: '4.0.0.GA',
+        platform: 'ios'
+    });</code></pre>
+			<p>slag 関数の第一引数は評価対象のファイルパスになります。
+				第二引数のオブジェクトで、Titanium SDK のバージョンやプラットフォームを指定します。
+				戻り値は実行結果のコンテキストになります。
+				これを元にオブジェクトのアサーションや、イベントハンドラを実行することができます。</p>
+			<h3 id="testscript-01">Classic プロジェクト</h3>
+			<p>create コマンドで作成したプロジェクトの初期 app.js になります。
+				それにイベントハンドラを付け加えているだけの状態になります。</p>
+			<pre><code class="javascript">Ti.UI.setBackgroundColor('#000');
+var tabGroup = Ti.UI.createTabGroup();
+
+var win1 = Ti.UI.createWindow({  
+    title: 'Tab 1',
+    backgroundColor:'#fff'
+});
+var tab1 = Ti.UI.createTab({  
+    icon: 'KS_nav_views.png',
+    title: 'Tab 1',
+    window:win1
+});
+
+var label1 = Ti.UI.createLabel({
+    color: '#999',
+    text: 'I am Window 1',
+    font: {
+        fontSize: 20,
+        fontFamily: 'Helvetica Neue'
+    },
+    textAlign: 'center',
+    width: 'auto'
+});
+
+win1.add(label1);
+
+var win2 = Ti.UI.createWindow({  
+    title: 'Tab 2',
+    backgroundColor: '#fff'
+});
+var tab2 = Ti.UI.createTab({  
+    icon: 'KS_nav_ui.png',
+    title: 'Tab 2',
+    window: win2
+});
+
+var label2 = Ti.UI.createLabel({
+    color: '#999',
+    text: 'I am Window 2',
+    font: {
+        fontSize: 20,
+        fontFamily: 'Helvetica Neue'
+        },
+    textAlign: 'center',
+    width: 'auto'
+});
+
+win2.add(label2);
+
+tabGroup.addTab(tab1);  
+tabGroup.addTab(tab2);  
+
+function doOpen() {
+    console.log('TabGroup opened');
+}
+
+function doFocus(e) {
+    if (e.index === 0) {
+        console.log('tab1 clicked');
+    } else if (e.index === 1) {
+        console.log('tab2 clicked');
+    } else {
+        console.log('tabX clicked');
+    }
+}
+
+tabGroup.addEventListener('open', doOpen);
+tabGroup.addEventListener('focus', doFocus);
+
+tabGroup.open();
+</code></pre>
+			<p>ti-slag から返却されたコンテキストを用いて、Assert モジュールでアサーションをおこなっています。
+				今回は Assert モジュールを使いましたが、should パッケージを用いることも可能です。</p>
+			<pre><code class="javascript">/* global describe: true, it: true */
+var assert = require('assert'),
+    path = require('path'),
+    slag = require('ti-slag');
+
+describe('ti-slag test', function(){
+    var context;
+
+    // context 変数へ ti-slag の実行結果を代入し、例外がスローされていないこと
+    it('should does not throw exception', function(){
+        assert.doesNotThrow(function(){
+            context = slag(path.join(__dirname, 'Resources', 'app.js'), {
+                titanium: '4.0.0.GA',
+                platform: 'ios'
+            });
+        });
+    });
+
+    // 一つ目のタブの名前が「Tab 1」であること
+    it('should win1 title is \'Tab 1\'', function(){
+        assert.strictEqual(context.win1.title, 'Tab 1');
+    });
+
+    // tab1 オブジェクトの window プロパティは win1 であること
+    it('should tab1 window property is win1', function(){
+        assert.strictEqual(context.tab1.window, context.win1);
+    });
+
+    // label1 の文字色は「#999」であること
+    it('should label1 color is \'#999\'', function(){
+        assert.strictEqual(context.label1.color, '#999');
+    });
+
+    // 二つ目のタブの名前が「Tab 2」であること
+    it('should win2 title is \'Tab 2\'', function(){
+        assert.strictEqual(context.win2.title, 'Tab 2');
+    });
+
+    // tab2 オブジェクトの window プロパティは win2 であること
+    it('should tab2 window property is win2', function(){
+        assert.strictEqual(context.tab2.window, context.win2);
+    });
+
+    // label2 の文字色は「#999」であること
+    it('should label2 color is \'#999\'', function(){
+        assert.strictEqual(context.label2.color, '#999');
+        collector.add(context.__coverage__);
+    });
+
+    // タブグループの focus イベントで例外がスローされていないこと
+    it('should tab1 click does not throw exception', function(){
+        assert.doesNotThrow(function(){
+            context.doFocus({
+                index: 0
+            });
+        });
+    });
+});</code></pre>
+			<p>test.js の準備ができたら、ターミナルで npm test を実行してみましょう。
+				先ほど記述したテストが実行されていきます。</p>
+			<pre><code class="bash">$ npm test
+
+> sandbox@1.0.0 test /Users/Kosuke/src/Sandbox
+> mocha test.js
+
+
+
+  ti-slag test
+    ✓ should does not throw exception (122ms)
+    ✓ should win1 title is 'Tab 1'
+    ✓ should tab1 window property is win1
+    ✓ should label1 color is '#999'
+    ✓ should win2 title is 'Tab 2'
+    ✓ should tab2 window property is win2
+    ✓ should label2 color is '#999'
+tab1 clicked
+    ✓ should tab1 click does not throw exception
+
+
+  8 passing (126ms)</code></pre>
+			<h3 id="testscript-02">Alloy プロジェクト</h3>
+			<p>Alloy プロジェクトでは、Alloy 自体を ti-slag でロードする必要があります。
+				オプションとして Alloy 自体を渡し、ti-slag で実行できるようにする必要があります。
+				この作業を簡略化できるよう、ti-slag/lib/Alloy.js を用意してありますので利用してください。</p>
+			<pre><code class="javascript">var alloy = require('ti-slag/lib/Alloy.js');</code></pre>
+			<p>また、app 配下のコントローラをそのまま実行することはできません（コントローラとビュー、スタイルが分かれている状態なので、コントローラのみを実行したとしても Titanium API が一切存在しない可能性もあります）ので、テストを実行する前に Alloy でコンパイルする必要があります。</p>
+			<pre><code class="bash">$ alloy compile --config platform=ios
+$ alloy compile --config platform=android</code></pre>
+			<p>ti-slag でコードを実行すると実行結果のコンテキストが返却されますが、この時点ではまだ正確には実行されていません。
+				コントローラに書かれたコードは、コンパイルするとビューとスタイル結合され、Controller という名前の関数に括られます。
+				次にこの関数を実行する必要があります。
+				また、Controller 関数を実行しない限り、コントローラ内部のコードは実行されませんので、必ず実行してください。</p>
+			<p>コントローラは Controller に括られてしまうので、中にあるイベントハンドラがそのままでは実行できません。
+				Alloy@1.7.x から、イベントが Alloy で管理されるようになり、$.getListener(); メソッドでイベントハンドラを取得できるようになりました。
+				ti-slag でも同じように実行できますので、context.getHandler(); として、イベントハンドラを取得し、テストすることができます。
+				もしくは、イベントハンドラ自体を exports で公開してしまうのも手ではありますが、テストのために公開するのは少々考えものですね。</p>
+			<pre><code class="javascript">/* global describe: true, it: true */
+var assert = require('assert'),
+    path = require('path'),
+    slag = require('ti-slag'),
+    Alloy = require('ti-slag/lib/Alloy');
+
+describe('ti-slag test', function(){
+    var context,
+        alloy = Alloy.load({
+            titanium: '4.0.0.GA',
+            platform: 'ios'
+        });
+
+    it('should does not throw exception ti-slag load', function(){
+        assert.doesNotThrow(function(){
+            context = slag(path.join(__dirname, 'Resources', 'iphone', 'alloy', 'controllers', 'index.js'), {
+                titanium: '4.0.0.GA',
+                platform: 'ios',
+                module: {
+                    alloy: alloy.core,
+                    'alloy/controllers/BaseControlle': alloy.BaseController
+                }
+            });
+        });
+    });
+
+    it('should does not throw exception Controller', function(){
+        assert.doesNotThrow(function(){
+            context.Controller();
+        });
+    });
+});</code></pre>
+			<h3 id="testscript-03">カバレッジ</h3>
+			<p>カバレッジを計測するには Instanbul と signal-exit パッケージが必要になります。
+				coverage オプションを true にすると、ti-slag から返却されるコンテキストに __coverage__ が含まれるようになります。
+				これをコレクタに渡してください。
+				最後に、テストスクリプトが完走し、プロセスが終了すると signal-exit が反応し、レポーターの処理を行えばカバレッジが出力されます。</p>
+			<pre><code class="javascript">/* global describe: true, it: true */
+var assert = require('assert'),
+    istanbul = require('istanbul'),
+    collector = new istanbul.Collector(),
+    reporter = new istanbul.Reporter(),
+    path = require('path'),
+    onexit = require('signal-exit'),
+    slag = require('ti-slag');
+
+// テストスクリプトが完走すると、レポーターがカバレッジを出力する
+onexit(function(){
+    reporter.add('text');
+    reporter.addAll([ 'lcov', 'clover' ]);
+    reporter.write(collector, true, function(){
+        console.log('All reports generated');
+    });
+}, {
+    alwaysLast: true
+});
+
+describe('ti-slag test', function(){
+    var context;
+
+    it('should does not throw exception', function(){
+        assert.doesNotThrow(function(){
+            context = slag(path.join(__dirname, 'Resources', 'app.js'), {
+                titanium: '4.0.0.GA',
+                platform: 'ios'
+            });
+        });
+    });
+
+    // ...
+
+    it('should tab1 click does not throw exception', function(){
+        assert.doesNotThrow(function(){
+            context.doFocus({
+                index: 0
+            });
+            // カバレッジ情報をコレクタへ渡す
+            collector.add(context.__coverage__);
+        });
+    });
+});</code></pre>
+            <p>カバレッジのレポートはターミナルに出力されます。
+            	また、プロジェクトフォルダ直下に coverage というフォルダも生成され、その中に HTML も出力されているので、ブラウザでステップを確認しながらカバレッジを 100 ％にしていくことができます。
+            	今回のテストは focus イベント内の if 文分岐や open イベントを網羅していないので、もちろん 100 ％以下になっています。</p>
+            <pre><code class="bash">$ npm test
+
+> sandbox@1.0.0 test /Users/Kosuke/src/Sandbox
+> mocha test.js
+
+
+
+  ti-slag coverage
+    ✓ should does not throw exception (122ms)
+    ✓ should win1 title is 'Tab 1'
+    ✓ should tab1 window property is win1
+    ✓ should label1 color is '#999'
+    ✓ should win2 title is 'Tab 2'
+    ✓ should tab2 window property is win2
+    ✓ should label2 color is '#999'
+tab1 clicked
+    ✓ should tab1 click does not throw exception
+
+
+  8 passing (126ms)
+
+------------|----------|----------|----------|----------|----------------|
+File        |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+------------|----------|----------|----------|----------|----------------|
+ Resources/ |    82.61 |       25 |       50 |    82.61 |                |
+  app.js    |    82.61 |       25 |       50 |    82.61 |    62,68,69,71 |
+------------|----------|----------|----------|----------|----------------|
+All files   |    82.61 |       25 |       50 |    82.61 |                |
+------------|----------|----------|----------|----------|----------------|
+
+All reports generated</code></pre>
+			<hr>
+
+			<h2 id="reference">リファレンスマニュアル</h2>
+			<h3 id="reference-01">第一引数 <small>&lt;String&gt;</small></h3>
+			<p>ti-slag で実行したい Titanium コードのファイルパスを指定します。</p>
+			<h3 id="reference-02">第二引数 <small>&lt;Object&gt;</small></h3>
+			<p></p>
+			<h4 id="reference-02-01">SDK バージョン <small>&lt;String&gt;</small></h4>
+			<p>ti-slag で実行する Titanium SDK バージョンを指定してください。'4.1.0.GA'、'4.0.0.GA'、'3.5.1.GA' を指定することができます。
+				もしもこの中にないバージョンの場合は、furnace.js で自動生成することができます（自己責任）。</p>
+			<pre><code class="javascript">{ titanium: '4.0.0.GA' }</code></pre>
+			<h4 id="reference-02-02">プラットフォーム <small>&lt;String&gt;</small></h4>
+			<p>ti-slag で実行するプラットフォームを指定してください。'ios'、'android'、'windowsphone' を指定することができます。</p>
+			<pre><code class="javascript">{ platform: 'ios' }</code></pre>
+			<h4 id="reference-02-03">モジュール <small>&lt;Object&gt;</small></h4>
+			<p>ネイティブモジュールや Alloy を ti-slag 内で実行する場合、ここで渡すことができます。
+				実際に require される名称をキーにしてください。</p>
+			<pre><code class="javascript">{
+    module: {
+        ti.map: {
+            // 自分でがんばれ
+        }
+    }
+}</code></pre>
+			<h4 id="reference-02-04">Strict <small>&lt;Boolean&gt;</small></h4>
+			<p>true を指定すると Titanium オブジェクトでカスタムプロパティを使用している場合、例外がスローされるようになります（初期値は true）。</p>
+			<pre><code class="javascript">{ strict: true }</code></pre>
+			<h4 id="reference-02-05">サイレント <small>&lt;Boolean&gt;</small></h4>
+			<p>true を指定すると Ti.API.info、console.log、alert 系の API はターミナルへ出力しなくなります（初期値は false）。</p>
+			<pre><code class="javascript">{ silent: true }</code></pre>
+			<h4 id="reference-02-06">カバレッジ <small>&lt;Boolean&gt;</small></h4>
+			<p>カバレッジを計測する場合は true を指定します（初期値は false）。
+				true を指定すると、実行結果コンテキストに __coverage__ が含まれるようになります。
+				また、カバレッジの計測には往々にして実行速度が低下します。</p>
+			<pre><code class="javascript">{ coverage: true }</code></pre>
+			<h4 id="reference-02-07">Injection <small>&lt;Function&gt;</small></h4>
+			<p>ti-slag で実行される Titanium コードへ、コードを注入することができます。
+				このオプションは乱用しないでください。
+				テストの信頼性が著しく低下してしまう可能性があります。</p>
+			<p>例えば、以下の例では Alloy.Globals.navigation に Ti.UI.iOS.NavigationWindow がどこかの段階で代入される場合、テストではそれを知ることができません。
+				その場合、exports.Globals のコードを置換して、あたかも Ti.UI.iOS.NavigationWindow として振る舞うようにしています。
+				あくまでも文字列として置換していますので、仮に require するようであればモジュールオプションで実体を渡す必要があります。
+				ここで渡される TiProxy は、Titanium API の全プロパティとメソッドを持ったワイルドカード API です。
+				これは ti-slag に内包されているので、必要に応じて使用してください。</p>
+			<pre><code class="javascript">{
+    module: {
+        'ti-slag/lib/TiProxy': require('ti-slag/lib/TiProxy')
+    },
+    injection: function(code){
+        return code.replace(/exports\.Globals\s=\s\{\};/m, 'exports.Globals = { navigation: require(\'ti-slag/lib/TiProxy\') };');
+    }
+}</code></pre>
+			<h3 id="reference-03">戻り値 <small>&lt;Object&gt;</small></h3>
+			<p>ti-slag で実行された結果のコンテキストが返却されます。
+				このコンテキストを用いて Titanium オブジェクトのアサーションやイベントハンドラのユニットテストをおこなうことができます。</p>
+
+			<hr>
+
+			<p class="footer">ti-slag &copy; Kosuke Isobe</p>
+		</div>
+	</body>
+</html>
