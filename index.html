@@ -18,6 +18,10 @@
 		<div id="sidebar">
 			<p class="title"><a href="#">ti-slag</a></p>
 			<a class="toc" href="#introduction">はじめに</a>
+			<ul class="menu">
+				<li><a href="#introduction-01">ti-slag のアーキテクチャ</a></li>
+				<li><a href="#introduction-02">いくつかのオプション</a></li>
+			</ul>
 			<a class="toc" href="#environment">環境構築</a>
 			<ul class="menu">
 				<li><a href="#environment-01">Titanium プロジェクトを作成する</a></li>
@@ -45,6 +49,8 @@
 					</ul>
 				</li>
 				<li><a href="#reference-03">戻り値</a></li>
+				<li><a href="#reference-04">ti-slag/lib/Alloy</a></li>
+				<li><a href="#reference-05">ti-slag/lib/TiProxy</a></li>
 			</ul>
 		</div>
 
@@ -58,11 +64,11 @@
 				アプリケーションのターゲットになるプラットフォームを用意する必要はありません。</p>
 			<p>ti-slag は現在も開発中です。
 				万が一実行中に VM がクラッシュしたりする場合は、Issues 等でコードと一緒にご連絡ください。</p>
-			<h3>ti-slag のアーキテクチャ</h3>
+			<h3 id="introduction-01">ti-slag のアーキテクチャ</h3>
 			<dl>
 				<dt>Titanium faker API</dt>
 				<dd>ti-slag の核となる、Titanium API を Node.js 実行環境で動作できるようする API 郡です。
-					この API 郡は Appcelerator 社から提供されている、公式リマレンスマニュアルの JSON を元に自動生成しています。
+					この API 郡は Appcelerator 社から提供されている、公式リファレンスマニュアルの JSON を元に自動生成しています。
 					コードを ti-slag で実行する際に、SDK のバージョンやプラットフォームを指定することができます。</dd>
 				<dt>VM モジュール</dt>
 				<dd>簡単に言ってしまうと、安全な eval 環境を提供してくれます。
@@ -77,7 +83,7 @@
 					ti-slag のカバレッジオプションを有効にすると、テストスクリプト内で Instanbul のコレクタでカバレッジを収集できるようになります。
 					テストスクリプトが完走した際、収集されたカバレッジを元にレポートとして出力することができます。</dd>
 			</dl>
-			<h3>いくつかのオプション</h3>
+			<h3 id="introduction-02">いくつかのオプション</h3>
 			<p>ti-slag は Titanium SDK のバージョン、プラットフォームをシミュレートします。
 				ご利用の開発環境にあったオプションを指定してください。</p>
 			<p>ti-slag はネイティブモジュールをシミュレートすることができます。
@@ -86,7 +92,7 @@
 			<p>ti-slag はテストを厳格にするため、いくつかの例外をスローします。
 				詳細な使い方はリファレンスマニュアルを参照してください。</p>
 			<ul>
-				<li>廃止されたメソッドを実行すると例外をスローします</li>
+				<li>廃止された（廃止対象であっても）メソッドを実行すると例外をスローします</li>
 				<li>オプションで指定されているプラットフォーム以外の Titanium API を使用すると例外をスローします</li>
 				<li>Titanium オブジェクトに対して、カスタムプロパティを定義すると例外をスローします。
 					strict オプションを false にすることにより許容するようになります</li>
@@ -99,6 +105,9 @@
 			<p>まずはじめにこれがないと実行することができません。
 				すでにご自身のプロジェクトがある方は読み飛ばしてください。</p>
 			<pre><code class="bash">$ appc ti create --type app --id be.k0suke.sandbox --name Sandbox --platforms ios,android --url http://sandbox.k0suke.be --workspace-dir ./</code></pre>
+			<p>Alloy を使用する場合は、プロジェクトフォルダへ移動して Alloy 環境を生成してください。</p>
+			<pre><code class="bash">$ cd Sandbox
+$ alloy new</code></pre>
 			<h3 id="environment-02">npm パッケージをインストールする</h3>
 			<p>テストをおこなうには、最低でも ti-slag と Mocha をインストールする必要があります。
 				カバレッジを計測する場合は、Instanbul と signal-exit をインストールしてください。
@@ -132,7 +141,7 @@ $ npm install ti-slag mocha istanbul signal-exit --save-dev</code></pre>
 
 			<h2 id="testscript">テストスクリプト</h2>
 			<p>package.json へ記述されているとおり、test.js ファイルをプロジェクト直下へ設置します。</p>
-			<pre><code class="javascript">var slag = require(ti-slag),
+			<pre><code class="javascript">var slag = require('ti-slag'),
     context = slag('path/to/titaniumcode.js', {
         titanium: '4.0.0.GA',
         platform: 'ios'
@@ -149,7 +158,7 @@ var tabGroup = Ti.UI.createTabGroup();
 
 var win1 = Ti.UI.createWindow({  
     title: 'Tab 1',
-    backgroundColor:'#fff'
+    backgroundColor: '#fff'
 });
 var tab1 = Ti.UI.createTab({  
     icon: 'KS_nav_views.png',
@@ -434,7 +443,6 @@ All reports generated</code></pre>
 			<h3 id="reference-01">第一引数 <small>&lt;String&gt;</small></h3>
 			<p>ti-slag で実行したい Titanium コードのファイルパスを指定します。</p>
 			<h3 id="reference-02">第二引数 <small>&lt;Object&gt;</small></h3>
-			<p></p>
 			<h4 id="reference-02-01">SDK バージョン <small>&lt;String&gt;</small></h4>
 			<p>ti-slag で実行する Titanium SDK バージョンを指定してください。'4.1.0.GA'、'4.0.0.GA'、'3.5.1.GA' を指定することができます。
 				もしもこの中にないバージョンを使用したい場合は、furnace.js で自動生成することができます（自己責任）。</p>
@@ -483,6 +491,44 @@ All reports generated</code></pre>
 			<h3 id="reference-03">戻り値 <small>&lt;Object&gt;</small></h3>
 			<p>ti-slag で実行された結果のコンテキストが返却されます。
 				このコンテキストを用いて Titanium オブジェクトのアサーションやイベントハンドラのユニットテストをおこなうことができます。</p>
+			<h3 id="reference-04">ti-slag/lib/Alloy <small>&lt;Object&gt;</small></h3>
+			<p>Alloy プロジェクトで容易に Alloy 本体を読み込むためのヘルパーです。
+				基本的な読み込みしかおこないませんので、複雑な、例えば Alloy.Globals 等を作るこんでいる場合は、やはりご自身で Alloy をロードをしたほうが良いかもしれません。</p>
+			<pre><code class="javascript">var Alloy = require('ti-slag/lib/Alloy'),
+    alloy = Alloy.load({
+        // オプションで指定できます。初期値は 4.0.0.GA
+        titanium: '4.0.0.GA',
+        // オプションで指定できます。初期値は ios
+        platform: 'ios',
+        // オプションで指定できます。初期値は Resources/iphone/alloy/alloy.js
+        alloy: 'path/to/alloy.js',
+        // オプションで指定できます。初期値は Resources/iphone/alloy/controllers/BaseController.js
+        BaseController: 'path/to/BaseController.js',
+        // オプションで指定できます。初期値は Resources/iphone/alloy/underscore.js
+        underscore: 'path/to/underscore.js',
+        // オプションで指定できます。初期値は Resources/iphone/alloy/backbone.js
+        backbone: 'path/to/backbone.js',
+        // オプションで指定できます。初期値は Resources/iphone/alloy/constants.js
+        constants: 'path/to/constants.js',
+        // オプションで指定できます。初期値は Resources/alloy/CFG.js
+        CFG: 'path/to/CFG.js'
+
+    });</code></pre>
+			<p>Alloy 本体と BaseController がセットになって返却されます。
+				ti-slag のモジュールオプションで require できるように指定します。</p>
+			<pre><code class="javascript">{
+    module: {
+        alloy: alloy.core,
+        'alloy/controllers/BaseController': alloy.BaseController
+    }
+}</code></pre>
+			<h3 id="reference-05">ti-slag/lib/TiProxy <small>&lt;Object&gt;</small></h3>
+			<p>全 Titanium API のプロパティとメソッドを持っている Titanium オブジェクトを返却するヘルパーです。
+				例えば、Ti.UI.iOS.NavigationWindow を Alloy.Globals.navigation に格納したい場合、ユニットテスト時は Alloy.Globals.navigation に存在するか保証されません。
+				Injection オプションと合わせて、Alloy.Globals.navigation に TiProxy を読みこめば、この問題を回避することができます。
+				しかし、このヘルパーを多用しているようであれば、アプリケーションのロジックを見なおしたほうが良いかもしれません。
+				Alloy.Globals に依存しすぎている可能性があります。</p>
+			<pre><code class="javascript">var TiProxy = require('ti-slag/lib/TiProxy');</code></pre>
 
 			<hr>
 
