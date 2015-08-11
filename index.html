@@ -58,7 +58,7 @@
 			<h1><a href="https://github.com/k0sukey/ti-slag">ti-slag</a> <small>Titanium faker API, Titanium app running on Node.js</small></h1>
 			<h2 id="introduction">はじめに</h2>
 			<p>ti-slag は Node.js 実行環境で動く、Titanium アプリケーション用のテストフレームワークです。</p>
-			<p>これまで Titanium にはいくつかのテストフレームワークがありましたが、どのフレームワークにもシミュレータ／エミュレータ、もしくは実機が必要でした。
+			<p>これまで Titanium にはいくつかのテストフレームワークがありましたが、どのフレームワークにもシミュレータやエミュレータ、もしくは実機が必要でした。
 				つまり Titanium は容易にユニットテストをすることができなかったのです。
 				ti-slag は Node.js 実行環境さえあれば、完全にターミナル上でテストを完結することができます。
 				アプリケーションのターゲットになるプラットフォームを用意する必要はありません。</p>
@@ -222,8 +222,7 @@ function doFocus(e) {
 tabGroup.addEventListener('open', doOpen);
 tabGroup.addEventListener('focus', doFocus);
 
-tabGroup.open();
-</code></pre>
+tabGroup.open();</code></pre>
 			<p>ti-slag から返却されたコンテキストを用いて、Assert モジュールでアサーションをおこなっています。
 				今回は Assert モジュールを使いましたが、should パッケージを用いることも可能です。</p>
 			<pre><code class="javascript">/* global describe: true, it: true */
