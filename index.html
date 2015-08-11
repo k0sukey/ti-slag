@@ -20,7 +20,8 @@
 			<a class="toc" href="#introduction">はじめに</a>
 			<ul class="menu">
 				<li><a href="#introduction-01">ti-slag のアーキテクチャ</a></li>
-				<li><a href="#introduction-02">いくつかのオプション</a></li>
+                <li><a href="#introduction-02">いくつかのオプション</a></li>
+                <li><a href="#introduction-03">その他、注意事項</a></li>
 			</ul>
 			<a class="toc" href="#environment">環境構築</a>
 			<ul class="menu">
@@ -80,7 +81,7 @@
 					それは Mocha が大好きだからです。</dd>
 				<dt>Instanbul</dt>
 				<dd>JavaScript 用 のカバレッジフレームワークです。
-					ti-slag のカバレッジオプションを有効にすると、テストスクリプト内で Instanbul のコレクタでカバレッジを収集できるようになります。
+					ti-slag のカバレッジオプションを有効にすると、テストスクリプト内で Instanbul のコレクタを使ってカバレッジを収集できるようになります。
 					テストスクリプトが完走した際、収集されたカバレッジを元にレポートとして出力することができます。</dd>
 			</dl>
 			<h3 id="introduction-02">いくつかのオプション</h3>
@@ -97,6 +98,12 @@
 				<li>Titanium オブジェクトに対して、カスタムプロパティを定義すると例外をスローします。
 					strict オプションを false にすることにより許容するようになります</li>
 			</ul>
+            <h3 id="introduction-03">その他、注意事項</h3>
+            <p>ti-slag は Titanium.UI API の add/remove メソッドをシミュレートするため、内部的に ID を割り当てます。
+                つまり、テストスクリプト内であってもなくても add/remove すると、getParent/getChildren の返却値を忠実にシミュレートするため、必要であればアサーションすることも可能になります。</p>
+            <p>ti-slag はデフォルトで Titanium オブジェクトのカスタムプロパティを許可していませんが、Alloy プロジェクトの場合は id が自動で割り当てられるため、id のみ許可しています。</p>
+            <p>Titanium faker API を自動生成するための JSON には、そもそも getParent メソッドが存在していません。
+                自動生成する際、getChildren メソッドが存在する Titanium API に対して getParent メソッドを追加しています。</p>
 
 			<hr>
 
