@@ -104,6 +104,13 @@
             <p>ti-slag はデフォルトで Titanium オブジェクトのカスタムプロパティを許可していませんが、Alloy プロジェクトの場合は id が自動で割り当てられるため、id のみ許可しています。</p>
             <p>Titanium faker API を自動生成するための JSON には、そもそも getParent メソッドが存在していません。
                 自動生成する際、getChildren メソッドが存在する Titanium API に対して getParent メソッドを追加しています。</p>
+            <p>ti-slag は Ti.App.Properties をシミュレートします。
+                ファイルに書きだされることはありませんが、実行結果コンテキストには展開されているので、本来の Titanium コードで期待できる通りの振る舞いをします。</p>
+            <p>Ti.Network.HTTPClient でサーバと通信する場合、もちろん ti-slag が提供する Ti.Network.HTTPClient は通信することはありません。
+                <a href="https://gist.github.com/k0sukey/831dc06bccffe479c857">https://gist.github.com/k0sukey/831dc06bccffe479c857</a> のように、npm/request の振る舞いをするように Ti.Network.HTTPClient をラップして使用し、テストコードは npm/request を使用すればテストコード内で通信することができます。
+                モジュールオプションで読み込む request パッケージを npm のものに切り替えてください。
+                この時、通信時間が長くなってしまった場合、Mocha はタイムアウトでテストが通過しない可能性があります（Mocha のタイムアウトする初期値は 2,000 ミリ秒）。
+                通信を伴うテストについては、タイムアウトの制限を外すか、タイムアウトする時間を伸ばしてテストしてください。</p>
 
 			<hr>
 
