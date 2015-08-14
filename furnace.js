@@ -4,8 +4,8 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Titanium_3.5.1.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '3.5.1.GA');
+var apis = require('./Titanium_4.1.0.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '4.1.0.GA');
 
 function getType(type) {
 	var result;
@@ -113,6 +113,10 @@ _.each(apis, function(api, namespace){
 		}
 	});
 
+	if (namespace === 'Titanium.App.Properties') {
+		properties.push('this.__SLAG_SIMULATE_PROPERTIES = {};');
+	}
+
 	names.push('\'id\'');
 	properties.push('this.id = __SLAG_PROPERTIES.id || \'\';');
 
@@ -162,6 +166,36 @@ _.each(apis, function(api, namespace){
 
 		if (item.name === 'applyProperties') {
 			methods.push(apiname + '.prototype.applyProperties = function(__SLAG_PROPERTIES){ for (var __SLAG_NAME in __SLAG_PROPERTIES) { this[__SLAG_NAME] = __SLAG_PROPERTIES[__SLAG_NAME]; } };');
+			return;
+		}
+
+		if (namespace === 'Titanium.App.Properties' && (item.name === 'getBool' || item.name === 'getDouble' || item.name === 'getInt' || item.name === 'getList' || item.name === 'getObject' || item.name === 'getString')) {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG_PROPERTY, __SLAG_DEFAULT){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } ' +
+				'if (this.__SLAG_SIMULATE_PROPERTIES.hasOwnProperty(__SLAG_PROPERTY)) { return this.__SLAG_SIMULATE_PROPERTIES[__SLAG_PROPERTY]; } else { return __SLAG_DEFAULT || null; } };');
+			return;
+		}
+
+		if (namespace === 'Titanium.App.Properties' && (item.name === 'setBool' || item.name === 'setDouble' || item.name === 'setInt' || item.name === 'setList' || item.name === 'setObject' || item.name === 'setString')) {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG_PROPERTY, __SLAG_VALUE){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } ' +
+				'this.__SLAG_SIMULATE_PROPERTIES[__SLAG_PROPERTY] = __SLAG_VALUE; };');
+			return;
+		}
+
+		if (namespace === 'Titanium.App.Properties' && item.name === 'hasProperty') {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG_PROPERTY){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } ' +
+				'if (this.__SLAG_SIMULATE_PROPERTIES.hasOwnProperty(__SLAG_PROPERTY)) { return true; } else { return false; } };');
+			return;
+		}
+
+		if (namespace === 'Titanium.App.Properties' && item.name === 'listProperties') {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } ' +
+				'return Object.keys(this.__SLAG_SIMULATE_PROPERTIES) };');
+			return;
+		}
+
+		if (namespace === 'Titanium.App.Properties' && item.name === 'removeProperty') {
+			methods.push(apiname + '.prototype.' + item.name + ' = function(__SLAG_PROPERTY){ if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { throw new Error(\'This method is not support specified platform\'); } ' +
+				'delete this.__SLAG_SIMULATE_PROPERTIES[__SLAG_PROPERTY] };');
 			return;
 		}
 

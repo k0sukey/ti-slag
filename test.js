@@ -12,7 +12,7 @@ describe('ti-slag', function(){
 		andjs = path.join(__dirname, 'test', 'classic', 'Resources', 'android.js'),
 		modjs = path.join(__dirname, 'test', 'classic', 'Resources', 'module.js'),
 		depjs = path.join(__dirname, 'test', 'classic', 'Resources', 'deprecated.js'),
-		prpjs = path.join(__dirname, 'test', 'classic', 'Resources', 'customprop.js');
+		cspjs = path.join(__dirname, 'test', 'classic', 'Resources', 'customprop.js');
 
 	it('should support Titanium SDK version 4.1.0.GA', function(){
 		assert.doesNotThrow(function(){
@@ -211,7 +211,7 @@ describe('ti-slag', function(){
 
 	it('should throw exception custom property detect', function(){
 		assert.throws(function(){
-			slag(prpjs, {
+			slag(cspjs, {
 				titanium: '4.1.0.GA',
 				platform: 'ios'
 			});
@@ -220,7 +220,7 @@ describe('ti-slag', function(){
 
 	it('should strict mode avoidance custom property detect', function(){
 		assert.doesNotThrow(function(){
-			slag(prpjs, {
+			slag(cspjs, {
 				titanium: '4.1.0.GA',
 				platform: 'ios',
 				strict: false
@@ -485,5 +485,147 @@ describe('Alloy Android', function(){
 
 	it('should #label text is \'Hello, Android\'', function(){
 		assert.strictEqual(views.label.text, 'Hello, Android');
+	});
+});
+
+describe('Ti.App.Properties', function(){
+	var context;
+
+	it('should does not throw exception', function(){
+		assert.doesNotThrow(function(){
+			context = slag(path.join(__dirname, 'test', 'classic', 'Resources', 'properties.js'), {
+				titanium: '4.0.0.GA',
+				platform: 'ios'
+			});
+		});
+	});
+
+	it('should has not property string returns false', function(){
+		assert.strictEqual(context.exports.hasntProperty.string, false);
+	});
+
+	it('should has not property bool returns false', function(){
+		assert.strictEqual(context.exports.hasntProperty.bool, false);
+	});
+
+	it('should has not property int returns false', function(){
+		assert.strictEqual(context.exports.hasntProperty.int, false);
+	});
+
+	it('should has not property double returns false', function(){
+		assert.strictEqual(context.exports.hasntProperty.double, false);
+	});
+
+	it('should has not property list returns false', function(){
+		assert.strictEqual(context.exports.hasntProperty.list, false);
+	});
+
+	it('should has not property object returns false', function(){
+		assert.strictEqual(context.exports.hasntProperty.object, false);
+	});
+
+	it('should default property string returns null', function(){
+		assert.strictEqual(context.exports.default.string, null);
+	});
+
+	it('should default property bool returns null', function(){
+		assert.strictEqual(context.exports.default.bool, null);
+	});
+
+	it('should default property int returns null', function(){
+		assert.strictEqual(context.exports.default.int, null);
+	});
+
+	it('should default property double returns null', function(){
+		assert.strictEqual(context.exports.default.double, null);
+	});
+
+	it('should default property list returns null', function(){
+		assert.strictEqual(context.exports.default.list, null);
+	});
+
+	it('should default property object returns null', function(){
+		assert.strictEqual(context.exports.default.object, null);
+	});
+
+	it('should has property string returns true', function(){
+		assert.strictEqual(context.exports.hasProperty.string, true);
+	});
+
+	it('should has property bool returns true', function(){
+		assert.strictEqual(context.exports.hasProperty.bool, true);
+	});
+
+	it('should has property int returns true', function(){
+		assert.strictEqual(context.exports.hasProperty.int, true);
+	});
+
+	it('should has property double returns true', function(){
+		assert.strictEqual(context.exports.hasProperty.double, true);
+	});
+
+	it('should has property list returns true', function(){
+		assert.strictEqual(context.exports.hasProperty.list, true);
+	});
+
+	it('should has property object returns true', function(){
+		assert.strictEqual(context.exports.hasProperty.object, true);
+	});
+
+	it('should get property string returns \'string\'', function(){
+		assert.strictEqual(context.exports.getProperty.string, 'string');
+	});
+
+	it('should get property bool returns true', function(){
+		assert.strictEqual(context.exports.getProperty.bool, true);
+	});
+
+	it('should get property int returns 1', function(){
+		assert.strictEqual(context.exports.getProperty.int, 1);
+	});
+
+	it('should get property double returns 3.14', function(){
+		assert.strictEqual(context.exports.getProperty.double, 3.14);
+	});
+
+	it('should get property list returns [ \'list\' ]', function(){
+		assert.strictEqual(context.exports.getProperty.list[0], 'list');
+	});
+
+	it('should get property object returns { object: \'object\' }', function(){
+		assert.strictEqual(context.exports.getProperty.object.object, 'object');
+	});
+
+	it('should list properties returns [ \'string\', \'bool\', \'int\', \'double\', \'list\', \'object\' ]', function(){
+		assert.strictEqual(context.exports.listProperties[0], 'string');
+		assert.strictEqual(context.exports.listProperties[1], 'bool');
+		assert.strictEqual(context.exports.listProperties[2], 'int');
+		assert.strictEqual(context.exports.listProperties[3], 'double');
+		assert.strictEqual(context.exports.listProperties[4], 'list');
+		assert.strictEqual(context.exports.listProperties[5], 'object');
+	});
+
+	it('should remove property string returns false', function(){
+		assert.strictEqual(context.exports.removeProperty.string, false);
+	});
+
+	it('should remove property bool returns false', function(){
+		assert.strictEqual(context.exports.removeProperty.bool, false);
+	});
+
+	it('should remove property int returns false', function(){
+		assert.strictEqual(context.exports.removeProperty.int, false);
+	});
+
+	it('should remove property double returns false', function(){
+		assert.strictEqual(context.exports.removeProperty.double, false);
+	});
+
+	it('should remove property list returns false', function(){
+		assert.strictEqual(context.exports.removeProperty.list, false);
+	});
+
+	it('should remove property object returns false', function(){
+		assert.strictEqual(context.exports.removeProperty.object, false);
 	});
 });

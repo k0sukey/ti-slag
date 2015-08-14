@@ -1,6 +1,6 @@
 {
   "name": "ti-slag",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Titanium faker API, Titanium app running on Node.js.",
   "keywords": [
     "appcelerator",
@@ -36,10 +36,7 @@
         "node_modules/",
         "lib/titanium/4.1.0.GA/",
         "lib/titanium/4.0.0.GA/",
-        "lib/titanium/3.5.1.GA/",
-        "lib/alloy/1.6.2/",
-        "lib/alloy/1.5.1/",
-        "lib/vendor/"
+        "lib/titanium/3.5.1.GA/"
       ]
     }
   },
