@@ -629,3 +629,16 @@ describe('Ti.App.Properties', function(){
 		assert.strictEqual(context.exports.removeProperty.object, false);
 	});
 });
+
+describe('Ti.Database', function(){
+	var context;
+
+	it('should does not throw exception', function(){
+		assert.doesNotThrow(function(){
+			context = slag(path.join(__dirname, 'test', 'classic', 'Resources', 'database.js'), {
+				titanium: '4.0.0.GA',
+				platform: 'ios'
+			});
+		});
+	});
+});
