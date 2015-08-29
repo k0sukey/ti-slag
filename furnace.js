@@ -116,6 +116,18 @@ _.each(apis, function(api, namespace){
 
 			var defaults = getType(item.type);
 
+			if (namespace === 'Titanium.Platform' && (item.name === 'name' || item.name === 'osname' || item.name === 'model' || item.name === 'version' || item.name === 'architecture' || item.name === 'ostype')) {
+				properties.push('if (__SLAG_PROPERTIES.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
+				properties.push('if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { this.' + item.name + ' = undefined; } else { this.' + item.name + ' = __SLAG_DEVICE.' + item.name + ' || ' + defaults + '; }');
+				return;
+			}
+
+			if (namespace === 'Titanium.Platform.DisplayCaps' && (item.name === 'density' || item.name === 'dpi' || item.name === 'platformWidth' || item.name === 'platformHeight')) {
+				properties.push('if (__SLAG_PROPERTIES.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
+				properties.push('if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { this.' + item.name + ' = undefined; } else { this.' + item.name + ' = __SLAG_DEVICE.displayCaps.' + item.name + ' || ' + defaults + '; }');
+				return;
+			}
+
 			if (item.permission && item.permission === 'read-only') {
 				properties.push('if (__SLAG_PROPERTIES.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
 				properties.push('if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { this.' + item.name + ' = undefined; } else { this.' + item.name + ' = ' + defaults + '; }');
@@ -138,6 +150,7 @@ _.each(apis, function(api, namespace){
 
 	code += 'function ' + apiname + '(__SLAG_PROPERTIES) {';
 	code += '__SLAG_PROPERTIES = __SLAG_PROPERTIES || {};';
+	code += 'var __SLAG_DEVICE = JSON.parse(process.env.SLAG_DEVICE);';
 	code += 'var __SLAG_CHECKS = [], __SLAG_NAMES = [' + names.join(', ') + '];';
 	code += 'if (__SLAG_NAMES.length > 0 && process.env.SLAG_STRICT === \'true\') { for (var __SLAG_NAME in __SLAG_PROPERTIES) { if (__SLAG_NAMES.indexOf(__SLAG_NAME) === -1) { throw new Error(\'Use user custom property \' + __SLAG_NAME); } } } else if (__SLAG_NAMES.length === 0 && __SLAG_PROPERTIES.length > 0 && process.env.SLAG_STRICT === \'true\') { throw new Error(\'Use user custom properties. \' + __SLAG_PROPERTIES.join(\', \')); }';
 	code += 'var md5 = crypto.createHash(\'md5\'); md5.update(crypto.randomBytes(32), \'binary\');';

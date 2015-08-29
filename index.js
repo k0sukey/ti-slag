@@ -12,6 +12,7 @@ var slag = function(file, options){
 	options = options || {};
 	options.titanium = options.titanium || null;
 	options.platform = options.platform || null;
+	options.device = options.device || { displayCaps: {} };
 	options.module = options.module || {};
 	options.injection = options.injection || null;
 	options.silent = options.silent || false;
@@ -19,6 +20,7 @@ var slag = function(file, options){
 
 	process.env.SLAG_STRICT = _.isBoolean(options.strict) ? options.strict : true;
 	process.env.SLAG_PLATFORM = options.platform;
+	process.env.SLAG_DEVICE = JSON.stringify(options.device);
 
 	var titaniumpath,
 		titanium,

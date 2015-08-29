@@ -642,3 +642,58 @@ describe('Ti.Database', function(){
 		});
 	});
 });
+
+describe('Ti.Platform(.displayCaps)', function(){
+	var device = require('./lib/device'),
+		context;
+
+	it('should does not throw exception', function(){
+		assert.doesNotThrow(function(){
+			context = slag(path.join(__dirname, 'test', 'classic', 'Resources', 'device.js'), {
+				titanium: '4.0.0.GA',
+				platform: 'ios',
+				device: device.iPhone5s
+			});
+		});
+	});
+
+	it('should get Ti.Platform.name returns \'iPhone OS\'', function(){
+		assert.strictEqual(context.exports.iPhone5s.name, 'iPhone OS');
+	});
+
+	it('should get Ti.Platform.osname returns \'iphone\'', function(){
+		assert.strictEqual(context.exports.iPhone5s.osname, 'iphone');
+	});
+
+	it('should get Ti.Platform.model returns \'Simulator\'', function(){
+		assert.strictEqual(context.exports.iPhone5s.model, 'Simulator');
+	});
+
+	it('should get Ti.Platform.version returns \'8.4\'', function(){
+		assert.strictEqual(context.exports.iPhone5s.version, '8.4');
+	});
+
+	it('should get Ti.Platform.architecture returns \'x86_64\'', function(){
+		assert.strictEqual(context.exports.iPhone5s.architecture, 'x86_64');
+	});
+
+	it('should get Ti.Platform.ostype returns \'64bit\'', function(){
+		assert.strictEqual(context.exports.iPhone5s.ostype, '64bit');
+	});
+
+	it('should get Ti.Platform.displayCaps.density returns \'high\'', function(){
+		assert.strictEqual(context.exports.iPhone5s.displayCaps.density, 'high');
+	});
+
+	it('should get Ti.Platform.displayCaps.dpi returns 320', function(){
+		assert.strictEqual(context.exports.iPhone5s.displayCaps.dpi, 320);
+	});
+
+	it('should get Ti.Platform.displayCaps.platformWidth returns 320', function(){
+		assert.strictEqual(context.exports.iPhone5s.displayCaps.platformWidth, 320);
+	});
+
+	it('should get Ti.Platform.displayCaps.platformHeight returns 568', function(){
+		assert.strictEqual(context.exports.iPhone5s.displayCaps.platformHeight, 568);
+	});
+});
