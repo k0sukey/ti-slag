@@ -42,11 +42,12 @@
 					<ul class="submenu">
 						<li><a href="#reference-02-01">SDK バージョン</a></li>
 						<li><a href="#reference-02-02">プラットフォーム</a></li>
-						<li><a href="#reference-02-03">モジュール</a></li>
-						<li><a href="#reference-02-04">Strict</a></li>
-						<li><a href="#reference-02-05">サイレント</a></li>
-						<li><a href="#reference-02-06">カバレッジ</a></li>
-						<li><a href="#reference-02-07">Injection</a></li>
+                        <li><a href="#reference-02-03">端末プロファイル</a></li>
+                        <li><a href="#reference-02-04">モジュール</a></li>
+						<li><a href="#reference-02-05">Strict</a></li>
+						<li><a href="#reference-02-06">サイレント</a></li>
+						<li><a href="#reference-02-07">カバレッジ</a></li>
+						<li><a href="#reference-02-08">Injection</a></li>
 					</ul>
 				</li>
 				<li><a href="#reference-03">戻り値</a></li>
@@ -473,7 +474,29 @@ All reports generated</code></pre>
 			<h4 id="reference-02-02">プラットフォーム <small>&lt;String&gt;</small></h4>
 			<p>ti-slag で実行するプラットフォームを指定してください。'ios'、'android'、'windowsphone' を指定することができます。</p>
 			<pre><code class="javascript">{ platform: 'ios' }</code></pre>
-			<h4 id="reference-02-03">モジュール <small>&lt;Object&gt;</small></h4>
+
+            <h4 id="reference-02-03">端末プロファイル <small>&lt;Object&gt;</small></h4>
+            <p>ti-slag で指定したい端末のプロファイルを指定することができます。
+                いくつかの端末プロファイルがプリセット（'iPhone4s'、'iPhone5'、'iPhone5s'、'iPhone6'、'iPhone6Plus'）されているのでそれを使っても良いですが、ご自身で用意することも可能です。</p>
+            <pre><code class="javascript">{ device: require('ti-slag/lib/device').iPhone5s }</code></pre>
+            <pre><code class="javascript">{
+    device: {
+        name: 'iPhone OS',
+        osname: 'iphone',
+        model: 'Simulator',
+        version: '8.4',
+        architecture: 'x86_64',
+        ostype: '64bit',
+        displayCaps: {
+            density: 'high',
+            dpi: 320,
+            platformWidth: 320,
+            platformHeight: 568
+        }
+    }
+}</code></pre>
+
+			<h4 id="reference-02-04">モジュール <small>&lt;Object&gt;</small></h4>
 			<p>ネイティブモジュールや Alloy を ti-slag 内で実行する場合、ここで渡すことができます。
 				実際に require される名称をキーにしてください。</p>
 			<pre><code class="javascript">{
@@ -483,18 +506,18 @@ All reports generated</code></pre>
         }
     }
 }</code></pre>
-			<h4 id="reference-02-04">Strict <small>&lt;Boolean&gt;</small></h4>
+			<h4 id="reference-02-05">Strict <small>&lt;Boolean&gt;</small></h4>
 			<p>true を指定すると Titanium オブジェクトでカスタムプロパティを使用している場合、例外がスローされるようになります（初期値は true）。</p>
 			<pre><code class="javascript">{ strict: true }</code></pre>
-			<h4 id="reference-02-05">サイレント <small>&lt;Boolean&gt;</small></h4>
+			<h4 id="reference-02-06">サイレント <small>&lt;Boolean&gt;</small></h4>
 			<p>true を指定すると Ti.API.info、console.log、alert 系の API はターミナルへ出力しなくなります（初期値は false）。</p>
 			<pre><code class="javascript">{ silent: true }</code></pre>
-			<h4 id="reference-02-06">カバレッジ <small>&lt;Boolean&gt;</small></h4>
+			<h4 id="reference-02-07">カバレッジ <small>&lt;Boolean&gt;</small></h4>
 			<p>カバレッジを計測する場合は true を指定します（初期値は false）。
 				true を指定すると、実行結果コンテキストに __coverage__ が含まれるようになります。
 				また、カバレッジの計測には往々にして実行速度が低下します。</p>
 			<pre><code class="javascript">{ coverage: true }</code></pre>
-			<h4 id="reference-02-07">Injection <small>&lt;Function&gt;</small></h4>
+			<h4 id="reference-02-08">Injection <small>&lt;Function&gt;</small></h4>
 			<p>ti-slag で実行される Titanium コードへ、コードを注入することができます。
 				このオプションは乱用しないでください。
 				テストの信頼性が著しく低下してしまう可能性があります。</p>
