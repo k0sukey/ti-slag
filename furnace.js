@@ -4,8 +4,8 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Titanium_3.5.1.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '3.5.1.GA');
+var apis = require('./Titanium_4.0.0.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '4.0.0.GA');
 
 function getType(type) {
 	var result;
@@ -87,6 +87,18 @@ _.each(apis, function(api, namespace){
 		names = [];
 
 	_.each(api.properties, function(item){
+		var platforms = [];
+
+		_.each(item.platforms, function(platform){
+			if (platform.name === 'iphone' || platform.name === 'ipad') {
+				platform.name = 'ios';
+			}
+
+			if (_.indexOf(platforms, '\'' + platform.name + '\'') === -1) {
+				platforms.push('\'' + platform.name + '\'');
+			}
+		});
+
 		names.push('\'' + item.name + '\'');
 
 		if (item.name === 'apiName') {
@@ -106,9 +118,9 @@ _.each(apis, function(api, namespace){
 
 			if (item.permission && item.permission === 'read-only') {
 				properties.push('if (__SLAG_PROPERTIES.' + item.name + ') { throw new Error(\'' + namespace.replace(/^Titanium/, 'Ti') + '.' + item.name + ' is read only property\'); }');
-				properties.push('this.' + item.name + ' = ' + defaults + ';');
+				properties.push('if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { this.' + item.name + ' = undefined; } else { this.' + item.name + ' = ' + defaults + '; }');
 			} else {
-				properties.push('this.' + item.name + ' = __SLAG_PROPERTIES.' + item.name + ' || ' + defaults + ';');
+				properties.push('if ([' + platforms.join(', ') + '].indexOf(process.env.SLAG_PLATFORM) === -1) { this.' + item.name + ' = undefined; } else { this.' + item.name + ' = __SLAG_PROPERTIES.' + item.name + ' || ' + defaults + '; }');
 			}
 		}
 	});
