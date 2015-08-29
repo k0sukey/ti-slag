@@ -104,6 +104,39 @@ path/to/example.js
 * ios
 * android
 
+##### device
+
+Load the device profile.
+
+```js
+slag(path.join(__dirname, 'Resources', 'app.js'), {
+	titanium: '4.0.0.GA',
+	platform: 'ios',
+	device: require('ti-slag/lib/device').iPhone5s
+});
+```
+
+Your device profile format.
+
+e.g.
+
+```js
+var profile = {
+	name: 'iPhone OS',
+	osname: 'iphone',
+	model: 'Simulator',
+	version: '8.4',
+	architecture: 'x86_64',
+	ostype: '64bit',
+	displayCaps: {
+		density: 'high',
+		dpi: 320,
+		platformWidth: 320,
+		platformHeight: 568
+	}
+};
+```
+
 ##### module
 
 Native or CommonJS module simulate.
