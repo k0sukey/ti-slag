@@ -477,7 +477,8 @@ All reports generated</code></pre>
 
             <h4 id="reference-02-03">端末プロファイル <small>&lt;Object&gt;</small></h4>
             <p>ti-slag で指定したい端末のプロファイルを指定することができます。
-                いくつかの端末プロファイルがプリセット（'iPhone4s'、'iPhone5'、'iPhone5s'、'iPhone6'、'iPhone6Plus'）されているのでそれを使っても良いですが、ご自身で用意することも可能です。</p>
+                いくつかの端末プロファイルがプリセット（'iPhone4s'、'iPhone5'、'iPhone5s'、'iPhone6'、'iPhone6Plus'）されているのでそれを使っても良いですが、ご自身で用意することも可能です。
+                この端末プロファイルを指定することで、Ti.Platform(.displayCaps) API のいくつかのプロパティが指定された値を返却するようになります。</p>
             <pre><code class="javascript">{ device: require('ti-slag/lib/device').iPhone5s }</code></pre>
             <pre><code class="javascript">{
     device: {
