@@ -271,6 +271,11 @@ _.each(apis, function(api, namespace){
 				childFile = 'TwoDMatrix';
 			} else if (childFile === '3DMatrix') {
 				childFile = 'ThreeDMatrix';
+			} else if (childFile === 'BroadcastIntent' ||
+				childFile === 'IntentChooser' ||
+				childFile === 'ServiceIntent') {
+				childFile = 'Intent';
+				childPath = path.join(namespaces[namespaces.length - 1], childFile);
 			}
 
 			if (item.deprecated) {
