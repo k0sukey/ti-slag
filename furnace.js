@@ -4,8 +4,8 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Titanium_4.0.0.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '4.0.0.GA');
+var apis = require('./Titanium_5.2.0.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '5.2.0.GA');
 
 function getType(type) {
 	var result;
@@ -276,6 +276,10 @@ _.each(apis, function(api, namespace){
 				childFile === 'ServiceIntent') {
 				childFile = 'Intent';
 				childPath = path.join(namespaces[namespaces.length - 1], childFile);
+			} else if (childFile === 'Event' ||
+				childFile === 'Alert' ||
+				childFile === 'Reminder') {
+				childPath = childFile;
 			}
 
 			if (item.deprecated) {
