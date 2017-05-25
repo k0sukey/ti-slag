@@ -95,6 +95,7 @@ path/to/example.js
 
 ##### Titanium SDK version
 
+* 6.0.4.GA
 * 5.2.0.GA
 * 4.1.0.GA
 * 4.0.0.GA
