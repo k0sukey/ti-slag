@@ -78,6 +78,9 @@ var slag = function(file, options){
 
 				if (_.has(options.module, original)) {
 					return options.module[original];
+				} else if (original.startsWith('/alloy') && _.has(options.module, original.substring(1))) {
+					// Catch up ALOY-1523 Update Alloy old require-paths
+					return options.module[original.substring(1)];
 				} else if (fs.existsSync(source)) {
 					newcontext = createContext();
 					vm.runInContext(fs.readFileSync(source, 'utf8'), newcontext);
