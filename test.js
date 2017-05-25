@@ -14,6 +14,15 @@ describe('ti-slag', function(){
 		depjs = path.join(__dirname, 'test', 'classic', 'Resources', 'deprecated.js'),
 		cspjs = path.join(__dirname, 'test', 'classic', 'Resources', 'customprop.js');
 
+	it('should support Titanium SDK version 6.0.4.GA', function(){
+		assert.doesNotThrow(function(){
+			slag(appjs, {
+				titanium: '6.0.4.GA',
+				platform: 'ios'
+			});
+		});
+	});
+
 	it('should support Titanium SDK version 5.2.0.GA', function(){
 		assert.doesNotThrow(function(){
 			slag(appjs, {
@@ -53,7 +62,7 @@ describe('ti-slag', function(){
 	it('should support platform iOS', function(){
 		assert.doesNotThrow(function(){
 			slag(iosjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios'
 			});
 		});
@@ -62,7 +71,7 @@ describe('ti-slag', function(){
 	it('should support platform Android', function(){
 		assert.doesNotThrow(function(){
 			slag(andjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'android'
 			});
 		});
@@ -71,7 +80,7 @@ describe('ti-slag', function(){
 	it('should support modules specified', function(){
 		assert.doesNotThrow(function(){
 			slag(modjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				module: {
 					'be.k0suke.module': {
@@ -87,7 +96,7 @@ describe('ti-slag', function(){
 
 	it('should simulate L', function(){
 		var context = slag(appjs, {
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.L('Hello, world.'));
@@ -95,7 +104,7 @@ describe('ti-slag', function(){
 
 	it('should simulate String.format', function(){
 		var context = slag(appjs, {
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.format('Hello, world.'));
@@ -103,7 +112,7 @@ describe('ti-slag', function(){
 
 	it('should simulate String.formatCurrency', function(){
 		var context = slag(appjs, {
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatCurrency('Hello, world.'));
@@ -111,7 +120,7 @@ describe('ti-slag', function(){
 
 	it('should simulate String.formatDate', function(){
 		var context = slag(appjs, {
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatDate('Hello, world.'));
@@ -119,7 +128,7 @@ describe('ti-slag', function(){
 
 	it('should simulate String.formatDecimal', function(){
 		var context = slag(appjs, {
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatDecimal('Hello, world.'));
@@ -127,7 +136,7 @@ describe('ti-slag', function(){
 
 	it('should simulate String.formatTime', function(){
 		var context = slag(appjs, {
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios'
 		});
 		assert.equal('Hello, world.', context.String.formatTime('Hello, world.'));
@@ -135,7 +144,7 @@ describe('ti-slag', function(){
 
 	it('should simulate alert', function(){
 		var context = slag(appjs, {
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios',
 			silent: true
 		});
@@ -147,7 +156,7 @@ describe('ti-slag', function(){
 	it('should throw exception invalid file path', function(){
 		assert.throws(function(){
 			slag('file_does_not_exist.js', {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios'
 			});
 		}, Error);
@@ -165,7 +174,7 @@ describe('ti-slag', function(){
 	it('should throw exception invalid plafrom specified', function(){
 		assert.throws(function(){
 			slag(appjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'tizen'
 			});
 		}, Error);
@@ -174,7 +183,7 @@ describe('ti-slag', function(){
 	it('should throw exception invalid plafrom specified', function(){
 		assert.throws(function(){
 			slag(andjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios'
 			});
 		}, Error);
@@ -183,7 +192,7 @@ describe('ti-slag', function(){
 	it('should throw exception invalid plafrom specified', function(){
 		assert.throws(function(){
 			slag(iosjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'android'
 			});
 		}, Error);
@@ -192,7 +201,7 @@ describe('ti-slag', function(){
 	it('should throw exception invalid modules specified', function(){
 		assert.throws(function(){
 			slag(modjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				module: 'invalid_module'
 			});
@@ -202,7 +211,7 @@ describe('ti-slag', function(){
 	it('should throw exception unknown module detect', function(){
 		assert.throws(function(){
 			slag(modjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				module: {}
 			});
@@ -212,7 +221,7 @@ describe('ti-slag', function(){
 	it('should throw exception deprecated detect', function(){
 		assert.throws(function(){
 			slag(depjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios'
 			});
 		}, Error);
@@ -221,7 +230,7 @@ describe('ti-slag', function(){
 	it('should throw exception custom property detect', function(){
 		assert.throws(function(){
 			slag(cspjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios'
 			});
 		}, Error);
@@ -230,7 +239,7 @@ describe('ti-slag', function(){
 	it('should strict mode avoidance custom property detect', function(){
 		assert.doesNotThrow(function(){
 			slag(cspjs, {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				strict: false
 			});
@@ -244,7 +253,7 @@ describe('Classic', function(){
 	it('should does not throw exception', function(){
 		assert.doesNotThrow(function(){
 			context = slag(path.join(__dirname, 'test', 'classic', 'Resources', 'app.js'), {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios'
 			});
 		});
@@ -295,7 +304,7 @@ describe('lib/alloy.js', function(){
 	it('should does not throw exception default platform is iOS', function(){
 		assert.doesNotThrow(function(){
 			alloy.load({
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
 				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
 				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
@@ -309,7 +318,7 @@ describe('lib/alloy.js', function(){
 	it('should throw exception alloy path specified, default path is Resources/iphone/alloy.js', function(){
 		assert.throws(function(){
 			alloy.load({
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
 				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
@@ -323,7 +332,7 @@ describe('lib/alloy.js', function(){
 	it('should throw exception BaseController path specified, default path is Resources/iphone/alloy/controllers/BaseController.js', function(){
 		assert.throws(function(){
 			alloy.load({
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
 				underscore: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'underscore.js'),
@@ -337,7 +346,7 @@ describe('lib/alloy.js', function(){
 	it('should throw exception underscore path specified, default path is Resources/iphone/alloy/underscore.js', function(){
 		assert.throws(function(){
 			alloy.load({
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
 				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
@@ -351,7 +360,7 @@ describe('lib/alloy.js', function(){
 	it('should throw exception backbone path specified, default path is Resources/iphone/alloy/backbone.js', function(){
 		assert.throws(function(){
 			alloy.load({
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
 				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
@@ -365,7 +374,7 @@ describe('lib/alloy.js', function(){
 	it('should throw exception constants path specified, default path is Resources/iphone/alloy/constants.js', function(){
 		assert.throws(function(){
 			alloy.load({
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
 				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
@@ -379,7 +388,7 @@ describe('lib/alloy.js', function(){
 	it('should throw exception CFG path specified, default path is Resources/alloy/CFG.js', function(){
 		assert.throws(function(){
 			alloy.load({
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
 				BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
@@ -395,7 +404,7 @@ describe('Alloy iOS', function(){
 	var views,
 		listeners,
 		Alloy = alloy.load({
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'ios',
 			alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy.js'),
 			BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'BaseController.js'),
@@ -406,7 +415,7 @@ describe('Alloy iOS', function(){
 		});
 
 	var context = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'iphone', 'alloy', 'controllers', 'index.js'), {
-		titanium: '5.2.0.GA',
+		titanium: '6.0.4.GA',
 		platform: 'ios',
 		silent: true,
 		module: {
@@ -448,7 +457,7 @@ describe('Alloy Android', function(){
 	var views,
 		listeners,
 		Alloy = alloy.load({
-			titanium: '5.2.0.GA',
+			titanium: '6.0.4.GA',
 			platform: 'android',
 			alloy: path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy.js'),
 			BaseController: path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'controllers', 'BaseController.js'),
@@ -459,7 +468,7 @@ describe('Alloy Android', function(){
 		});
 
 	var context = slag(path.join(__dirname, 'test', 'alloy', 'Resources', 'android', 'alloy', 'controllers', 'index.js'), {
-		titanium:'5.2.0.GA',
+		titanium:'6.0.4.GA',
 		platform: 'android',
 		silent: true,
 		module: {
@@ -709,7 +718,7 @@ describe('Ti.Platform(.displayCaps)', function(){
 
 /* describe('Titanium API cover test', function(){
 			var context = slag(path.join(__dirname, 'test', 'coverage', 'android.js'), {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'android',
 				strict: false
 			});
@@ -718,7 +727,7 @@ describe('Ti.Platform(.displayCaps)', function(){
 	it('should does not throw exception iOS', function(){
 		assert.doesNotThrow(function(){
 			var context = slag(path.join(__dirname, 'test', 'coverage', 'ios.js'), {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'ios',
 				strict: false
 			});
@@ -728,7 +737,7 @@ describe('Ti.Platform(.displayCaps)', function(){
 	it('should does not throw exception Android', function(){
 		assert.doesNotThrow(function(){
 			var context = slag(path.join(__dirname, 'test', 'coverage', 'android.js'), {
-				titanium: '5.2.0.GA',
+				titanium: '6.0.4.GA',
 				platform: 'android',
 				strict: false
 			});

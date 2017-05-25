@@ -4,8 +4,8 @@ var _ = require('lodash'),
 	fs = require('fs'),
 	path = require('path');
 
-var apis = require('./Titanium_5.2.0.GA.json'),
-	root = path.join(__dirname, 'lib', 'titanium', '5.2.0.GA');
+var apis = require('./Titanium_6.0.4.GA.json'),
+	root = path.join(__dirname, 'lib', 'titanium', '6.0.4.GA');
 
 function getType(type) {
 	var result;
